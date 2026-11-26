@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_GROUPED_IN_STOCK",
+  "entity": "product",
+  "type": "grouped",
+  "constraints": {
+    "type": "grouped",
+    "status": "active",
+    "publishState": "production",
+    "activeChildCount": ">= 1",
+    "childInventory": ">= {quantityUsed}",
+    "price": "> 0",
+    "addOnCount": ">= {minAddOns}",
+    "personalizableAttributeCount": ">= {minPersonalizableAttributes}",
+    "addOnDisplayType": "{addOnDisplayType}",
+    "personalizableAttributeCode": "{personalizationAttribute}",
+    "storefrontActive": "= true",
+    "storefrontObsolete": "= false",
+    "storefrontProductIndex": ">= 1",
+    "addOnPrice": "> 0",
+    "requiredAddOnCount": "<= {minAddOns}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active published grouped product on the store with an active in-stock child, plus as many add-on groups and personalizable attributes as the test fills in. KB: Product Types (Grouped); Configuring Product Add-ons; Adding Personalization Options to a Product.",
+  "declaredParams": {
+    "quantityUsed": {
+      "type": "integer",
+      "description": "Highest quantity the test sets for this product in the cart"
+    },
+    "minAddOns": {
+      "type": "integer",
+      "description": "Add-on groups the test selects on this product (0 when it selects none)"
+    },
+    "minPersonalizableAttributes": {
+      "type": "integer",
+      "description": "Personalizable text attributes the test fills in (0 when none)"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode)"
+    },
+    "addOnDisplayType": {
+      "type": "string",
+      "description": "Stored ZnodePimAddonGroup.DisplayType of the add-on group the test selects (CheckBox, RadioButton or DropDown). Pass only when minAddOns >= 1",
+      "optional": true
+    },
+    "personalizationAttribute": {
+      "type": "string",
+      "description": "Personalizable attribute code the test types into (ZnodePimAttribute.AttributeCode, e.g. AdditionalInformation, DisplayText). Pass only when minPersonalizableAttributes >= 1",
+      "optional": true
+    }
+  },
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-10-28T14:30:00Z"
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_SIMPLE_IN_STOCK",
+  "entity": "product",
+  "type": "simple",
+  "constraints": {
+    "type": "simple",
+    "status": "active",
+    "inventory": ">= {quantityUsed}",
+    "publishState": "production",
+    "price": "> 0",
+    "storefrontActive": "= true",
+    "storefrontObsolete": "= false",
+    "storefrontProductIndex": ">= 1",
+    "requiredAddOnCount": "= 0",
+    "retailPrice": "< {maxPrice}",
+    "categoryId": "= {inCategoryId}",
+    "notCategoryId": "!= {notInCategoryId}",
+    "maxQuantity": ">= {minMaxQuantity}",
+    "discountedForProfile": "!= {notDiscountedForProfile}",
+    "outOfStockOption": "= {outOfStockOption}",
+    "personalizableAttributeCount": "<= {maxPersonalizableAttributes}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active simple product on the store with a price above zero (optionally below maxPrice, in or not in a given category) and enough inventory to add to cart. KB: Product Types. Variant children of configurable products are excluded.",
+  "declaredParams": {
+    "quantityUsed": {
+      "type": "integer",
+      "description": "Quantity the test adds to cart"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code"
+    },
+    "maxPrice": {
+      "type": "number",
+      "description": "Optional upper bound (exclusive) on the unit price, e.g. so a cart stays under a promotion's minimum order; left out = any price above zero",
+      "optional": true
+    },
+    "inCategoryId": {
+      "type": "integer",
+      "description": "Optional: the product must be in this category (e.g. @product.categoryId: same category as another need). Same id kind as promotion_categories.categoryId",
+      "optional": true
+    },
+    "notInCategoryId": {
+      "type": "integer",
+      "description": "Optional: the product must be in NO category with this id (e.g. @product.categoryId), so a category discount stays off it. Same id kind as promotion_categories.categoryId",
+      "optional": true
+    },
+    "minMaxQuantity": {
+      "type": "number",
+      "description": "Optional: the product must allow at least this quantity in the cart (MaximumQuantity >= value); left out = any maximum",
+      "optional": true
+    },
+    "notDiscountedForProfile": {
+      "type": "string",
+      "description": "Optional: profile name the test shops as (e.g. Anonymous); no active automatic product/category promotion of the store for that profile (or all profiles) may discount the product",
+      "optional": true
+    },
+    "outOfStockOption": {
+      "type": "string",
+      "description": "Optional: stored out-of-stock option the product must have (ZnodePimProduct.OutOfStockOptions), e.g. DisablePurchasing when the test reads the tracked stock quantity; left out = any option",
+      "optional": true
+    },
+    "maxPersonalizableAttributes": {
+      "type": "integer",
+      "description": "Optional: at most this many personalizable attributes on the product; 0 for flows that reject personalization (Quick Order); left out = any",
+      "optional": true
+    }
+  },
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-11-03T14:30:00Z"
+}

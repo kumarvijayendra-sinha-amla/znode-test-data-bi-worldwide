@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "entity": "payment",
+  "tables": [
+    "dbo.ZnodePaymentSetting",
+    "dbo.ZnodePaymentType",
+    "dbo.ZnodePortalPaymentSetting",
+    "dbo.ZnodePublishState",
+    "dbo.ZnodePortal",
+    "dbo.ZnodeProfilePaymentSetting",
+    "dbo.ZnodePortalProfile",
+    "dbo.ZnodeProfile"
+  ],
+  "joins": [
+    {
+      "from": "dbo.ZnodePaymentSetting.PaymentTypeId",
+      "to": "dbo.ZnodePaymentType.PaymentTypeId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.ZnodePaymentSetting.PaymentSettingId",
+      "to": "dbo.ZnodePortalPaymentSetting.PaymentSettingId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.ZnodePortalPaymentSetting.PublishStateId",
+      "to": "dbo.ZnodePublishState.PublishStateId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodePortalPaymentSetting.PortalId",
+      "to": "dbo.ZnodePortal.PortalId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.ZnodePaymentSetting.PaymentSettingId",
+      "to": "dbo.ZnodeProfilePaymentSetting.PaymentSettingId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeProfilePaymentSetting.ProfileId",
+      "to": "dbo.ZnodePortalProfile.ProfileId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeProfilePaymentSetting.ProfileId",
+      "to": "dbo.ZnodeProfile.ProfileId",
+      "kind": "left"
+    }
+  ],
+  "properties": {
+    "paymentCode": "dbo.ZnodePaymentSetting.PaymentCode",
+    "paymentName": "dbo.ZnodePaymentSetting.PaymentName",
+    "displayName": "dbo.ZnodePortalPaymentSetting.PaymentDisplayName",
+    "settingDisplayName": "dbo.ZnodePaymentSetting.PaymentDisplayName",
+    "gatewayType": "dbo.ZnodePaymentType.Name",
+    "paymentTypeCode": "dbo.ZnodePaymentType.Code",
+    "paymentTypeName": "dbo.ZnodePaymentType.Name",
+    "paymentTypeActive": "dbo.ZnodePaymentType.IsActive",
+    "isActive": "dbo.ZnodePaymentSetting.IsActive",
+    "isTestMode": "dbo.ZnodePaymentSetting.IsTestMode",
+    "displayOrder": "dbo.ZnodePaymentSetting.DisplayOrder",
+    "displayOnWebstore": "dbo.ZnodePortalPaymentSetting.IsUsedForWebStorePayment",
+    "displayOnOffline": "dbo.ZnodePortalPaymentSetting.IsUsedForOfflinePayment",
+    "approvalRequired": "dbo.ZnodePortalPaymentSetting.IsApprovalRequired",
+    "publishState": "dbo.ZnodePublishState.PublishStateCode",
+    "store": "dbo.ZnodePortal.StoreCode",
+    "profile": "dbo.ZnodeProfile.ProfileName",
+    "profilePublishState": "dbo.ZnodeProfilePaymentSetting.PublishStateId"
+  },
+  "scope": {
+    "store": "dbo.ZnodePortal.StoreCode"
+  },
+  "maskedColumns": [],
+  "schemaFingerprint": "sha256:b3908811522691db1a3df7d41e8d66e93a936c2629750665de69726403ba72ec",
+  "scannedAt": "2026-10-29T00:00:00Z",
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-11-01T14:30:00Z"
+}

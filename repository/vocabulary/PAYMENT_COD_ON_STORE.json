@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "key": "PAYMENT_COD_ON_STORE",
+  "entity": "payment",
+  "type": "cod",
+  "constraints": {
+    "gatewayType": "cod",
+    "isActive": "true",
+    "displayOnWebstore": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Charge on Delivery (COD) payment method associated with the store, or with one of the store's profiles, and shown in webstore checkout, so the test can place an order without a card. KB: Configuring Charge on Delivery (COD) Payment Plugin; Managing Payment Process Plugins.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode)"
+    }
+  },
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-11-01T14:30:00Z"
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_CONFIGURABLE_PDP_DETAILS",
+  "entity": "product",
+  "type": "configurable_pdp_details",
+  "constraints": {
+    "type": "configurable",
+    "isActive": "true",
+    "publishState": "production",
+    "activeVariantCount": ">= 1",
+    "variantInventory": ">= {quantityUsed}",
+    "priceTierCount": ">= {minTiers}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Published active configurable product with an active in-stock variant, plus its guest PDP for the Nth eligible variant by SKU (first if not given): text attributes, guest price, inventory, parent category path/brand/links. KB: Product Detail Page; Custom Price Lists; Managing Inventory.",
+  "declaredParams": {
+    "quantityUsed": {
+      "type": "integer",
+      "description": "Highest quantity the test sets on the PDP; the variant needs at least this inventory and the guest tier price is picked for it"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode)"
+    },
+    "minTiers": {
+      "type": "integer",
+      "description": "Optional: the parent or the variant must have at least this many tier prices on the price list the variant is priced from (e.g. 1 when the test checks SPECIAL PRICE OFFERS); left out = any",
+      "optional": true
+    },
+    "variantRank": {
+      "type": "integer",
+      "description": "Optional: which eligible variant (active, inventory >= quantityUsed on the store) to describe, 1-based in SKU order; left out = the first, as before",
+      "optional": true
+    }
+  },
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-11-03T14:30:00Z"
+}

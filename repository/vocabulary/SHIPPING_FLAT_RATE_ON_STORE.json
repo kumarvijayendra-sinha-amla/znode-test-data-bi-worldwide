@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "key": "SHIPPING_FLAT_RATE_ON_STORE",
+  "entity": "shipping",
+  "type": "flat_rate",
+  "constraints": {
+    "isActive": "true",
+    "shippingType": "custom",
+    "ruleType": "flat_rate_per_item",
+    "code": "{shippingCode}",
+    "countries": "{countries}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active custom shipping method with the given code and a flat-rate rule, associated with the store, that returns a rate for every listed destination country, so Estimate Shipping and checkout offer it. KB: Managing Shipping Methods; Associating Shipping Rules with a Shipping Method.",
+  "declaredParams": {
+    "shippingCode": {
+      "type": "string",
+      "description": "ZnodeShipping.ShippingCode of the option the page objects click (FLAT for #Flat-1)"
+    },
+    "countries": {
+      "type": "string",
+      "description": "Comma-separated list (no list type in the schema) of destination country codes the test estimates for, e.g. us,ca; the method must return a rate for each"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode)"
+    }
+  },
+  "status": "approved",
+  "approvedBy":"Akshay Hedaoo",
+  "approvedAt": "2026-10-28T14:30:00Z"
+}
