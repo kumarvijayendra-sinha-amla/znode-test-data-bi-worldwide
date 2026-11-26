@@ -8,6 +8,7 @@ writeEnvironments:
   - at
   - local     # local Znode API/gateway against the local copy of the at database (user decision 2026-10-22)
   - atstage   # staging; writes explicitly approved by the user 2026-10-23 (security_and_access_doc.md section 2)
+  - qa        # BI Worldwide test environment; writes (per-test admin users, story BMP-36) explicitly approved by the user 2026-11-26
 
 # Token request, from the gateway source (znode10-api-gateways TokenController/AuthService, read 2026-10-22):
 # POST <gateway>/Token with {"ClientName", "ClientKey"}; response {"Token", "RefreshToken", "HasError", ...}.

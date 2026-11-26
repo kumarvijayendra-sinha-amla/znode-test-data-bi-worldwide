@@ -213,3 +213,20 @@ swapped:
     - testim-migrated/tests/webstore/my-account/edit-profile-validate-functionality.spec.ts
     - testim-migrated/tests/webstore/my-account/order-template-validate-functionality.spec.ts
     - testim-migrated/tests/webstore/my-account/review-history-validate-functionality.spec.ts
+
+# New tests run on keys from the start (/new-test). Every file under these paths of the BI Worldwide Playwright fork
+# (znode-biww-playwright-automation-fork) must be on keys, except the tests that existed before (legacy, from
+# `bin/tda legacy-list playwright <repo dir>`; a legacy file leaves the list when it is migrated).
+keysRequired:
+  playwright:
+    paths: ["tests/**"]
+    legacy:
+      - tests/seed.spec.ts
+      - tests/webstore/ForgotPasswordPage/ForgotPasswordPageTest.spec.ts
+      - tests/webstore/HomePage/FooterTest.spec.ts
+      - tests/webstore/HomePage/HeaderTest.spec.ts
+      - tests/webstore/LoginPage/LoginPageTest.spec.ts
+      - tests/webstore/ProductDisplayPage/EmailAFriendTest.spec.ts
+      - tests/webstore/ProductDisplayPage/ProductSettingTest.spec.ts
+      - tests/webstore/ProductListingPage/CategoryPageTest.spec.ts
+      - tests/webstore/RegistrationPage/RegistrationPageTest.spec.ts

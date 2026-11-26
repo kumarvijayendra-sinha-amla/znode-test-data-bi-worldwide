@@ -1,0 +1,75 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_ADMIN_PORTAL",
+  "spec" : {
+    "file" : "specs/znode-web-v1-api.json",
+    "operations" : [ "POST /User/CreateAdminUserAccount", "POST /User/DeleteUserAccount" ]
+  },
+  "create" : {
+    "method" : "POST",
+    "path" : "/User/CreateAdminUserAccount",
+    "payloadTemplate" : "payloads/USER_ADMIN_PORTAL.create.json",
+    "inputsFromDb" : {
+      "portalId" : {
+        "key" : "STORE_WEBSTORE_ACTIVE",
+        "output" : "portalId",
+        "params" : {
+          "store" : "{store}"
+        }
+      }
+    },
+    "constants" : {
+      "isAdminUser" : true,
+      "isActive" : true,
+      "isWebStoreUser" : false,
+      "isGuestUser" : false,
+      "isLock" : false
+    },
+    "generated" : {
+      "uniqueSuffix" : {
+        "kind" : "uniqueSuffix"
+      },
+      "password" : {
+        "kind" : "password",
+        "secret" : true
+      }
+    },
+    "runIdTag" : {
+      "field" : "/UserName",
+      "format" : "TDA-{runId}-",
+      "property" : "userName"
+    },
+    "idPointer" : "/User/UserId",
+    "outputs" : {
+      "userName" : {
+        "from" : "payload",
+        "pointer" : "/UserName"
+      },
+      "password" : {
+        "from" : "payload",
+        "pointer" : "/User/Password",
+        "secret" : true
+      },
+      "role" : {
+        "from" : "value",
+        "name" : "role"
+      },
+      "userId" : {
+        "from" : "response",
+        "pointer" : "/User/UserId"
+      }
+    }
+  },
+  "teardown" : {
+    "method" : "POST",
+    "path" : "/User/DeleteUserAccount",
+    "bodyTemplate" : "payloads/USER_ADMIN_PORTAL.teardown.json"
+  },
+  "specFingerprint" : "sha256:fa305635774c11a0ce08bfa54ed87da1791a1c9b76de2d0dc444f3d6928a6311",
+  "status" : "approved",
+  "approvedBy" : "roshni-sen-amla",
+  "approvedAt" : "2026-11-26T11:08:10Z",
+  "createdAt" : "2026-11-26T11:30:00Z",
+  "lastValidated" : "2026-11-26T11:07:38Z",
+  "verifiedHash" : "sha256:cc257ee13bb4c6649d805fd60d94b6a00657a1a4bdf7c1562cb5ffe5d3e28f2c"
+}
