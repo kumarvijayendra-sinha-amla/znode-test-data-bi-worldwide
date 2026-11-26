@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_ADMIN_PORTAL",
+  "entity": "user",
+  "type": "admin",
+  "constraints": {
+    "userType": "registered",
+    "role": "{role}",
+    "isActive": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "consumable",
+  "description": "Active Admin Portal (Znode admin) user with the given admin role (e.g. Admin, Super Admin) who can sign in to the admin with username and password; created per test and deleted at teardown. Story BMP-36.",
+  "declaredParams": {
+    "role": {
+      "type": "string",
+      "description": "Admin role name the user gets (dbo.AspNetRoles.Name), e.g. Admin or Super Admin"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the admin user is assigned to (ZnodePortal.StoreCode); resolves through STORE_WEBSTORE_ACTIVE"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "roshni-sen-amla",
+  "approvedAt": "2026-11-26T11:06:21Z"
+}
