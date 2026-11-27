@@ -9,9 +9,10 @@
   },
   "outputs" : [ "userCount", "countScope" ],
   "identity" : "countScope",
-  "schemaFingerprint" : "sha256:9a2800bd6c1a8c49af814733b7b6d94a80528597d0306813609564145fcf4fe3",
+  "schemaFingerprint" : "sha256:a4eb8286089d442eb853e5228a3225d39becab4fe88514d2dca85b1914bdf70e",
+  "vocabularyFingerprint" : "sha256:e827e3015a77a34bef9941455425fd079a96c2978c31a6364d416055943f83c5",
   "status" : "pending_approval",
   "createdAt" : "2026-11-26T00:00:00Z",
-  "lastValidated" : "2026-11-27T05:33:17Z",
+  "lastValidated" : "2026-11-27T05:35:11Z",
   "verifiedHash" : "sha256:f32e78e372ed6c0940366fbb36d496cc603686f3f761fb55c108b44d18d2b01a"
 }
