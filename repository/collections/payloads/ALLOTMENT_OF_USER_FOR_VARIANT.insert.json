@@ -1,9 +1,11 @@
-{
-  "SalesRepEmail": "{ownerEmail}",
-  "ParentSKU": "{parentSku}",
-  "ChildSKU": "{childSku}",
-  "Status": "{status}",
-  "QuantityAllocated": "{quantity}",
-  "CurrentlyRedeemed": "{currentlyRedeemed}",
-  "QuantityRemaining": "{quantity}"
-}
+[
+  {
+    "SalesRepEmail": "{ownerEmail}",
+    "ParentSKU": "{parentSku}",
+    "ChildSKU": "{childSku}",
+    "Status": "{status}",
+    "QuantityAllocated": "{quantity}",
+    "CurrentlyRedeemed": "{currentlyRedeemed}",
+    "QuantityRemaining": "{quantity}"
+  }
+]

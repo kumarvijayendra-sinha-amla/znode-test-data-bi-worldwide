@@ -3,7 +3,7 @@
   "key" : "ADDRESS_OF_USER",
   "spec" : {
     "file" : "specs/znode-web-v1-api.json",
-    "operations" : [ "POST /Customer/CreateCustomerAddress", "POST /Customer/DeleteCustomerAddress" ]
+    "operations" : [ "POST /Customer/CreateCustomerAddress", "DELETE /WebStoreAccount/DeleteAddress/{addressId}/{userId}" ]
   },
   "create" : {
     "method" : "POST",
@@ -92,13 +92,12 @@
     }
   },
   "teardown" : {
-    "method" : "POST",
-    "path" : "/Customer/DeleteCustomerAddress",
-    "bodyTemplate" : "payloads/ADDRESS_OF_USER.teardown.json"
+    "method" : "DELETE",
+    "path" : "/WebStoreAccount/DeleteAddress/{id}/{owner}"
   },
-  "specFingerprint" : "sha256:3424b3c5c8636d9945f806fcaf8846c159a12e4561d52f007005008963c5d70b",
+  "specFingerprint" : "sha256:3a3f5642fc0ae29dae6deaa9275dd6212fe469acaea77317adaf5803b43c496c",
   "status" : "pending_approval",
   "createdAt" : "2026-11-26T15:00:00Z",
-  "lastValidated" : "2026-11-27T07:27:40Z",
-  "verifiedHash" : "sha256:6b72472a861de45bd7840dba9e3385a7d0970849babea138f87501f5c41a8e14"
+  "lastValidated" : "2026-11-27T08:46:03Z",
+  "verifiedHash" : "sha256:bfdaa830852e95be6ed37ce8a139ae5a60c3b50dfb6da817ee437534eeb7a633"
 }
