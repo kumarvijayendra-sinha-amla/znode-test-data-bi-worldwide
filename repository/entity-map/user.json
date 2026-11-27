@@ -6,7 +6,9 @@
     "dbo.AspNetUsers",
     "dbo.AspNetZnodeUser",
     "dbo.ZnodeUserPortal",
-    "dbo.ZnodePortal"
+    "dbo.ZnodePortal",
+    "dbo.AspNetUserRoles",
+    "dbo.AspNetRoles"
   ],
   "joins": [
     {
@@ -28,13 +30,24 @@
       "from": "dbo.ZnodeUserPortal.PortalId",
       "to": "dbo.ZnodePortal.PortalId",
       "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeUser.AspNetUserId",
+      "to": "dbo.AspNetUserRoles.UserId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.AspNetUserRoles.RoleId",
+      "to": "dbo.AspNetRoles.Id",
+      "kind": "left"
     }
   ],
   "properties": {
     "userName": "dbo.AspNetZnodeUser.UserName",
     "store": "dbo.ZnodePortal.StoreCode",
     "userType": "IFNULL(dbo.ZnodeUser.AspNetUserId, guest, registered)",
-    "isActive": "IFNULL(dbo.AspNetUsers.LockoutEnd, true, false)"
+    "isActive": "IFNULL(dbo.AspNetUsers.LockoutEnd, true, false)",
+    "role": "dbo.AspNetRoles.Name"
   },
   "scope": {
     "store": "dbo.ZnodePortal.StoreCode"
@@ -60,9 +73,9 @@
     "dbo.ZnodeUser.Custom4",
     "dbo.ZnodeUser.Custom5"
   ],
-  "schemaFingerprint": "sha256:a6b9c46fff5656a5bc716ebb3335f151ea20faa4a6a17d3aad87d1168e260087",
-  "scannedAt": "2026-10-23T00:00:00Z",
+  "schemaFingerprint": "sha256:7f971a40f6d4c09a213f0827877830139997a0a9ccd39d385ba8670d497bb8e8",
+  "scannedAt": "2026-11-26T00:00:00Z",
   "status": "approved",
-  "approvedBy":"Akshay Hedaoo",
-  "approvedAt": "2026-10-23T14:30:00Z"
+  "approvedBy": "roshni-sen-amla",
+  "approvedAt": "2026-11-26T09:46:56Z"
 }

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "key": "ALLOTMENT_ID_BY_EMAIL_AND_SKU",
+  "entity": "allocation",
+  "type": "id_by_email_and_sku",
+  "constraints": {
+    "salesRepEmail": "{ownerEmail}",
+    "childSku": "{childSku}",
+    "status": "active"
+  },
+  "scope": {},
+  "usage": "read-only",
+  "description": "The newest Active allotment row (TblCustom_Allocations.Id) of the given sales rep e-mail for the given variant SKU. Lookup for collections whose insert returns no row ID (create.lookupsFromDb). Read only. Story BMP-94.",
+  "declaredParams": {
+    "ownerEmail": { "type": "string", "description": "Exact SalesRepEmail the allotment was inserted with (the created rep's e-mail)" },
+    "childSku": { "type": "string", "description": "Exact ChildSKU the allotment was inserted with" }
+  },
+  "status": "pending_approval"
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+  "entity": "allocation",
+  "type": "of_user_for_variant",
+  "constraints": {
+    "ownerUserId": "{owner}",
+    "salesRepEmail": "{ownerEmail}",
+    "parentSku": "{parentSku}",
+    "childSku": "{childSku}",
+    "status": "active",
+    "quantityRemaining": ">= {quantity}"
+  },
+  "scope": {},
+  "usage": "consumable",
+  "description": "An Active row of the BIWW Allocations custom table giving the declared sales rep a remaining allotment of at least the quantity for one product variant; created per test and deleted at teardown. Story BMP-94.",
+  "declaredParams": {
+    "owner": {
+      "type": "integer",
+      "description": "ZnodeUser.UserId of the sales rep: link it to the test's declared account (@user.userId), never a username"
+    },
+    "ownerEmail": {
+      "type": "string",
+      "description": "E-mail of the same rep (allotments link to the rep only through SalesRepEmail): link it as @user.email"
+    },
+    "parentSku": {
+      "type": "string",
+      "description": "SKU of the configurable parent product, linked from the product need, e.g. @product.parentProductSku"
+    },
+    "childSku": {
+      "type": "string",
+      "description": "SKU of the variant the allotment is for, linked from the product need, e.g. @product.variant1Sku"
+    },
+    "quantity": {
+      "type": "integer",
+      "description": "Units the test redeems; the allotment is created with QuantityAllocated = QuantityRemaining = quantity"
+    }
+  },
+  "status": "pending_approval"
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/admin/DashboardPage/DashboardTest.spec.ts > BMP-36 TC4: Admin is redirected to the Dashboard again after logging out and in",
+  "scenario": {
+    "summary": "The project's Admin account (role Admin on qa) signs in on the storefront, lands on the BI WORLDWIDE Web Admin Dashboard, logs out, signs in again and is redirected to the Dashboard again.",
+    "steps": [
+      "Open the storefront sign-in page (config webstoreURL, /login)",
+      "Enter the Admin account's username and password (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD) and sign in",
+      "Check that the Web Admin Dashboard (/admin) is shown",
+      "Log Out from the Web Admin",
+      "Check that the sign-in page is shown",
+      "Sign in again with the same account",
+      "Check that the Web Admin Dashboard (/admin) is shown again"
+    ],
+    "entitiesTouched": ["user"],
+    "stateChanges": ["A session is started for the Admin account, ended by Log Out, and started again"],
+    "assertions": [
+      "After the first sign-in the Web Admin Dashboard (/admin) is shown",
+      "After Log Out the sign-in page is shown",
+      "After signing in again the user is redirected to the Web Admin Dashboard (/admin) again"
+    ],
+    "evidence": [
+      "Jira BMP-36 test case TC4 (work/stories/BMP-36/input/BMP-36-story.md); no FRD",
+      "BMP-447 (no logout from the web admin) is fixed on qa: the Web Admin Log Out works there (user decision 2026-11-26)",
+      "work/stories/BMP-36/analysis.md section 6: shared Admin account exception decided by the user 2026-11-26; retarget to the BI WORLDWIDE Web Admin via storefront sign-in decided by the user 2026-11-26"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": ["BMP-36"],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "roshni-sen-amla",
+  "approvedAt": "2026-11-26T12:47:34Z"
+}

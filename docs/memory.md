@@ -2,6 +2,81 @@
 
 Living state of the project for Claude Code and the team. Read at the start of every session; update at the end (see `rules.md` section 3).
 
+## BI Worldwide (this repository) - read this first
+
+This repository started as a copy of the Znode data repository. Everything from "Current status" down is the Znode
+history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for reference only.
+
+| Field | Value |
+| --- | --- |
+| Environment | `qa` = BI Worldwide bnjm-dv (`TDA_ENV_NAME=qa`; DB 172.21.44.4 over VPN; API gateway apigateways-bnjm-dv.znodecorp.com with a dedicated client; storefront webstore-bnjm-dv.znodecorp.com; store code BNJM = PortalId 10) |
+| Framework | Playwright fork `D:\IdeaFestNov\znode-biww-playwright-automation-fork`, branch `dev_BMP36`; runs with `ENV=qa` (config/qa.json) |
+| Release | core and adapter 0.19.0 |
+| Last updated | 2026-11-27 |
+| Next step | BMP-94 (Cart and Checkout page): finish step 2 keys, then requirements (see "2026-11-27: story BMP-94" below). Needs core 0.21.0 (local generator branch `feat/collection-lookups-constant-sets`, not released) |
+
+### 2026-11-26: setup for new tests (/new-test)
+
+- Data repo: `tda.version` 0.16.0 -> 0.19.0; `config/agents.yaml` gained `newTests` (webstore and Web Admin conventions)
+  and `runs` (`ENV=qa`, junit to `tda-reports/`, `--reporter` replaces the fork's reporters so no execution e-mail);
+  `config/scanners.yaml` gained `keysRequired` (`tests/**`, 9 legacy specs); `config/api.yaml` `writeEnvironments` gained
+  `qa` (writes approved by the user 2026-11-26); `specs/Znode Web V1 API.json` renamed `specs/znode-web-v1-api.json`
+  (schema forbids spaces). `docs/ops/create-tda-api-client-qa.sql` creates the dedicated qa API client.
+- Fork: adapter `@mrrsoft/tda-playwright-adapter` 0.19.0 (`.npmrc`, token from `NODE_AUTH_TOKEN`), global setup/teardown
+  only when `TDA_HOME` is set, `testData`/`tdaSwap` fixtures; `utils/envConfig.ts` takes `ADMIN_USERNAME` /
+  `ADMIN_PASSWORD` from the environment over `config/<env>.json` (credentials never in git). Type-check needs
+  TypeScript 6: `npx -y -p typescript@6 tsc --noEmit`. On this machine use `npx.cmd` in PowerShell (npx.ps1 blocked).
+- Pitfalls met: the token 401 "Invalid Configuration!" means the gateway does not know the client (name, not numeric id;
+  exact secret; gateway caches clients); the resolver needs `TDA_ENV_NAME=qa` passed to the run; `bin/tda run` needs
+  `--serial` (no `fallbackWorktree` in `runs`).
+- Still open: the copied Znode vocabulary/queries/collections are unverified for bnjm-dv; 8 copied collections point to
+  `specs/znode-core-api-v1.json`, which is not in `specs/`; `scanners.yaml` `migrated`/`swapped` still list Znode files.
+
+### 2026-11-26: story BMP-36 (Admin Dashboard - default landing page after login)
+
+- Analysis: `work/stories/BMP-36/analysis.md` (git-ignored; sections 5-6 hold the decisions).
+- App under test: the BI WORLDWIDE Web Admin. Sign in on the storefront (`/login`); Admins are redirected to `/admin`
+  (header nav Dashboard, Users, Products, Orders, Alerts; BMP-82). It is NOT the Znode Merchant admin at admin-bnjm-dv
+  (that one asks for an e-mailed code and has a different header; testing it was a wrong turn, no defect logged).
+- Sign-in: the user's own Admin account from `ADMIN_USERNAME` / `ADMIN_PASSWORD` (explicit user exception to the
+  per-test created user rule, 2026-11-26). Admin users created via `POST /User/CreateAdminUserAccount` could not sign in
+  (the call does not keep the sent password) - user decided not to create admin users.
+- Tests: `tests/admin/DashboardPage/DashboardTest.spec.ts` - TC1 (redirect), TC3 (header), TC4 (log out and in again;
+  the BMP-447 logout fix is on qa), TC5 (wrong password + unknown username, message "The entered Username or Password
+  does not exist."). Page code: `page_objects/webstore/WebAdminPageObjects.ts`, `page_actions/webstore/WebAdminPage/`.
+  TC2 (Super Admin) held until a Super Admin account exists (requirement copy in `work/stories/BMP-36/held/`).
+- Requirements: `repository/requirements/playwright/tests/admin/DashboardPage/DashboardTest/` (4, approved by
+  roshni-sen-amla 2026-11-26, no data needs; sources recorded by hand: the scanner does not see top-of-file constants).
+- Reference run 2026-11-26 (`bin/tda run ... --serial`): normal 4/4 passed, fallback 4/4 passed, teardown 0 failed.
+- Unused now: key `USER_ADMIN_PORTAL` + its collection (store BNJM) and the `role` property in `entity-map/user.json`
+  (approved); keep for TC2 if created users can sign in later, else reject. Fork leftovers: Merchant-admin Dashboard
+  page code and `auth/` device-cookie files (delete `auth/admin-qa.json`, it holds full sessions).
+- Generator follow-ups opened: PR #16 (scanner follows constants) and PR #15 (`sensitive` default); both set 0.19.1.
+
+### 2026-11-27: story BMP-94 (Web Storefront Cart and Checkout page, step 2 in progress)
+
+- Analysis: `work/stories/BMP-94/analysis.md` (git-ignored; decisions in sections 6, 8, findings in 9). Inputs in
+  `work/stories/BMP-94/input/` (story from Jira, 73 manual cases SAN-/EDG-/SCN- from `BMP-94_QA_report.xlsx`, FSD).
+- Decisions (user): users are created with a role as Web Admin > Users > Add New; tests sign in as the user's own Admin
+  and use **Shop As** on the created user (no password); Shop As cases and real orders are in scope (PeopleSoft
+  ignored); the heading test asserts "Place Your Order" and fails until BMP-500 is fixed; store-configuration cases
+  stay manual. Assumption: placed orders are left on qa (run ID tagged user deleted at teardown).
+- Core: the BIWW create returns only `true`, so core 0.21.0 adds `create.lookupsFromDb` (read the ID after the steps),
+  `create.constantSets` (values by param) and `query-verify --param name=env:VAR`. Built locally only; run tda with
+  `TDA_CLI_JAR=D:/IdeaFestNov/znode10-automation-testdata-generator/core/target/tda-cli.jar`. The pin (0.19.0) cannot
+  read these entries: CI validate will fail until 0.21.0 is released and pinned.
+- New entries (all pending_approval, none verified): vocabulary + collection USER_STOREFRONT_WITH_ROLE (roles SalesRep,
+  MarketCoordinator, Web Admin, Super Admin), ADDRESS_OF_USER (NJ default, CA set), ALLOTMENT_OF_USER_FOR_VARIANT
+  (Custom Table API, table key `Allocations`); read-only lookups USER_ID_BY_USERNAME, ALLOTMENT_ID_BY_EMAIL_AND_SKU;
+  entity map `allocation` (cso.TblCustom_Allocations, registry); `user_address` gains displayName/stateCode/countryCode
+  (back to pending); `config/api.yaml` entityTerms for address and allocation.
+- ALLOTMENT_OF_USER_FOR_VARIANT uses `runIdTag.inheritedFrom: ownerEmail` (core 0.21.0, approved by the user
+  2026-11-27): SalesRepEmail is the rep's tagged e-mail; the resolver refuses an untagged owner. `validate` passes.
+- Open: `ADMIN_USERNAME` missing in .env (verify
+  USER_ID_BY_USERNAME); where BNJM's default shipping method is stored (P4); Loqate check of the two addresses;
+  `cso.*.*email*` for config/column-mask.yaml; whether the BIWW create ties the role to portal 10; requirements not
+  written yet, so no collection can be verified.
+
 ## Current status
 
 | Field | Value |

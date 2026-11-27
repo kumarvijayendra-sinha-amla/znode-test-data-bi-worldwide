@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "entity": "allocation",
+  "tables": [
+    "cso.TblCustom_Allocations",
+    "dbo.ZnodeUser",
+    "cso.ZnodeCustomTableDetail",
+    "cso.ZnodeCustomTableFields"
+  ],
+  "joins": [
+    {
+      "from": "cso.TblCustom_Allocations.SalesRepEmail",
+      "to": "dbo.ZnodeUser.Email",
+      "kind": "left"
+    },
+    {
+      "from": "cso.ZnodeCustomTableDetail.CustomTableDetailId",
+      "to": "cso.ZnodeCustomTableFields.CustomTableDetailId",
+      "kind": "left"
+    }
+  ],
+  "properties": {
+    "id": "cso.TblCustom_Allocations.Id",
+    "salesRepEmail": "cso.TblCustom_Allocations.SalesRepEmail",
+    "parentSku": "cso.TblCustom_Allocations.ParentSKU",
+    "childSku": "cso.TblCustom_Allocations.ChildSKU",
+    "quantityAllocated": "cso.TblCustom_Allocations.QuantityAllocated",
+    "currentlyRedeemed": "cso.TblCustom_Allocations.CurrentlyRedeemed",
+    "quantityRemaining": "cso.TblCustom_Allocations.QuantityRemaining",
+    "status": "cso.TblCustom_Allocations.Status",
+    "ownerUserId": "dbo.ZnodeUser.UserId",
+    "customTableId": "cso.ZnodeCustomTableDetail.CustomTableDetailId",
+    "tableKey": "cso.ZnodeCustomTableDetail.TableKey",
+    "tableName": "cso.ZnodeCustomTableDetail.TableName",
+    "fieldCode": "cso.ZnodeCustomTableFields.FieldCode",
+    "fieldName": "cso.ZnodeCustomTableFields.FieldName",
+    "fieldType": "cso.ZnodeCustomTableFields.FieldType"
+  },
+  "maskedColumns": [
+    "cso.TblCustom_Allocations.SalesRepEmail",
+    "cso.TblCustom_AllocationsAudit.SalesRepEmail",
+    "cso.TblCustom_AllocationsAudit.OldSalesRepEmail",
+    "dbo.ZnodeUser.Email",
+    "dbo.ZnodeUser.UserName",
+    "dbo.ZnodeUser.FirstName",
+    "dbo.ZnodeUser.LastName",
+    "dbo.ZnodeUser.MiddleName",
+    "dbo.ZnodeUser.PhoneNumber",
+    "dbo.ZnodeUser.CustomerPaymentGUID",
+    "dbo.ZnodeUser.RefreshToken",
+    "dbo.ZnodeUser.ExternalId",
+    "dbo.ZnodeUser.Custom1",
+    "dbo.ZnodeUser.Custom2",
+    "dbo.ZnodeUser.Custom3",
+    "dbo.ZnodeUser.Custom4",
+    "dbo.ZnodeUser.Custom5"
+  ],
+  "schemaFingerprint": "sha256:68815ce9d9c1c05bc734b33c8527635fe3f3d480daa44641725711474981376e",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "pending_approval"
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "key": "ALLOTMENT_ID_BY_EMAIL_AND_SKU",
+  "sql": "SELECT TOP 1 a.Id AS id, a.ChildSKU AS childSku, a.ParentSKU AS parentSku, a.QuantityRemaining AS quantityRemaining FROM cso.TblCustom_Allocations a WHERE a.SalesRepEmail = @ownerEmail AND a.ChildSKU = @childSku AND a.Status = @statusActive ORDER BY a.Id DESC",
+  "params": [ "ownerEmail", "childSku", "statusActive" ],
+  "constants": { "statusActive": "Active" },
+  "outputs": [ "id", "childSku", "parentSku", "quantityRemaining" ],
+  "identity": "id",
+  "schemaFingerprint": "sha256:8f3f484219eba85b2c478aed92ec9de99a2520a976638c99ebcb4265bf4b1843",
+  "vocabularyFingerprint": "sha256:177255fd4d3a7692eeeb689454b3c8ce197ae5dfa9fa01aa4ad00b270d732e31",
+  "status": "pending_approval",
+  "createdAt": "2026-11-26T20:30:00Z"
+}

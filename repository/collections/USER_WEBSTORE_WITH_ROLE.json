@@ -2,7 +2,7 @@
   "schemaVersion" : 1,
   "key" : "USER_WEBSTORE_WITH_ROLE",
   "spec" : {
-    "file" : "specs/Znode Web V1 API.json",
+    "file" : "specs/znode-web-v1-api.json",
     "operations" : [ "POST /User/CreateCustomerAccount", "POST /User/DeleteUserAccount" ],
     "additional" : [ {
       "file" : "specs/Znode Custom API V1.json",
@@ -144,9 +144,9 @@
     "path" : "/User/DeleteUserAccount",
     "bodyTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.teardown.json"
   },
-  "specFingerprint" : "sha256:ce855a270260f72429308ebf951de4aef647f5a709ff31ef2e86f9deee373561",
+  "specFingerprint" : "sha256:281282b9b098ed45d16f6f4d2f7eb354e5bdaae66906e46bf47fbcdfb9161d57",
   "status" : "pending_approval",
   "createdAt" : "2026-11-26T00:00:00Z",
-  "lastValidated" : "2026-11-27T05:33:32Z",
-  "verifiedHash" : "sha256:73e1721625e5394dd6be6cdf2c783153dff93479637dd0d6d136cc2010ad1e6d"
+  "lastValidated" : "2026-11-27T07:07:03Z",
+  "verifiedHash" : "sha256:3f7cc3b2cb25b4f338eb2985c5c9d572142b6249e3b29ab6dbfbc7b6d1d7577d"
 }
