@@ -13,7 +13,7 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
 | Framework | Playwright fork `D:\znode-biww-playwright-automation-fork` (moved from `D:\IdeaFestNov\...`), one branch per story `qa/<KEY>-<slug>` from `origin/master`; runs with `ENV=qa` (config/qa.json) |
 | Release | core and adapter 0.19.0 |
 | Last updated | 2026-11-27 |
-| Next step | BMP-94 (Cart and Checkout page): finish step 2 keys, then requirements (see "2026-11-27: story BMP-94" below). Needs core 0.21.0 (local generator branch `feat/collection-lookups-constant-sets`, not released) **BMP-84**: commit both BMP-84 branches on the user's word; log defects (placeholder text, Account tab labels) on the user's word; fix the create-path Web Admin id gap; TC005 when a category Admin account exists |
+| Next step | BMP-94 (Cart and Checkout page): human approval round 1, release core 0.21.0, then live verify of the collections and the scripts (step 4) (see "2026-11-27: story BMP-94" below). Needs core 0.21.0 (local generator branch `feat/collection-lookups-constant-sets`, not released) **BMP-84**: commit both BMP-84 branches on the user's word; log defects (placeholder text, Account tab labels) on the user's word; fix the create-path Web Admin id gap; TC005 when a category Admin account exists |
 
 ### 2026-11-26: setup for new tests (/new-test)
 
@@ -135,6 +135,18 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   (back to pending); `config/api.yaml` entityTerms for address and allocation.
 - ALLOTMENT_OF_USER_FOR_VARIANT uses `runIdTag.inheritedFrom: ownerEmail` (core 0.21.0, approved by the user
   2026-11-27): SalesRepEmail is the rep's tagged e-mail; the resolver refuses an untagged owner. `validate` passes.
+- Requirements: 15 entries in `repository/requirements/playwright/tests/webstore/CartCheckoutPage/CartCheckoutPageTest/`
+  (T1-T15, pending_approval; list in analysis section 10). Sign-in: own Admin account + Shop As (Shop As exists only for
+  Sales Reps and Market Coordinators; Logout ends the impersonation). T4 uses the own Admin account; Super Admin halves
+  held. T14/T15 use USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable: a user with an order cannot be deleted).
+  Products: PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule; VERIFIED with sample
+  params). Loqate ignored (not developed). Readiness: 30 PENDING_APPROVAL, 28 GAP (dependency on the created user).
+- Scripts (2026-11-27): fork branch `dev_BMP94`, `tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts` (15
+  tests) + page code (PlaceYourOrderPage, SizeGridPage, BnjmHeaderPage, WebAdminUsersPage). Locators read on qa as the
+  own Admin; 21 TODO(BMP-94) spots need the first Shop As run. Not run yet (keys pending approval). Sources filled
+  (18 values: 5 expected-output, 13 config); check-hardcoded lists 6 tests only because nothing is approved.
+  qa findings: Header Cart opens a drawer (Checkout link opens the page; defect vs SAN-011 undecided), lowercase
+  section headings, a single size is removed by quantity 0.
 - Open: `ADMIN_USERNAME` missing in .env (verify
   USER_ID_BY_USERNAME); where BNJM's default shipping method is stored (P4); Loqate check of the two addresses;
   `cso.*.*email*` for config/column-mask.yaml; whether the BIWW create ties the role to portal 10; requirements not

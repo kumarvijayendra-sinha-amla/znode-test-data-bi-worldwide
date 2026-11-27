@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-003: Header search, Account and Logout work on the combined page",
+  "scenario": {
+    "summary": "As a created Sales Rep (Shop As) with an item, the Header search, Account and Logout still work from the combined page.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter 1 for size @product.variant1Attr1 and click Add to Cart",
+      "Open the page from the Header Cart; run a Header search for @product.parentProductSku",
+      "Return to the page from the Header Cart and open Account from the Header",
+      "Return to the page and log out from the Header; check the tester is back in the own Admin session (impersonation header gone)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep user and its allotment are created for the test by their collections and deleted at teardown",
+      "Cart line added by Add to Cart",
+      "Logout ends the Shop As impersonation"
+    ],
+    "assertions": [
+      "The search opens the search results and they list @product.name",
+      "Account opens the Account page",
+      "Logout ends the impersonation and returns the tester to the own Admin session (no impersonation header; not signed out)"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-003 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T12)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "The case searches 'BM05' (the product SKU): the term is the product's SKU from the key",
+      "SAN-003 title mentions language; its steps do not, so no language check. SAN-003 'Logout should sign the user out' is read as ending the impersonated user's session: Decision 2026-11-27 (analysis section 11): Logout during Shop As ends the impersonation, not the Admin's session; after Logout the tester is back in the own Admin session",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-003"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}
