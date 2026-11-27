@@ -1,6 +1,6 @@
 {
   "schemaVersion" : 1,
-  "key" : "USER_WEBSTORE_WITH_ROLE_ORDERING",
+  "key" : "USER_WEBSTORE_WITH_ROLE_KEPT",
   "spec" : {
     "file" : "specs/znode-web-v1-api.json",
     "operations" : [ "POST /User/CreateCustomerAccount" ],
@@ -17,7 +17,7 @@
       "name" : "createUser",
       "method" : "POST",
       "path" : "/User/CreateCustomerAccount",
-      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_ORDERING.createUser.json",
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_KEPT.createUser.json",
       "captures" : {
         "userId" : "/User/UserId",
         "createdUserName" : "/User/UserName"
@@ -26,12 +26,12 @@
       "name" : "setBiwwFields",
       "method" : "POST",
       "path" : "/BIWWCustomer/CreateSingleCustomerWithAdditionalField",
-      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_ORDERING.setBiwwFields.json"
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_KEPT.setBiwwFields.json"
     }, {
       "name" : "setStatus",
       "method" : "PUT",
       "path" : "/v2/users/{userId}/account-status",
-      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_ORDERING.setStatus.json"
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE_KEPT.setStatus.json"
     } ],
     "id" : "{userId}",
     "inputsFromDb" : {
@@ -129,11 +129,11 @@
   },
   "teardown" : {
     "notRemovable" : true,
-    "reason" : "a user who placed an order cannot be deleted on this environment (the app refuses DeleteUserAccount)"
+    "reason" : "test users are kept on qa (user decision 2026-11-27); a user with an order or a default address cannot be deleted"
   },
   "specFingerprint" : "sha256:06a1b368962328bba6bee96f31364ad7edcd961a406db134f5137bd8aac23787",
   "status" : "active",
   "createdAt" : "2026-11-26T00:00:00Z",
-  "lastValidated" : "2026-11-27T08:39:23Z",
-  "verifiedHash" : "sha256:d71ba30c6b721dfe018eed0fa86e0cf49433833f215adfb2372c4ac643677431"
+  "lastValidated" : "2026-11-27T09:33:39Z",
+  "verifiedHash" : "sha256:d462961f32be0d461116c2cfa873b64196ec9d88ce8d905d78b6a57723258943"
 }

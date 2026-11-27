@@ -26,7 +26,7 @@
       "user"
     ],
     "stateChanges": [
-      "The Sales Rep user, its three allotments and its two addresses are created for the test by their collections and deleted at teardown",
+      "The Sales Rep user, its three allotments and its two addresses are created for the test by their collections; at teardown the allotments are deleted, the user and its addresses are kept on qa (test users are not deleted, user decision 2026-11-27)",
       "Cart lines (1, 2, 5; first line edited to 2)",
       "A new NY address typed by the test (created-by-test values; removed with the user)"
     ],
@@ -56,7 +56,7 @@
   },
   "requires": [
     {
-      "key": "USER_WEBSTORE_WITH_ROLE",
+      "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
       "alias": "user",
       "params": {
         "store": "BNJM",

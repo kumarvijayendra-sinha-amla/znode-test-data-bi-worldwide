@@ -3,7 +3,7 @@
   "key" : "ADDRESS_OF_USER",
   "spec" : {
     "file" : "specs/znode-web-v1-api.json",
-    "operations" : [ "POST /Customer/CreateCustomerAddress", "DELETE /WebStoreAccount/DeleteAddress/{addressId}/{userId}" ]
+    "operations" : [ "POST /Customer/CreateCustomerAddress" ]
   },
   "create" : {
     "method" : "POST",
@@ -92,12 +92,12 @@
     }
   },
   "teardown" : {
-    "method" : "DELETE",
-    "path" : "/WebStoreAccount/DeleteAddress/{id}/{owner}"
+    "notRemovable" : true,
+    "reason" : "kept with its user (test users are kept on qa, user decision 2026-11-27); qa refuses to delete a default shipping address"
   },
-  "specFingerprint" : "sha256:3a3f5642fc0ae29dae6deaa9275dd6212fe469acaea77317adaf5803b43c496c",
+  "specFingerprint" : "sha256:ae69a636efcee5d9ceafedccdfe1e68ed83be62f2c6bb59b93fe3830ecdf7804",
   "status" : "pending_approval",
   "createdAt" : "2026-11-26T15:00:00Z",
-  "lastValidated" : "2026-11-27T08:46:03Z",
-  "verifiedHash" : "sha256:bfdaa830852e95be6ed37ce8a139ae5a60c3b50dfb6da817ee437534eeb7a633"
+  "lastValidated" : "2026-11-27T09:33:47Z",
+  "verifiedHash" : "sha256:ffb5d2bb2d7d099da7c69ed42374df8171464fd7bd9a75292f3666ef27ed19d4"
 }

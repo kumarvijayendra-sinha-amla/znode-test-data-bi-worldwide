@@ -23,7 +23,7 @@
       "user"
     ],
     "stateChanges": [
-      "The Sales Rep and Market Coordinator users, their allotments and the Sales Rep address are created for the test by their collections and deleted at teardown",
+      "The Sales Rep and Market Coordinator users, their allotments and the Sales Rep address are created for the test by their collections; at teardown the allotments are deleted, the user and its addresses are kept on qa (test users are not deleted, user decision 2026-11-27)",
       "The own Admin account's cart emptied at the start",
       "Cart lines on the created users"
     ],
@@ -48,7 +48,7 @@
   },
   "requires": [
     {
-      "key": "USER_WEBSTORE_WITH_ROLE",
+      "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
       "alias": "salesRep",
       "params": {
         "store": "BNJM",
@@ -57,7 +57,7 @@
       }
     },
     {
-      "key": "USER_WEBSTORE_WITH_ROLE",
+      "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
       "alias": "coordinator",
       "params": {
         "store": "BNJM",

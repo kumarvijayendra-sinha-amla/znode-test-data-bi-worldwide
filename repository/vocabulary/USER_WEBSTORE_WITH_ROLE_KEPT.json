@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "key": "USER_WEBSTORE_WITH_ROLE_ORDERING",
+  "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
   "entity": "user_management",
   "type": "with_role",
   "constraints": {
@@ -13,7 +13,7 @@
     "store": "{store}"
   },
   "usage": "consumable",
-  "description": "As USER_WEBSTORE_WITH_ROLE, for tests that place an order as the user: a user with an order cannot be deleted (the app refuses DeleteUserAccount), so the user and its BIWW row are kept on qa at teardown (reported as kept, tagged with the run ID). Story BMP-94 (T14, T15).",
+  "description": "As USER_WEBSTORE_WITH_ROLE, but the user is never deleted: test users are kept on qa at teardown (reported as kept, tagged with the run ID; user decision 2026-11-27: users are not deleted, and a user with an order or a default address cannot be deleted anyway). Story BMP-94.",
   "declaredParams": {
     "store": {
       "type": "string",

@@ -149,10 +149,12 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   section headings, a single size is removed by quantity 0.
 - First runs on qa (2026-11-27, local core 0.22.0 jar + adapter): the BIWW-only create (CreateSingleCustomerWithAdditionalField)
   answers 200 but creates no user, so BMP-94 now uses USER_WEBSTORE_WITH_ROLE (BMP-38: CreateCustomerAccount, then BIWW
-  fields, then status; role Sales Rep / Market Coordinator + portalRole) and the kept copy USER_WEBSTORE_WITH_ROLE_ORDERING
-  (T14/T15); USER_STOREFRONT_WITH_ROLE(_ORDERING) removed. Allotment insert body is an array ([{...}]). Address teardown
+  fields, then status; role Sales Rep / Market Coordinator + portalRole) and its kept copy USER_WEBSTORE_WITH_ROLE_KEPT
+  (all BMP-94 tests: test users are never deleted, user decision 2026-11-27; ADDRESS_OF_USER is kept with its user,
+  qa refuses to delete a default address); USER_STOREFRONT_WITH_ROLE(_ORDERING) removed. Allotment insert body is an array ([{...}]). Address teardown
   is DELETE /WebStoreAccount/DeleteAddress/{id}/{owner} (DeleteCustomerAddress throws on qa; run 3 left addresses
-  215-222). Run 4: all 15 tests get their data.
+  215-222). Run 4: all 15 tests get their data; 2 passed, 13 failed on the Shop As banner and Questionnaire locators
+  (fixed) and a VPN drop; its teardown deleted 50 records, 6 default addresses (223-230) stayed.
 - Open: `ADMIN_USERNAME` missing in .env (verify
   USER_ID_BY_USERNAME); where BNJM's default shipping method is stored (P4); Loqate check of the two addresses;
   `cso.*.*email*` for config/column-mask.yaml; whether the BIWW create ties the role to portal 10; requirements not
