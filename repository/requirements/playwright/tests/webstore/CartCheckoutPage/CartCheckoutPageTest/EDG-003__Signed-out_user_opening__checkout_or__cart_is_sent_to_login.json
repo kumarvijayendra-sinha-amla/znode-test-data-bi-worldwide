@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > EDG-003: Signed-out user opening /checkout or /cart is sent to login",
+  "scenario": {
+    "summary": "A signed-out user in a fresh browser context who opens /checkout or /cart directly is redirected to the login page and sees no Place Your Order page, sections or cart content.",
+    "steps": [
+      "Start a fresh browser context without signing in",
+      "Open /checkout on the storefront (config webstoreURL) and observe the page",
+      "Open /cart and observe the page"
+    ],
+    "entitiesTouched": [],
+    "stateChanges": [],
+    "assertions": [
+      "Both URLs redirect to the login page",
+      "The Place Your Order page, its sections and any cart content are not shown"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases EDG-003 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 10 (T11)"
+    ],
+    "confidence": "medium",
+    "needsReview": false
+  },
+  "requires": [],
+  "linkedCases": [
+    "EDG-003"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

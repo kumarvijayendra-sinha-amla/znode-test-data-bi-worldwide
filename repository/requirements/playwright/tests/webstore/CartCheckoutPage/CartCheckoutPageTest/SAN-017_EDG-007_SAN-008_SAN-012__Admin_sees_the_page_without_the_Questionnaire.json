@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-017 EDG-007 SAN-008 SAN-012: Admin sees the page without the Questionnaire",
+  "scenario": {
+    "summary": "The tester's own Admin account, signed in directly on the storefront without Shop As, redeems a size from inventory and sees Address and Contact, Delivery, Order Summary and Place Order without the Questionnaire and without prices. The Super Admin halves of SAN-017 and EDG-007 are held until a Super Admin account exists (partially automated).",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "Open the Header Cart; if the own Admin account's cart has lines, remove them so it starts empty",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown as the Admin (no Shop As)",
+      "Enter quantity 1 for size @product.variant1Attr1 (within inventory) and click Redeem Now (SAN-008, SAN-017 step 1)",
+      "Check the sections: Address and Contact, Delivery, Order Summary and Place Order shown, Questionnaire not shown (SAN-017 steps 2-3, EDG-007 steps 2-3, SAN-008)",
+      "Check that no price, subtotal, tax, shipping cost or total is shown (SAN-012 step 5)",
+      "Click Cart in the Header; check the same page and sections (EDG-007 step 1)",
+      "Remove the line so the own Admin account's cart is empty again"
+    ],
+    "entitiesTouched": [
+      "product",
+      "user_address",
+      "user"
+    ],
+    "stateChanges": [
+      "A cart line on the tester's own Admin account, removed again by the test",
+      "A session for the tester's own Admin account"
+    ],
+    "assertions": [
+      "For the Admin: Address and Contact, Delivery, Order Summary and Place Order are shown",
+      "For the Admin the Questionnaire section is not shown",
+      "For the Admin no unit price, line price, subtotal, tax, shipping cost, total or currency amount is shown",
+      "Header Cart opens the same combined page for the Admin"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-017, EDG-007, SAN-008, SAN-012 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T4)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Admins redeem from inventory, not from an allotment (SAN-008): the product key ensures variant inventory >= 1; no allotment need",
+      "SAN-017 / EDG-007 Admin halves use the own Admin account directly, without Shop As, as the cases say",
+      "Held (partially automated): the Super Admin halves of SAN-017 (step 4) and EDG-007 (step 4) wait for a Super Admin account, like BMP-36 TC2. Shop As exists only for Sales Reps and Market Coordinators and created users have no password, so a created Super Admin or Web Admin cannot be reached (user answer 2026-11-27, analysis section 11)",
+      "The own Admin account is shared: its cart is emptied at the start and at the end so runs do not affect each other; parallel runs with the same account would collide",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the Super Admin halves of SAN-017 and EDG-007 are held until a Super Admin account exists (analysis section 11); only the Admin half with the tester's own account is automated - partially automated",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-017",
+    "EDG-007",
+    "SAN-008",
+    "SAN-012"
+  ],
+  "sources": [
+    {
+      "value": "/checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:452",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "0",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:454",
+      "kind": "literal",
+      "keyPath": "verifyCartCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+  "entity": "product",
+  "type": "configurable_size_grid",
+  "constraints": {
+    "type": "configurable",
+    "status": "active",
+    "publishState": "production",
+    "activeVariantCount": ">= {minVariants}",
+    "variantInventory": ">= {quantityUsed}",
+    "addOnCount": ">= {minAddOns}",
+    "personalizableAttributeCount": ">= {minPersonalizableAttributes}",
+    "addOnDisplayType": "{addOnDisplayType}",
+    "personalizableAttributeCode": "{personalizationAttribute}",
+    "variantAttributeCodes": "{variantAttributes}",
+    "storefrontActive": "= true",
+    "storefrontObsolete": "= false",
+    "storefrontProductIndex": ">= 1",
+    "requiredAddOnCount": "<= {minAddOns}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active published configurable product visible on the store's storefront with at least N active in-stock variants picked by their attribute values (e.g. Size), with no price rule: variants may be priced 0 or unpriced (redemption stores).",
+  "declaredParams": {
+    "quantityUsed": {
+      "type": "integer",
+      "description": "Highest quantity the test sets for this product in the cart"
+    },
+    "minAddOns": {
+      "type": "integer",
+      "description": "Add-on groups the test selects on this product (0 when it selects none)"
+    },
+    "minPersonalizableAttributes": {
+      "type": "integer",
+      "description": "Personalizable text attributes the test fills in (0 when none)"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode)"
+    },
+    "minVariants": {
+      "type": "integer",
+      "description": "Distinct variants the test adds to the cart"
+    },
+    "addOnDisplayType": {
+      "type": "string",
+      "description": "Stored ZnodePimAddonGroup.DisplayType of the add-on group the test selects (CheckBox, RadioButton or DropDown). Pass only when minAddOns >= 1",
+      "optional": true
+    },
+    "personalizationAttribute": {
+      "type": "string",
+      "description": "Personalizable attribute code the test types into (ZnodePimAttribute.AttributeCode, e.g. AdditionalInformation, DisplayText). Pass only when minPersonalizableAttributes >= 1",
+      "optional": true
+    },
+    "variantAttributes": {
+      "type": "string",
+      "description": "Comma-separated list (no list type in the schema) of the configurable attribute codes (ZnodePimAttribute.AttributeCode) the test picks the variant by; the product must vary by all of them"
+    }
+  },
+  "status": "pending_approval"
+}

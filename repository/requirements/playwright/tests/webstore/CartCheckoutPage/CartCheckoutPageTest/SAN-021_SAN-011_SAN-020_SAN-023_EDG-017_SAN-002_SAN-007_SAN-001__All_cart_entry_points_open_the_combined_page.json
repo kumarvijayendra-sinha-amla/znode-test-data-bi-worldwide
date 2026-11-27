@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-021 SAN-011 SAN-020 SAN-023 EDG-017 SAN-002 SAN-007 SAN-001: All cart entry points open the combined page",
+  "scenario": {
+    "summary": "As a created Sales Rep reached through Shop As, Add to Cart keeps the user on the PDP and updates the header count; the Header Cart, PDP Redeem Now, the PLP cart entry and direct /cart and /checkout all open the same combined page; no native cart page; the cart survives logging out and in.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter quantity 1 for size @product.variant1Attr1 and click Add to Cart; check the user stays on the PDP and the Header cart count shows 1 (SAN-007, SAN-001, SAN-002)",
+      "Open the PLP; check product tiles load without prices (SAN-001)",
+      "Click Cart in the Header; note URL, heading and sections; check the Order Summary lists @product.variant1Sku with quantity 1 (SAN-011, SAN-007, SAN-021 steps 1-2)",
+      "Check there is no separate native cart page and no 'Proceed to Checkout' step (SAN-011)",
+      "Browser Back; check the PDP opens (SAN-002)",
+      "On the PDP enter 1 for size @product.variant1Attr1 and click Redeem Now; compare URL, heading and sections with the Header page (SAN-021 steps 3-4)",
+      "Open the PLP and use its cart entry; compare URL, heading and sections (SAN-020, SAN-021 steps 5-6)",
+      "Open /cart and then /checkout directly; compare with the Header page and check for native cart elements (SAN-023, EDG-017)",
+      "Log out from the Header (ends the Shop As impersonation; the tester is back in the own Admin session), then in Web Admin Users choose Shop As on the same user (@user.userName) again; open the Header Cart and check the line is still there (SAN-001 step 5, adapted to Shop As)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep user and its allotment are created for the test by their collections and deleted at teardown",
+      "Cart lines added by Add to Cart and Redeem Now",
+      "Logout ends the Shop As impersonation; Shop As on the same user again"
+    ],
+    "assertions": [
+      "Add to Cart keeps the user on the PDP and the Header cart count reflects the added item",
+      "PLP tiles show no prices",
+      "Header Cart, PDP Redeem Now, PLP cart entry, /cart and /checkout open the same combined page: same URL, heading and sections",
+      "The combined page URL is /checkout (SAN-002; open in analysis Q12)",
+      "No native cart page, subtotal, Estimate Shipping or 'Proceed to Checkout' step is shown",
+      "Browser Back from the combined page returns to the PDP",
+      "After Logout (end of Shop As) and Shop As on the same user again the cart line is still shown on the combined page"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-021, SAN-011, SAN-020, SAN-023, EDG-017, SAN-002, SAN-007, SAN-001 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T2)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "SAN-021 precondition 'BNJM store published' is checked through the product key (publish state PRODUCTION and a published product entity on the store)",
+      "SAN-001 step 5 'log out and log back in' becomes Logout (which ends Shop As) and Shop As on the same created user again, since created users never sign in with a password. Decision 2026-11-27 (analysis section 11): Logout during Shop As ends the impersonation, not the Admin's session; after Logout the tester is back in the own Admin session",
+      "Heading text is not compared to a fixed value here (SAN-024 only, BMP-500)",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 2,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 2
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-021",
+    "SAN-011",
+    "SAN-020",
+    "SAN-023",
+    "EDG-017",
+    "SAN-002",
+    "SAN-007",
+    "SAN-001"
+  ],
+  "sources": [
+    {
+      "value": "the native cart step",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:363",
+      "kind": "literal",
+      "keyPath": "verifyShowsNone",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "PDP Redeem Now",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:377",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "the PLP cart entry",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:383",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "/cart",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:386",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "direct /cart",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:387",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "the native cart step",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:388",
+      "kind": "literal",
+      "keyPath": "verifyShowsNone",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "/checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:389",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "direct /checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:390",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}
