@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-040 EDG-028: No Estimate Shipping Cost section when the store setting is No",
+  "scenario": {
+    "summary": "With store BNJM set to Show Estimate Shipping Cost Section = No, a created Sales Rep (Shop As) with an item sees no Estimate Shipping Cost section, zip estimate field or estimated amount, and Delivery shows only the default shipping method and its information.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter 1 for size @product.variant1Attr1 and click Redeem Now",
+      "Look for an Estimate Shipping section, a zip code estimate field or an estimated amount (SAN-040 steps 3-4, EDG-028 step 2)",
+      "Check Delivery shows only the default shipping method and its information (EDG-028 step 3)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep user and its allotment are created for the test by their collections and deleted at teardown",
+      "Cart line added by Redeem Now"
+    ],
+    "assertions": [
+      "No Estimate Shipping Cost section, estimate field, shipping cost field or estimated amount is shown",
+      "Delivery shows only one shipping method with its information and no cost (expected values: P4)"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-040, EDG-028 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T9)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Precondition 'Show Estimate Shipping Cost Section = No, published' waits for a read-only key of the store attribute ShowEstimateShippingCost (P5, not built; qa value is false today, analysis section 9)",
+      "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
+      "Partially automated: the Admin steps (confirm the setting in Additional Store Attributes, save and publish; SAN-040 steps 1-2, EDG-028 step 1) are a store change and are not done (analysis 1d, decision Q8)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-040",
+    "EDG-028"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

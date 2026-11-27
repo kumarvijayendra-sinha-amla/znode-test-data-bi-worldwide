@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-026 EDG-021 EDG-004 SAN-016: Shop As shows the impersonated user's page and cart only",
+  "scenario": {
+    "summary": "An Admin with an empty own cart uses Shop As on a created Market Coordinator and then a created Sales Rep: the Questionnaire follows the impersonated role and the impersonation header stays visible; after End Impersonation the Admin's own cart is empty and shows none of the Sales Rep's items or address.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "Open the Header Cart; if the own Admin account's cart has lines, remove them; check 'Your cart is empty' (EDG-004 precondition)",
+      "In Web Admin open Users, find the created Market Coordinator by its user name (@coordinator.userName) and choose Shop As; the storefront opens as that user with the impersonation header (EDG-021 step 1, SAN-016 step 3)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 1 for @product.variant1Attr1 and click Redeem Now (EDG-021 step 2)",
+      "Check the Questionnaire section is shown and the impersonation header is visible (EDG-021 step 3, SAN-016 step 4)",
+      "End Impersonation; In Web Admin open Users, find the created Sales Rep by its user name (@salesRep.userName) and choose Shop As; the storefront opens as that user with the impersonation header (EDG-021 step 4, SAN-026 step 1)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 2 for @product.variant1Attr1 and click Redeem Now (EDG-004 step 1, SAN-026 step 2)",
+      "Check the Order Summary lists @product.variant1Sku with quantity 2 and the Questionnaire section is shown (EDG-004 step 2, SAN-026 step 3, EDG-021 step 4, SAN-016 step 2)",
+      "Click End Impersonation in the storefront header (EDG-004 step 3)",
+      "As the Admin open the Header Cart (EDG-004 step 4)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep and Market Coordinator users, their allotments and the Sales Rep address are created for the test by their collections and deleted at teardown",
+      "The own Admin account's cart emptied at the start",
+      "Cart lines on the created users"
+    ],
+    "assertions": [
+      "While impersonating the Market Coordinator and the Sales Rep the Questionnaire section is shown (page follows the impersonated role, not the Admin role)",
+      "The impersonation header stays visible on the combined page",
+      "After End Impersonation the Admin's page shows 'Your cart is empty' with a PLP link",
+      "The Admin's page shows neither @product.variant1Sku nor the Sales Rep's address (@addressRep.address1)"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-026, EDG-021, EDG-004, SAN-016 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T13)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Partially automated: SAN-016 'client linked to the address, pre-filled' and 'Questionnaire required' need a client in the BIWW Clients custom table (Checkout 3 story): no key yet. SAN-016 step 1 'sign in as the Sales Rep' is reached through Shop As (user decision 2026-11-26)",
+      "The own Admin account is shared: its cart is emptied at the start; parallel runs with the same account would collide",
+      "EDG-021 names a tester account as the Market Coordinator; not used (created user)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "salesRep",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "coordinator",
+      "params": {
+        "role": "MarketCoordinator",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 2,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentRep",
+      "params": {
+        "owner": "@salesRep.userId",
+        "ownerEmail": "@salesRep.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 2
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentCoordinator",
+      "params": {
+        "owner": "@coordinator.userId",
+        "ownerEmail": "@coordinator.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    },
+    {
+      "key": "ADDRESS_OF_USER",
+      "alias": "addressRep",
+      "params": {
+        "owner": "@salesRep.userId",
+        "stateCode": "NJ",
+        "isDefaultShipping": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-026",
+    "EDG-021",
+    "EDG-004",
+    "SAN-016"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

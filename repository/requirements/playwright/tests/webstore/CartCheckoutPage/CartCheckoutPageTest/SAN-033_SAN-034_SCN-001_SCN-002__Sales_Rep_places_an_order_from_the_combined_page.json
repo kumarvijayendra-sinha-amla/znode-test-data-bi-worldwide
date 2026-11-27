@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-033 SAN-034 SCN-001 SCN-002: Sales Rep places an order from the combined page",
+  "scenario": {
+    "summary": "A created Sales Rep (Shop As) with an allotment, a saved address and an empty cart redeems a size on the PDP, completes the combined page and places the order on it; the confirmation shows the order number, the cart is empty, the order is in My Orders, Recent Orders and Admin Order History, and the remaining allotment is reduced by 1.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header; the Sales Rep landing page shows (SCN-002 step 1)",
+      "Open the PLP; check tiles show no prices (SCN-001 step 1, SCN-002 step 2)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; check the remaining allotment @allotment.quantityRemaining for size @product.variant1Attr1 (SCN-001 step 2, SCN-002 step 3)",
+      "Enter 1 for @product.variant1Attr1 and click Redeem Now; the Place Your Order page opens directly (SCN-001 step 3, SCN-002 step 4)",
+      "Check the sections and Place Order; the Order Summary lists @product.variant1Sku quantity 1 without price (SCN-001 step 4, SCN-002 steps 5-6)",
+      "Check Address and Contact shows the saved address (@address.address1) and select it (SCN-001 step 5, SCN-002 step 8)",
+      "Check Delivery: heading 'Delivery', default method and information, no cost (SCN-001 step 7, SCN-002 step 7; see P4)",
+      "Complete the Questionnaire (answers made up by the test; client: see evidence) (SAN-033 step 2, SCN-001 step 6, SCN-002 step 9)",
+      "Check the URL stayed on the one combined page during the flow (SCN-001 step 8)",
+      "Click Place Order; check the confirmation with the order number and note the number (SAN-033 steps 3-4, SCN-001 step 9, SCN-002 step 10)",
+      "Open the Header Cart; check 'Your cart is empty' with a PLP link (SCN-002 step 11)",
+      "Open Account > My Orders and the Account dashboard Recent Orders; find the order by its number (SAN-034, SCN-002 step 12)",
+      "Open the PDP again; check the remaining allotment for @product.variant1Attr1 (SCN-002 step 13)",
+      "End Impersonation; open the order in Web Admin Order History / order details (SAN-033 step 5)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user",
+      "order"
+    ],
+    "stateChanges": [
+      "The Sales Rep user, its allotment and its default address are created for the test; the allotment and address are deleted at teardown, the user is kept on qa at teardown (a user with an order cannot be deleted; key USER_STOREFRONT_WITH_ROLE_ORDERING, reported as kept)",
+      "An order placed by the test on qa (left on qa, not torn down; decision 2026-11-26); the allotment is reduced by 1",
+      "Cart line added by Redeem Now and consumed by the order"
+    ],
+    "assertions": [
+      "PLP tiles and the PDP show no prices; the PDP shows the remaining allotment per size",
+      "Redeem Now opens the combined page directly; no separate cart page or second checkout step at any point",
+      "The Order Summary lists the redeemed line without price; Address and Contact shows the saved address",
+      "Delivery shows 'Delivery' and the default method without cost (expected values: P4)",
+      "Place Order submits from the same page and shows a confirmation with an order number",
+      "After the order the Header Cart shows 'Your cart is empty' with a PLP link",
+      "The order is listed in My Orders and in Recent Orders with its order number and shipping address",
+      "The remaining allotment for the size is @allotment.quantityRemaining minus 1",
+      "Admin Order History lists the order; its details carry the default shipping method (P4) and the Questionnaire answers"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-033, SAN-034, SCN-001, SCN-002 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T14)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Orders may be placed on qa, PeopleSoft is ignored, placed orders are left on qa (no order key, no teardown beyond the user): user decisions 2026-11-26 (brief and analysis sections 6 and 8)",
+      "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
+      "Allotment created with quantity 2 so the reduced value (1) is still shown on the PDP",
+      "Questionnaire: SCN-002 step 9 'with a client' needs a client in the BIWW Clients custom table (Checkout 3): no key yet; whether Place Order requires a client is open (question to the user). SCN-002 step 1 'sign in as the Sales Rep' is reached through Shop As (user decision)",
+      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE_ORDERING",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 2
+      }
+    },
+    {
+      "key": "ADDRESS_OF_USER",
+      "alias": "address",
+      "params": {
+        "owner": "@user.userId",
+        "stateCode": "NJ",
+        "isDefaultShipping": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-033",
+    "SAN-034",
+    "SCN-001",
+    "SCN-002"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

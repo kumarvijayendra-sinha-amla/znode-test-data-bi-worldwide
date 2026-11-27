@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-024: Page heading reads exactly Place Your Order",
+  "scenario": {
+    "summary": "As a created Sales Rep (Shop As) with an item in the cart, the combined page heading reads exactly 'Place Your Order' (capital Y and O, no '!'). Known failure until BMP-500 is fixed: qa shows 'Place your order!'.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter 1 for size @product.variant1Attr1 and click Add to Cart",
+      "Open the Cart and Checkout page from the Header",
+      "Read the page heading and compare it exactly with 'Place Your Order'"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep user and its allotment are created for the test by their collections and deleted at teardown",
+      "Cart line added by Add to Cart"
+    ],
+    "assertions": [
+      "The page heading equals exactly 'Place Your Order' (not 'Place your order!')"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-024 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T6)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "User decision 2026-11-26 (analysis section 8, Q4): assert exactly 'Place Your Order'; the test fails until BMP-500 is fixed (known failure linked to BMP-500)",
+      "Precondition 'heading store attribute at its default value' is not checkable: the attribute does not exist yet (BMP-500); expected text from the FSD default"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-024"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

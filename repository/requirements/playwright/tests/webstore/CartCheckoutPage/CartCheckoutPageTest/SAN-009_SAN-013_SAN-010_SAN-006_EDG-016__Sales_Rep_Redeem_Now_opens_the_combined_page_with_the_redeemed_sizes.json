@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-009 SAN-013 SAN-010 SAN-006 EDG-016: Sales Rep Redeem Now opens the combined page with the redeemed sizes",
+  "scenario": {
+    "summary": "An Admin uses Shop As on a created Sales Rep with an empty cart, a default saved address and allotments for two sizes; Redeem Now on the PDP with two sizes opens the combined Place Your Order page with all four sections, Place Order and the redeemed sizes, which survive refresh, Back and Forward.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Check that the size grid shows the remaining allotment @allotmentFirst.quantityRemaining for size @product.variant1Attr1 and @allotmentSecond.quantityRemaining for @product.variant2Attr1 (precondition check)",
+      "Enter quantity 1 for size @product.variant1Attr1 and 2 for size @product.variant2Attr1 (SAN-006) and click Redeem Now",
+      "Check the sections Address and Contact, Questionnaire, Delivery and Order Summary and the Place Order button (SAN-009, SAN-013)",
+      "Check the Order Summary: @product.variant1Sku / @product.variant1Attr1 with quantity 1 and @product.variant2Sku / @product.variant2Attr1 with quantity 2, no prices",
+      "Check that Address and Contact shows the saved address (@address.address1, @address.city)",
+      "Check the Delivery section (see P4 note in evidence)",
+      "Open the page from the Header Cart and check the four sections and Place Order again (SAN-010)",
+      "Refresh, then browser Back (PDP opens), then browser Forward (EDG-016)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep user, its two allotments and its default address are created for the test by their collections and deleted at teardown",
+      "Cart lines added by Redeem Now (quantities 1 and 2)",
+      "A session for the tester's own Admin account and a Shop As impersonation"
+    ],
+    "assertions": [
+      "Redeem Now opens the combined Place Your Order page (no separate cart page)",
+      "Address and Contact, Questionnaire, Delivery and Order Summary sections and the Place Order button are shown, also when opened from the Header Cart",
+      "The Order Summary lists the two redeemed sizes with quantities 1 and 2 and no price",
+      "Address and Contact shows the saved address",
+      "Delivery shows the heading 'Delivery' and a shipping method without cost (method name: P4)",
+      "After refresh the page reloads with the same sections and lines; Back opens the PDP; Forward opens the page again; each size is one line with its quantity unchanged (not duplicated) and no prices"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-009, SAN-013, SAN-010, SAN-006, EDG-016 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T1)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
+      "Page heading text is asserted in SAN-024 only, so this test does not fail on BMP-500 (analysis 2b T1)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 2,
+        "quantityUsed": 2,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentFirst",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentSecond",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant2Sku",
+        "quantity": 2
+      }
+    },
+    {
+      "key": "ADDRESS_OF_USER",
+      "alias": "address",
+      "params": {
+        "owner": "@user.userId",
+        "stateCode": "NJ",
+        "isDefaultShipping": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-009",
+    "SAN-013",
+    "SAN-010",
+    "SAN-006",
+    "EDG-016"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

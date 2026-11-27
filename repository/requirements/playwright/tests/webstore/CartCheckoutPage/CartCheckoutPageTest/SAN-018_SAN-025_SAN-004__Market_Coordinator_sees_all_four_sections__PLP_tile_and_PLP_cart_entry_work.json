@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-018 SAN-025 SAN-004: Market Coordinator sees all four sections; PLP tile and PLP cart entry work",
+  "scenario": {
+    "summary": "An Admin uses Shop As on a created Market Coordinator with a saved address and an allotment; after Redeem Now the combined page shows Address and Contact, Questionnaire, Delivery and Order Summary and Place Order; a PLP tile opens the PDP and the PLP cart entry opens the combined page.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Market Coordinator by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter quantity 1 for size @product.variant1Attr1 and click Redeem Now (SAN-018)",
+      "Check Address and Contact, Questionnaire, Delivery (heading Delivery) and Order Summary (with @product.variant1Sku) and the Place Order button (SAN-018, SAN-025)",
+      "Click Cart in the Header; check the same sections (SAN-025 step 1)",
+      "Open the PLP and click the tile of @product.name; check its PDP opens (SAN-004)",
+      "Return to the PLP and use its cart entry; check the combined page opens with the cart line (SAN-004)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user"
+    ],
+    "stateChanges": [
+      "The Market Coordinator user, its allotment and its default address are created for the test by their collections and deleted at teardown",
+      "Cart line added by Redeem Now"
+    ],
+    "assertions": [
+      "The Questionnaire section is shown together with Address and Contact, Delivery and Order Summary and the Place Order button for the Market Coordinator",
+      "The Delivery section heading reads 'Delivery'",
+      "The Order Summary lists the redeemed line",
+      "A PLP tile opens the product's PDP",
+      "The PLP cart entry opens the combined page with the cart line"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-018, SAN-025, SAN-004 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T3)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "SAN-018 and SAN-025 name the Market Coordinator reached through Shop As in their test data; the named tester account is not used (created user, analysis section 2)"
+    ],
+    "confidence": "medium",
+    "needsReview": false
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "user",
+      "params": {
+        "role": "MarketCoordinator",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    },
+    {
+      "key": "ADDRESS_OF_USER",
+      "alias": "address",
+      "params": {
+        "owner": "@user.userId",
+        "stateCode": "NJ",
+        "isDefaultShipping": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-018",
+    "SAN-025",
+    "SAN-004"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SCN-003: Admin uses Shop As for a Market Coordinator without an address and places an order",
+  "scenario": {
+    "summary": "The tester's own Admin uses Shop As on a created Market Coordinator with an allotment and no saved address, redeems a size, sees the default shipping method without cost, adds an address, completes the Questionnaire and places the order; after End Impersonation the order is listed for the Market Coordinator in Admin Order History.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens (SCN-003 step 1)",
+      "In Web Admin open Users, find the created Market Coordinator by its user name (@user.userName) and choose Shop As; the storefront opens as that user with the impersonation header (SCN-003 step 2)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 1 for @product.variant1Attr1 and click Redeem Now (SCN-003 step 3)",
+      "Check Delivery: default method, no cost, no 'included in price' (SCN-003 step 4; see P4)",
+      "Add a new address in Address and Contact (created by the test, a valid US address that passes Loqate); check it is saved and selected (SCN-003 step 5)",
+      "Complete the Questionnaire (answers made up by the test) (SCN-003 step 6)",
+      "Click Place Order; check the confirmation with the order number and note it (SCN-003 step 7)",
+      "Click End Impersonation; check the Admin returns to the user's details (SCN-003 step 8)",
+      "Open Admin Order History; find the order by its number for @user.userName (SCN-003 step 9)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user",
+      "order"
+    ],
+    "stateChanges": [
+      "The Market Coordinator user and its allotment are created for the test; the allotment is deleted at teardown, the user is kept on qa at teardown (a user with an order cannot be deleted; key USER_STOREFRONT_WITH_ROLE_ORDERING, reported as kept)",
+      "An address typed by the test (stays with the user)",
+      "An order placed by the test on qa (left on qa, not torn down; decision 2026-11-26)"
+    ],
+    "assertions": [
+      "Shop As opens the storefront with the impersonation header",
+      "Delivery shows the default shipping method without cost or 'included in price' text (expected values: P4)",
+      "The new address is saved and selected",
+      "The Questionnaire accepts the answers",
+      "Place Order shows a confirmation with an order number",
+      "End Impersonation returns the Admin to the user's details",
+      "Admin Order History lists the order for the Market Coordinator"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SCN-003 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T15)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Orders may be placed on qa, PeopleSoft is ignored, placed orders are left on qa (no order key, no teardown beyond the user): user decisions 2026-11-26 (brief and analysis sections 6 and 8)",
+      "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
+      "Precondition 'no saved address': the created user has none (its create payload sends no address)",
+      "Questionnaire client: see the SAN-033 test (question to the user)",
+      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)",
+      "SCN-003 names a tester account as the Market Coordinator; not used (created user)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE_ORDERING",
+      "alias": "user",
+      "params": {
+        "role": "MarketCoordinator",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotment",
+      "params": {
+        "owner": "@user.userId",
+        "ownerEmail": "@user.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "SCN-003"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

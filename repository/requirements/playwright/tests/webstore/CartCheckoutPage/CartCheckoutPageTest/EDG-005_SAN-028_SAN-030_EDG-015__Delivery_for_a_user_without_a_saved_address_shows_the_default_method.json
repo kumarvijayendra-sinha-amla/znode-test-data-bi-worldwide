@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > EDG-005 SAN-028 SAN-030 EDG-015: Delivery for a user without a saved address shows the default method",
+  "scenario": {
+    "summary": "For a created Sales Rep and a created Market Coordinator without a saved address, both reached through Shop As, the Delivery section shows the store's default shipping method and never 'Delivery method not selected', 'included in price' or a cost, also after the Market Coordinator adds an address (BMP-501 retest).",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@salesRep.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown",
+      "Enter 1 for size @product.variant1Attr1 and click Redeem Now",
+      "Check Address and Contact shows no saved address (precondition check)",
+      "Read Delivery: a shipping method is shown; no 'Delivery method not selected', no 'included in price', no cost (EDG-005 step 4)",
+      "End Impersonation",
+      "In Web Admin open Users, find the created Market Coordinator by its user name (@coordinator.userName) and choose Shop As; the storefront opens as that user with the impersonation header (SAN-028 step 1, SAN-030 step 1, EDG-015 step 1)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 1 for size @product.variant1Attr1 and click Redeem Now",
+      "Check Address and Contact shows no saved address (precondition check)",
+      "Read Delivery: heading 'Delivery', the default method and its information; no 'Delivery method not selected', no 'Standard delivery is included in price' or 'included in price', no cost (SAN-028 step 3, SAN-030, EDG-015 steps 2-3)",
+      "Add an address in Address and Contact (created by the test, a valid US address that passes Loqate) and read Delivery again (SAN-028 steps 4-5)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user_address",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep and Market Coordinator users and their allotments are created for the test by their collections and deleted at teardown",
+      "Cart lines added by Redeem Now",
+      "An address typed by the test for the Market Coordinator (removed with the user)"
+    ],
+    "assertions": [
+      "For both users without a saved address Delivery shows the store's default shipping method and its information (expected values: P4)",
+      "'Delivery method not selected' is not shown",
+      "No 'included in price' wording (incl. 'Standard delivery is included in price') and no cost is shown",
+      "The Delivery heading reads 'Delivery' before and after the Market Coordinator adds an address, and the method stays the default"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases EDG-005, SAN-028, SAN-030, EDG-015 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T8)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
+      "Precondition 'no saved address': USER_STOREFRONT_WITH_ROLE's create payload (BIWW CreateSingleCustomerWithAdditionalField) sends no address, so a created user has none; the test checks it in Address and Contact. ADDRESS_DEFAULT_IDS_OF_USER is not declared: a need resolves only when a row exists, it cannot express 'no row'",
+      "BMP-501 (Ready for Testing): the test fails if the fix is not on qa",
+      "EDG-015 step 4 (store without default shipping method) is a store configuration case, out of scope (analysis section 8, Q8): partially automated; the cases name a tester account as the Market Coordinator, not used (created user)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "salesRep",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "coordinator",
+      "params": {
+        "role": "MarketCoordinator",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 1,
+        "quantityUsed": 1,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentRep",
+      "params": {
+        "owner": "@salesRep.userId",
+        "ownerEmail": "@salesRep.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentCoordinator",
+      "params": {
+        "owner": "@coordinator.userId",
+        "ownerEmail": "@coordinator.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "EDG-005",
+    "SAN-028",
+    "SAN-030",
+    "EDG-015"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}

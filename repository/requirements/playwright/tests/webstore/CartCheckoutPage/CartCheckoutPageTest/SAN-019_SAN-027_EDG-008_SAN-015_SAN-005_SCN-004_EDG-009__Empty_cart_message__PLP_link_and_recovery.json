@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-019 SAN-027 EDG-008 SAN-015 SAN-005 SCN-004 EDG-009: Empty cart message, PLP link and recovery",
+  "scenario": {
+    "summary": "A created Sales Rep (Shop As) with an empty cart sees 'Your cart is empty' with a PLP link and no sections; after adding two lines, editing a quantity and removing both lines the empty state returns; re-adding from the PLP shows the page again. A created Market Coordinator sees the empty state after removing the last line, before and after refresh.",
+    "steps": [
+      "Sign in on the storefront (config webstoreURL, /login) with the tester's own Admin account (config adminUsername / adminPassword, from env ADMIN_USERNAME / ADMIN_PASSWORD); the Web Admin Dashboard (/admin) opens",
+      "In Web Admin open Users, find the created Sales Rep by its user name (@salesRep.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Click Cart in the Header with the empty cart; read the message; check no checkout sections and no Place Order (SAN-019, SAN-005 steps 1-2)",
+      "Click the PLP link in the message; check the PLP opens with products (SAN-019 step 4, SAN-005 step 3)",
+      "Apply a Category filter on the PLP and check the list is filtered (SAN-005 step 4; see P6)",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 1 for @product.variant1Attr1 and 1 for @product.variant2Attr1 and click Add to Cart",
+      "Open the Header Cart; change the quantity of @product.variant1Sku from 1 to 2 (no price shown); remove @product.variant2Sku (SAN-015 steps 1-3)",
+      "Remove the remaining line (SAN-015 step 4, SAN-027, EDG-008 step 2); check the empty state (EDG-008 step 3)",
+      "Click the PLP link; check the PLP opens (EDG-008 step 4)",
+      "Click Cart in the Header with the cart still empty; check the empty state with the PLP link (EDG-008 step 5)",
+      "From the PLP open @product.name and click Add to Cart with 1 for @product.variant1Attr1; check the Header cart count updates (SCN-004 steps 3-4)",
+      "Click the Header Cart; check all sections, the new line and no prices (SCN-004 step 5)",
+      "End Impersonation; In Web Admin open Users, find the created Market Coordinator by its user name (@coordinator.userName) and choose Shop As; the storefront opens as that user with the impersonation header",
+      "Open the PDP /product/{@product.parentProductId}; the size grid is shown; enter 1 for @product.variant1Attr1 and click Redeem Now; open the page from the Header Cart (EDG-009 step 1)",
+      "Remove the only line; check the page without refreshing, then refresh and check again (EDG-009 steps 2-4)"
+    ],
+    "entitiesTouched": [
+      "product",
+      "allocation",
+      "user"
+    ],
+    "stateChanges": [
+      "The Sales Rep and Market Coordinator users and their allotments are created for the test by their collections and deleted at teardown",
+      "Cart lines added, edited and removed by the test",
+      "The Sales Rep ends with one line in the cart (removed with the user)"
+    ],
+    "assertions": [
+      "With an empty cart the page shows 'Your cart is empty' with a link to the PLP (link text open, analysis Q12)",
+      "With an empty cart Address and Contact, Questionnaire, Delivery, Order Summary and Place Order are not shown (an order cannot be placed)",
+      "The link opens the PLP with the user's products; the Category filter still works",
+      "Changing a quantity from 1 to 2 updates it without showing a price; a removed line disappears",
+      "Removing the last line switches the page to the empty state with the PLP link",
+      "Re-adding a product from the PLP and opening the Header Cart shows all sections with the new line and no prices",
+      "For the Market Coordinator the empty state (message, PLP link, no Place Order) shows right after removing the last line and again after refresh"
+    ],
+    "evidence": [
+      "Jira BMP-94 (story, FSD section 'Shopping Cart and Checkout', work/stories/BMP-94/input/) and manual cases SAN-019, SAN-027, EDG-008, SAN-015, SAN-005, SCN-004, EDG-009 (work/stories/BMP-94/input/BMP-94-testcases.md)",
+      "work/stories/BMP-94/analysis.md section 6: every role test signs in with the tester's own Admin account and reaches the created user through Shop As (user decision 2026-11-26); created users never sign in with a password, so 'signed in as <role>' in the cases is reached through Shop As",
+      "work/stories/BMP-94/analysis.md section 10 (T10)",
+      "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
+      "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
+      "Category filter: the category name to filter by waits for an output categoryName on PRODUCT_CONFIGURABLE_SIZE_GRID (P6, not built)",
+      "SAN-015 'two different items' are two lines (two sizes of the product); SCN-004 'any allotted product' is the same allotted product"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "salesRep",
+      "params": {
+        "role": "SalesRep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_STOREFRONT_WITH_ROLE",
+      "alias": "coordinator",
+      "params": {
+        "role": "MarketCoordinator",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_CONFIGURABLE_SIZE_GRID",
+      "alias": "product",
+      "params": {
+        "store": "BNJM",
+        "minVariants": 2,
+        "quantityUsed": 2,
+        "minAddOns": 0,
+        "minPersonalizableAttributes": 0,
+        "variantAttributes": "Size"
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentRepFirst",
+      "params": {
+        "owner": "@salesRep.userId",
+        "ownerEmail": "@salesRep.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 2
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentRepSecond",
+      "params": {
+        "owner": "@salesRep.userId",
+        "ownerEmail": "@salesRep.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant2Sku",
+        "quantity": 1
+      }
+    },
+    {
+      "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+      "alias": "allotmentCoordinator",
+      "params": {
+        "owner": "@coordinator.userId",
+        "ownerEmail": "@coordinator.email",
+        "parentSku": "@product.parentProductSku",
+        "childSku": "@product.variant1Sku",
+        "quantity": 1
+      }
+    }
+  ],
+  "linkedCases": [
+    "SAN-019",
+    "SAN-027",
+    "EDG-008",
+    "SAN-015",
+    "SAN-005",
+    "SCN-004",
+    "EDG-009"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "pending_approval"
+}
