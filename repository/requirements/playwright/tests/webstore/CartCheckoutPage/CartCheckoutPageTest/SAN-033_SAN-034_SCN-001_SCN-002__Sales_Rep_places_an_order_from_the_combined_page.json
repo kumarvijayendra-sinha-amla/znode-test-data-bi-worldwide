@@ -54,7 +54,11 @@
       "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
       "Allotment created with quantity 2 so the reduced value (1) is still shown on the PDP",
       "Questionnaire: SCN-002 step 9 'with a client' needs a client in the BIWW Clients custom table (Checkout 3): no key yet; whether Place Order requires a client is open (question to the user). SCN-002 step 1 'sign in as the Sales Rep' is reached through Shop As (user decision)",
-      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)"
+      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the exact name of the store default shipping method is not compared; P4 (SHIPPING_DEFAULT_OF_STORE) is open because the default flag is not in ZnodePortalShipping or a mapped table (analysis section 11). The test checks that Delivery shows one method without cost - partially automated",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the shipping address shown in the order lists, the Admin order details and the client of the order are not checked - partially automated",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",
     "needsReview": true
@@ -107,7 +111,17 @@
     "SCN-001",
     "SCN-002"
   ],
-  "sources": [],
+  "sources": [
+    {
+      "value": "0",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:849",
+      "kind": "literal",
+      "keyPath": "verifyCartCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    }
+  ],
   "strategy": "migrate",
   "status": "pending_approval"
 }

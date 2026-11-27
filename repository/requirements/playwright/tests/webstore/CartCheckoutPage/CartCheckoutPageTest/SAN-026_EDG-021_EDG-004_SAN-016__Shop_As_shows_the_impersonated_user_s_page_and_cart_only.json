@@ -113,7 +113,35 @@
     "EDG-004",
     "SAN-016"
   ],
-  "sources": [],
+  "sources": [
+    {
+      "value": "/checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:804",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "/checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:827",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "the Sales Rep item or address on the Admin page",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:830",
+      "kind": "literal",
+      "keyPath": "verifyShowsNone",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    }
+  ],
   "strategy": "migrate",
   "status": "pending_approval"
 }

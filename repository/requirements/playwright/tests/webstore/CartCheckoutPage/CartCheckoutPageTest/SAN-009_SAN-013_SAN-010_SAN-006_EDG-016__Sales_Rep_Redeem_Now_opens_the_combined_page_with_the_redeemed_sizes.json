@@ -43,7 +43,9 @@
       "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
       "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
       "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
-      "Page heading text is asserted in SAN-024 only, so this test does not fail on BMP-500 (analysis 2b T1)"
+      "Page heading text is asserted in SAN-024 only, so this test does not fail on BMP-500 (analysis 2b T1)",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",
     "needsReview": true
@@ -108,7 +110,17 @@
     "SAN-006",
     "EDG-016"
   ],
-  "sources": [],
+  "sources": [
+    {
+      "value": "0",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:291",
+      "kind": "literal",
+      "keyPath": "verifyCartCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    }
+  ],
   "strategy": "migrate",
   "status": "pending_approval"
 }

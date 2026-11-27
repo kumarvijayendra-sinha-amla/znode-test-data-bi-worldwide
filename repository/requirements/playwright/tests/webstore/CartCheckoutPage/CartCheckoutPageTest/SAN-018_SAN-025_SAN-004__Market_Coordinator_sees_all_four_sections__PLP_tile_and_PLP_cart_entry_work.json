@@ -37,7 +37,9 @@
       "work/stories/BMP-94/analysis.md section 10 (T3)",
       "PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule: BNJM variants are priced 0.00; user decision 2026-11-27) replaces the hardcoded /product/798 (BM05) and size Small of the cases; on qa product 798 (SKU BM05) is configured by attribute Size (ZnodePimConfigureProductAttribute -> PimAttributeId 129, AttributeCode Size), so variantAttributes = Size",
       "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
-      "SAN-018 and SAN-025 name the Market Coordinator reached through Shop As in their test data; the named tester account is not used (created user, analysis section 2)"
+      "SAN-018 and SAN-025 name the Market Coordinator reached through Shop As in their test data; the named tester account is not used (created user, analysis section 2)",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",
     "needsReview": false

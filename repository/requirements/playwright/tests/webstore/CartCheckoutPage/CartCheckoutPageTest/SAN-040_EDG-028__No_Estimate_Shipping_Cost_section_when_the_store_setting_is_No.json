@@ -33,7 +33,9 @@
       "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
       "Precondition 'Show Estimate Shipping Cost Section = No, published' waits for a read-only key of the store attribute ShowEstimateShippingCost (P5, not built; qa value is false today, analysis section 9)",
       "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
-      "Partially automated: the Admin steps (confirm the setting in Additional Store Attributes, save and publish; SAN-040 steps 1-2, EDG-028 step 1) are a store change and are not done (analysis 1d, decision Q8)"
+      "Partially automated: the Admin steps (confirm the setting in Additional Store Attributes, save and publish; SAN-040 steps 1-2, EDG-028 step 1) are a store change and are not done (analysis 1d, decision Q8)",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the exact name of the store default shipping method is not compared; P4 (SHIPPING_DEFAULT_OF_STORE) is open because the default flag is not in ZnodePortalShipping or a mapped table (analysis section 11). The test checks that Delivery shows one method without cost - partially automated",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the P5 precondition (Show Estimate Shipping Cost Section = No, published) is not checked through a declared need, and the Admin confirm-and-publish steps of SAN-040 / EDG-028 are not done - partially automated"
     ],
     "confidence": "medium",
     "needsReview": true

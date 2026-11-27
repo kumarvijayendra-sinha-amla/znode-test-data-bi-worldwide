@@ -45,7 +45,9 @@
       "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
       "SAN-021 precondition 'BNJM store published' is checked through the product key (publish state PRODUCTION and a published product entity on the store)",
       "SAN-001 step 5 'log out and log back in' becomes Logout (which ends Shop As) and Shop As on the same created user again, since created users never sign in with a password. Decision 2026-11-27 (analysis section 11): Logout during Shop As ends the impersonation, not the Admin's session; after Logout the tester is back in the own Admin session",
-      "Heading text is not compared to a fixed value here (SAN-024 only, BMP-500)"
+      "Heading text is not compared to a fixed value here (SAN-024 only, BMP-500)",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",
     "needsReview": true
@@ -93,7 +95,80 @@
     "SAN-007",
     "SAN-001"
   ],
-  "sources": [],
+  "sources": [
+    {
+      "value": "the native cart step",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:363",
+      "kind": "literal",
+      "keyPath": "verifyShowsNone",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "PDP Redeem Now",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:377",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "the PLP cart entry",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:383",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "/cart",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:386",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "direct /cart",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:387",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "the native cart step",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:388",
+      "kind": "literal",
+      "keyPath": "verifyShowsNone",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "/checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:389",
+      "kind": "literal",
+      "keyPath": "openDirect",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "direct /checkout",
+      "location": "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts:390",
+      "kind": "literal",
+      "keyPath": "verifySameAs",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    }
+  ],
   "strategy": "migrate",
   "status": "pending_approval"
 }

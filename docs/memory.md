@@ -78,6 +78,12 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   held. T14/T15 use USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable: a user with an order cannot be deleted).
   Products: PRODUCT_CONFIGURABLE_SIZE_GRID (existing BNJM size-grid products, no price rule; VERIFIED with sample
   params). Loqate ignored (not developed). Readiness: 30 PENDING_APPROVAL, 28 GAP (dependency on the created user).
+- Scripts (2026-11-27): fork branch `dev_BMP94`, `tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts` (15
+  tests) + page code (PlaceYourOrderPage, SizeGridPage, BnjmHeaderPage, WebAdminUsersPage). Locators read on qa as the
+  own Admin; 21 TODO(BMP-94) spots need the first Shop As run. Not run yet (keys pending approval). Sources filled
+  (18 values: 5 expected-output, 13 config); check-hardcoded lists 6 tests only because nothing is approved.
+  qa findings: Header Cart opens a drawer (Checkout link opens the page; defect vs SAN-011 undecided), lowercase
+  section headings, a single size is removed by quantity 0.
 - Open: `ADMIN_USERNAME` missing in .env (verify
   USER_ID_BY_USERNAME); where BNJM's default shipping method is stored (P4); Loqate check of the two addresses;
   `cso.*.*email*` for config/column-mask.yaml; whether the BIWW create ties the role to portal 10; requirements not

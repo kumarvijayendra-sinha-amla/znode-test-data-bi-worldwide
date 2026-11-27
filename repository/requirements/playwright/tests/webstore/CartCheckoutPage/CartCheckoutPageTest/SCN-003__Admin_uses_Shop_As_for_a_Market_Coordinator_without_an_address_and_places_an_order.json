@@ -47,7 +47,9 @@
       "Precondition 'no saved address': the created user has none (its create payload sends no address)",
       "Questionnaire client: see the SAN-033 test (question to the user)",
       "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)",
-      "SCN-003 names a tester account as the Market Coordinator; not used (created user)"
+      "SCN-003 names a tester account as the Market Coordinator; not used (created user)",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the exact name of the store default shipping method is not compared; P4 (SHIPPING_DEFAULT_OF_STORE) is open because the default flag is not in ZnodePortalShipping or a mapped table (analysis section 11). The test checks that Delivery shows one method without cost - partially automated",
+      "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the owner of the placed order (that it belongs to the Market Coordinator, not the Admin) is not checked - partially automated"
     ],
     "confidence": "medium",
     "needsReview": true
