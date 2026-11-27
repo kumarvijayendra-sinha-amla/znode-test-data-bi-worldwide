@@ -1,28 +1,8 @@
-# Phase 6 rollout: tests of a module being migrated that fail for reasons outside the test data agents (Part B step 5:
-# "failures that also happen without the agents go into config/known-failures.yaml with evidence"). The module run
-# reports them and fails only on other failures; an entry is removable once the test passes again. Every entry needs
-# evidence that the failure is pre-existing. (The Phase 4 pilots keep config/pilot-known-failures.yaml.)
-# 2026-10-28: the two estimate-shipping tests were listed here after each failed once on atstage when run alone (no
-# shipping option for the US zip), then removed the same day: both PASSED in the clean origin/dev baseline of the 23
-# stage-1 specs (2 workers). They are intermittent, not pre-existing failures (see docs/memory.md).
+# Tests that fail for reasons outside the test data agents (app defects, environment setup). A run reports them and
+# fails only on other failures. Every entry needs evidence; remove it once the test passes again.
 knownFailures:
-  - testId: "testim-migrated/tests/webstore/my-account/order-template-validate-functionality.spec.ts > Webstore - My Account - Order Template > validate order template functionality"
-    reason: "Order template SKU validation differs from the recording on atstage: row 0 (configurable parent SKU) shows no validation error where 'The entered SKU is invalid.' was recorded; row 2 (out-of-stock product) shows 'This product is out of stock.' where 'The entered SKU is invalid.' was recorded; then a page wait times out"
-    evidence: "Baseline 2026-11-02: run without the test data agents (no TDA_HOME, the spec's own JSON data) fails the same three checks; with the agents it fails identically in normal mode (the spec's own SKUs, z-100000 preferred) and in fallback mode."
-    decidedBy: "Akshay Hedaoo"
-    decidedAt: "2026-11-02"
-  - testId: "testim-migrated/tests/webstore/my-account/dashboard-validate-functionality.spec.ts > Webstore - My Account - Dashboard > validate dashboard functionality"
-    reason: "The dashboard's Return History card is not on the page (returnHistoryCardTitle 'Return History' not found) and a dashboard link click times out on atstage"
-    evidence: "Baseline 2026-11-02: the committed original spec run without the test data agents (no TDA_HOME, its own JSON data) fails identically; with the agents it fails the same way in normal and fallback mode."
-    decidedBy: "Akshay Hedaoo"
-    decidedAt: "2026-11-02"
-  - testId: "testim-migrated/tests/webstore/order/verify-create-return-availability.spec.ts > Webstore - Order > the Create Return control is present on a tracked order @ZPD-TC-9692 @ZPD-TC-9695"
-    reason: "Tracking the shared account's most recent order (Order History row 0) shows no Create Return button on atstage; the spec's own header says Create Return is disabled for every order there. Same as the parked my-account order-history step 6 (linkCreateReturn absent on recently created orders). A return-eligible order (proposed key ORDER_OF_USER_RETURNABLE) would be needed."
-    evidence: "Baseline 2026-11-04: the original spec run without migration, signed in (order/ added to AUTH_SPECS), fails on getByRole('button', { name: /create return/i }) not visible; the quote request spec in the same run passes."
-    decidedBy: "Akshay Hedaoo"
-    decidedAt: "2026-11-04"
-  - testId: "testClasses.webstore.shoppingCart.ShippingCostTest#shippingCostVerifyPaidShippingCost"
-    reason: "After selecting a paid shipping option, the cart's order total does not equal sub-total + shipping + handling as the test computes it (e.g. page $29.00 vs expected $39.00, $783.00 vs $46.00): a page/framework calculation mismatch, not test data. The test reads no data value."
-    evidence: "Baseline 2026-11-04: ShippingCostTest run alone from origin/dev (9633704f) without the test data agents, original sheet data, atstage: fails the same assertion in both attempts. With the agents 2026-11-05: fails the same way in normal mode (run tda-selenium-1793856369691) and fallback mode (tda-selenium-1793857670661)."
-    decidedBy: "Akshay Hedaoo"
-    decidedAt: "2026-11-05"
+  - testId: "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts > BMP-TC-74 - Verify sorting by Created Date ascending shows the oldest users first and descending the newest first"
+    reason: "App defect on qa: the Users tab sorts Created Date by day only, and users created on the same day are always listed newest first, in ascending order too. The test's users are created seconds apart in one run (same day), so ascending and descending return the same list. Ties in Last Name and Email behave the same way. Bug to be logged in Jira (BMP)."
+    evidence: "2026-11-27, qa (webstore-bnjm-dv), read-only GET /api/admin/users: with search=TDA (81 users, all created 2026-11-27) sortField=createdDate sortOrder=asc and desc return the identical order 579, 578, 577 ...; without a search, asc lists 53 (ZnodeUser.CreatedDate 2026-11-10), 109 (2026-11-16), then 290 (2026-11-18 09:48) before 289 (2026-11-18 09:27): days ascending, times within a day descending. With search=example.test, lastName and email asc equal desc too."
+    decidedBy: "Kumar Vijayendra Sinha"
+    decidedAt: "2026-11-27"

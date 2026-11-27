@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "key": "MARKET_AVAILABLE",
+  "entity": "market",
+  "type": "available",
+  "constraints": {
+    "marketName": "!= {excludeMarket}",
+    "marketUserCount": ">= 1"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "A market from the Market custom table (cso.TblCustom_Market), listed in the BIWW Users tab Market filter, that already has at least one user on the store; optionally different from another alias's market. Not MARKET_WITHOUT_USERS. Story BMP-38.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code of the storefront under test (cso.TblCustom_UserManagement.StoreCode, e.g. the BIWW store)"
+    },
+    "excludeMarket": {
+      "type": "string",
+      "optional": true,
+      "description": "Market name the result must differ from (link to another alias's marketName for a second market). Left out: any"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

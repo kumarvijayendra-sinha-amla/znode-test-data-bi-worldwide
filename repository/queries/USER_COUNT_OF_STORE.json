@@ -1,0 +1,18 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_COUNT_OF_STORE",
+  "sql" : "SELECT TOP 1 COUNT(DISTINCT cu.Id) AS userCount, CONCAT(p.StoreCode, @separator, MAX(CASE WHEN (@role IS NULL OR cu.Role <> @role) THEN NULL ELSE cu.Role END), @separator, MAX(CASE WHEN (@market IS NULL OR cu.Market <> @market) THEN NULL ELSE cu.Market END)) AS countScope FROM cso.TblCustom_UserManagement cu INNER JOIN dbo.ZnodePortal p ON p.StoreCode = cu.StoreCode INNER JOIN dbo.AspNetZnodeUser azu ON azu.UserName = cu.UserName AND azu.PortalId = p.PortalId INNER JOIN dbo.AspNetUsers au ON au.UserName = azu.AspNetZnodeUserId INNER JOIN dbo.ZnodeUser zu ON zu.AspNetUserId = au.Id WHERE p.StoreCode = @store AND (@role IS NULL OR cu.Role = @role) AND (@market IS NULL OR cu.Market = @market) AND (@isActive IS NULL OR (@isActive = @activeFlag AND ((au.LockoutEnd IS NULL OR au.LockoutEnd <= @now) AND NOT EXISTS (SELECT us.UserId FROM dbo.ZnodeUserStatus us WHERE us.UserId = zu.UserId AND (us.PortalId IS NULL OR us.PortalId = p.PortalId) AND us.LockoutEnd > @now))) OR (@isActive <> @activeFlag AND (au.LockoutEnd > @now OR EXISTS (SELECT us.UserId FROM dbo.ZnodeUserStatus us WHERE us.UserId = zu.UserId AND (us.PortalId IS NULL OR us.PortalId = p.PortalId) AND us.LockoutEnd > @now)))) GROUP BY p.StoreCode HAVING (@minUsers IS NULL OR COUNT(DISTINCT cu.Id) >= @minUsers) ORDER BY p.StoreCode",
+  "params" : [ "store", "role", "market", "isActive", "minUsers", "separator", "now", "activeFlag" ],
+  "constants" : {
+    "separator" : "|",
+    "activeFlag" : "true"
+  },
+  "outputs" : [ "userCount", "countScope" ],
+  "identity" : "countScope",
+  "schemaFingerprint" : "sha256:a4eb8286089d442eb853e5228a3225d39becab4fe88514d2dca85b1914bdf70e",
+  "vocabularyFingerprint" : "sha256:e827e3015a77a34bef9941455425fd079a96c2978c31a6364d416055943f83c5",
+  "status" : "pending_approval",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-27T05:35:11Z",
+  "verifiedHash" : "sha256:f32e78e372ed6c0940366fbb36d496cc603686f3f761fb55c108b44d18d2b01a"
+}

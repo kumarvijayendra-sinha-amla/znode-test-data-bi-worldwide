@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_STOREFRONT_WITH_ROLE",
+  "entity": "user",
+  "type": "storefront",
+  "constraints": {
+    "userType": "registered",
+    "role": "{role}",
+    "isActive": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "consumable",
+  "description": "Active storefront user of the given store with the given BIWW role, created as in Web Admin > Users > Add New (no password; tests reach it through an Admin's Shop As); created per test and deleted at teardown. Story BMP-94.",
+  "declaredParams": {
+    "role": {
+      "type": "string",
+      "description": "Stored role name (dbo.AspNetRoles.Name, Commerce Portal): SalesRep, MarketCoordinator, Web Admin or Super Admin (Add New labels: Sales Representative, Market Coordinator, Admin, Super Admin)"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code the user belongs to (ZnodePortal.StoreCode), sent as storeCode of the BIWW create"
+    }
+  },
+  "status": "pending_approval"
+}

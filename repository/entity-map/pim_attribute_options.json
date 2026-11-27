@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "entity": "pim_attribute_options",
+  "tables": [
+    "dbo.ZnodePimAttribute",
+    "dbo.ZnodePimAttributeLocale",
+    "dbo.ZnodeAttributeType",
+    "dbo.ZnodePimAttributeDefaultValue",
+    "dbo.ZnodePimAttributeDefaultValueLocale"
+  ],
+  "joins": [
+    { "from": "dbo.ZnodePimAttribute.PimAttributeId", "to": "dbo.ZnodePimAttributeLocale.PimAttributeId", "kind": "left" },
+    { "from": "dbo.ZnodePimAttribute.AttributeTypeId", "to": "dbo.ZnodeAttributeType.AttributeTypeId", "kind": "left" },
+    { "from": "dbo.ZnodePimAttribute.PimAttributeId", "to": "dbo.ZnodePimAttributeDefaultValue.PimAttributeId", "kind": "inner" },
+    { "from": "dbo.ZnodePimAttributeDefaultValue.PimAttributeDefaultValueId", "to": "dbo.ZnodePimAttributeDefaultValueLocale.PimAttributeDefaultValueId", "kind": "left" }
+  ],
+  "properties": {
+    "attributeCode": "dbo.ZnodePimAttribute.AttributeCode",
+    "attributeName": "dbo.ZnodePimAttributeLocale.AttributeName",
+    "attributeType": "dbo.ZnodeAttributeType.AttributeTypeName",
+    "isCategory": "dbo.ZnodePimAttribute.IsCategory",
+    "isHidden": "dbo.ZnodePimAttribute.IsHidden",
+    "optionId": "dbo.ZnodePimAttributeDefaultValue.PimAttributeDefaultValueId",
+    "optionCode": "dbo.ZnodePimAttributeDefaultValue.AttributeDefaultValueCode",
+    "optionValue": "dbo.ZnodePimAttributeDefaultValueLocale.AttributeDefaultValue",
+    "optionDisplayOrder": "dbo.ZnodePimAttributeDefaultValue.DisplayOrder",
+    "optionIsDefault": "dbo.ZnodePimAttributeDefaultValue.IsDefault",
+    "localeId": "dbo.ZnodePimAttributeDefaultValueLocale.LocaleId",
+    "optionCount": "COUNT(DISTINCT dbo.ZnodePimAttributeDefaultValue.PimAttributeDefaultValueId)"
+  },
+  "maskedColumns": [],
+  "schemaFingerprint": "sha256:f9d3446758407f84e4c5d99fe4dcc32be1852d7941a8d04d6d8871d509bdefa1",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

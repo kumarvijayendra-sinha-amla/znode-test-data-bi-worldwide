@@ -1,0 +1,19 @@
+{
+  "schemaVersion" : 1,
+  "key" : "ADMIN_CATEGORY_AVAILABLE",
+  "sql" : "SELECT TOP 10 dv.AttributeDefaultValueCode AS optionCode, dvl.AttributeDefaultValue AS optionValue, dv.PimAttributeDefaultValueId AS optionId FROM dbo.ZnodePimAttribute a INNER JOIN dbo.ZnodePimAttributeDefaultValue dv ON dv.PimAttributeId = a.PimAttributeId INNER JOIN dbo.ZnodePimAttributeDefaultValueLocale dvl ON dvl.PimAttributeDefaultValueId = dv.PimAttributeDefaultValueId WHERE a.AttributeCode = @attributeCode AND dvl.LocaleId = @localeId ORDER BY dv.PimAttributeDefaultValueId",
+  "params" : [ "attributeCode", "localeId" ],
+  "constants" : {
+    "localeId" : "1"
+  },
+  "outputs" : [ "optionCode", "optionValue", "optionId" ],
+  "identity" : "optionCode",
+  "schemaFingerprint" : "sha256:42f7ab508b516c8e84a6c02f0aa2bc9ea2eac4c1a4e7f41802368eb768815976",
+  "vocabularyFingerprint" : "sha256:e951af3a901225f74b58d83b8dada0a730432a0ad609c2c75255cd304f1d3491",
+  "status" : "approved",
+  "approvedBy" : "Kumar Vijayendra Sinha",
+  "approvedAt" : "2026-11-26T10:19:50Z",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-26T10:17:58Z",
+  "verifiedHash" : "sha256:06a83c3fbd0a2c90a4db7c06905c60c27061d361eb845e4a4d731e86b8fbd5df"
+}

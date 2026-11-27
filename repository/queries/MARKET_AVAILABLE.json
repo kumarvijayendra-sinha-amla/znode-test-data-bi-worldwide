@@ -1,0 +1,19 @@
+{
+  "schemaVersion" : 1,
+  "key" : "MARKET_AVAILABLE",
+  "sql" : "SELECT TOP 10 m.Market AS marketName, m.Id AS marketId FROM cso.TblCustom_Market m INNER JOIN cso.TblCustom_UserManagement u ON u.Market = m.Market WHERE u.StoreCode = @store AND (@excludeMarket IS NULL OR m.Market <> @excludeMarket) AND (@preferred IS NULL OR m.Market = @preferred) GROUP BY m.Id, m.Market HAVING COUNT(DISTINCT u.Id) >= @minUsers ORDER BY m.Id",
+  "params" : [ "store", "excludeMarket", "preferred", "minUsers" ],
+  "constants" : {
+    "minUsers" : "1"
+  },
+  "outputs" : [ "marketName", "marketId" ],
+  "identity" : "marketName",
+  "schemaFingerprint" : "sha256:895f015b9c8eafb472ce772170f86ac3b7002ec643f21a70bcb0c98f3623fac6",
+  "vocabularyFingerprint" : "sha256:5572dce5df3f0b0f52e13f2dbf30a5d62942a5390e99c90591177dff20130100",
+  "status" : "approved",
+  "approvedBy" : "Kumar Vijayendra Sinha",
+  "approvedAt" : "2026-11-26T10:19:50Z",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-26T10:17:41Z",
+  "verifiedHash" : "sha256:c90bceab7a85efc23ed781c66150edf428e3d5b41492aea27555d9b3fa1a46f2"
+}

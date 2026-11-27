@@ -6,6 +6,15 @@ apiDocs: apidocs.znode.com
 
 # collection-builder: which spec and operations to use.
 apiChoices: |
+  BI Worldwide (user decision 2026-11-26): prefer a V2 spec (specs/Znode CP API V2.json, specs/Znode Engine API V2 V2.json);
+  only when V2 has no operation that creates and deletes the record, use V1 (specs/znode-web-v1-api.json, then the
+  BIWW-specific specs/Znode Custom API V1.json and specs/Znode Custom Table API V1.json).
+  Observed on qa 2026-11-26 (corrects an earlier assumption): /User/DeleteUserAccount deletes the Znode user but NOT its
+  cso.TblCustom_UserManagement row, so a BIWW user's teardown also needs that row removed (e.g. the Custom Table API's
+  DELETE /v1/custom-table-data/{tableKey}/{columnName}/{columnValue}/bulk on UserName). The BIWW create call writes the
+  custom row but did not give the user a Commerce Portal role (only Customer); storefront Admins on qa have Customer
+  plus a Commerce Portal role ("Web Admin", "Super Admin", "SalesRep", "MarketCoordinator").
+  The text below is from the generic Znode repository; its spec file names (znode-core-api-v1/v2.json) are not in specs/.
   Prefer the Core API v2 (specs/znode-core-api-v2.json). Use the legacy v1 (specs/znode-core-api-v1.json) only where
   v2 cannot create and delete the record. Decided 2026-10-22: promotions (POST /Promotion/Create, POST /Promotion/Delete)
   and customer users (POST /User/CreateCustomerAccount, POST /User/DeleteUserAccount) use v1. v1 deletes take the IDs in
@@ -14,16 +23,16 @@ apiChoices: |
 # /new-test: conventions of the BI Worldwide Playwright framework that story-analyst and test-author follow.
 newTests:
   inputs: "Atlassian connector (Jira stories, linked issues and AIO test cases on amla.atlassian.net; Confluence FRD pages); else files in work/stories/<KEY>/input/"
-  environment: "qa (TDA_ENV_NAME=qa; the fork runs with ENV=qa, playwright.config.ts copies ENV to TEST_ENV: config/qa.json webstoreURL for webstore stories, adminURL for Admin Portal stories)"
-  userKey: "USER_WEBSTORE_REGISTERED for webstore stories; USER_ADMIN_PORTAL (param role: Admin or Super Admin) for Admin Portal stories"
-  repository: "D:/znode-biww-playwright-automation-fork, branch qa/<STORY-KEY>-<slug> from origin/master (e.g. qa/BMP-84-storefront-header)"
+  environment: "qa (TDA_ENV_NAME=qa; the fork runs with ENV=qa, playwright.config.ts copies ENV to TEST_ENV: config/qa.json webstoreURL for webstore stories, adminURL for Admin Portal stories). A declared sign-in account (BMP-38) comes from the fork's git-ignored tests/.env"
+  userKey: "USER_WEBSTORE_REGISTERED for webstore customer stories; USER_ADMIN_PORTAL (param role: Admin or Super Admin) for Admin Portal stories; USER_WEBSTORE_WITH_ROLE (BMP-38) for the storefront's admin pages (Users tab): a BIWW user with a Commerce Portal role, market and status per test"
+  repository: "znode-biww-playwright-automation-fork (TDA_PLAYWRIGHT_REPO; the local path differs per machine), one branch per story from origin/master: dev_<STORY-KEY without dash> (e.g. dev_BMP36, dev_bmp38) or, from the QA agent, qa/<STORY-KEY>-<slug> (e.g. qa/BMP-84-storefront-header)"
   specRoot: "tests/webstore/<Area>Page/ or tests/admin/<Area>Page/ (one <Feature>Test.spec.ts per story area, like tests/webstore/LoginPage/LoginPageTest.spec.ts)"
   helper: "testData.value(ALIAS, OUTPUT) and testData.get(ALIAS) from the testData fixture; testData.useExisting(ALIAS, userName) only for a declared existing account"
   fixtures: "fixtures/base.fixture.ts (test with pom, config and testData; import { test } from '../../../fixtures/base.fixture')"
   pageObjects: "page_objects/{webstore,admin}/<Area>/ (locators) and page_actions/{webstore,admin}/<Area>/ (actions and checks), reached through the pom fixture (page_action_manager/PageActionManager.ts)"
   formatting: "money as the storefront shows it, e.g. $1,234.56 (en-US, 2 decimals); counts as plain integers"
   locators: "data-test-selector attribute (page.locator('[data-test-selector=\"...\"]'))"
-  linking: "test case key in the test title, e.g. 'BMP-123: Verify ...', plus tag @regression"
+  linking: "test case key leading the test title, e.g. 'BMP-123: Verify ...' (BMP-36) or 'BMP-TC-63 - Verify ...' (BMP-38, AIO case key), plus tag @regression"
   scan: "npm run scan:playwright -- <spec paths> (from this data repository; needs TDA_PLAYWRIGHT_REPO)"
   compile: "npx -y -p typescript@6 tsc --noEmit (in the framework repository; its tsconfig needs TypeScript 6, the adapter bundles 5.6)"
   logging: "test.step('<what> <value>') around each action and check in page_actions, as the existing page actions do; secret outputs (passwords) shown as ***"
@@ -32,7 +41,7 @@ newTests:
 # tda run <suite>: normal and fallback mode. --reporter replaces the configured reporters (no execution e-mail);
 # the junit file name matches run-compare's TEST-*.xml.
 runs:
-  workdir: "D:/znode-biww-playwright-automation-fork"
+  workdir: "D:/IdeaFestNov/znode-biww-playwright-automation-fork"
   command: "npx playwright test {suite} --project=chromium --reporter=list,junit"
   reports: "tda-reports"
   env:

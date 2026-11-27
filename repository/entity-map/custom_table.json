@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "entity": "custom_table",
+  "tables": [
+    "cso.ZnodeCustomTableDetail",
+    "cso.ZnodeCustomTableFields"
+  ],
+  "joins": [
+    { "from": "cso.ZnodeCustomTableDetail.CustomTableDetailId", "to": "cso.ZnodeCustomTableFields.CustomTableDetailId", "kind": "left" }
+  ],
+  "properties": {
+    "customTableId": "cso.ZnodeCustomTableDetail.CustomTableDetailId",
+    "tableKey": "cso.ZnodeCustomTableDetail.TableKey",
+    "tableName": "cso.ZnodeCustomTableDetail.TableName",
+    "isSystemDefined": "cso.ZnodeCustomTableDetail.IsSystemDefined",
+    "type": "cso.ZnodeCustomTableDetail.Type",
+    "fieldCode": "cso.ZnodeCustomTableFields.FieldCode",
+    "fieldName": "cso.ZnodeCustomTableFields.FieldName",
+    "fieldType": "cso.ZnodeCustomTableFields.FieldType",
+    "fieldIsUnique": "cso.ZnodeCustomTableFields.IsUniqueConstraint",
+    "fieldDisplayOrder": "cso.ZnodeCustomTableFields.DisplayOrder"
+  },
+  "maskedColumns": [],
+  "schemaFingerprint": "sha256:c891821e60bcb178a2a5b2409fa8bb4af9c434d8c7934b446242e8c0239b0307",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T11:17:13Z"
+}

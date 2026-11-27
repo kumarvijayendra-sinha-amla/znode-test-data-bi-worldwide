@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "key": "ADMIN_CATEGORY_AVAILABLE",
+  "entity": "pim_attribute_options",
+  "type": "available",
+  "constraints": {
+    "attributeCode": "{attributeCode}"
+  },
+  "scope": {},
+  "usage": "read-only",
+  "description": "One option (default value) of the BIWW Benjamin Moore product category PIM attribute (a dropdown product attribute), as the category an Admin user is assigned when USER_WEBSTORE_WITH_ROLE creates one. Outputs optionCode, optionValue, optionId. BMP-38.",
+  "declaredParams": {
+    "attributeCode": {
+      "type": "string",
+      "description": "PIM attribute code whose options are the categories (ZnodePimAttribute.AttributeCode), e.g. the BIWW Benjamin Moore category attribute"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

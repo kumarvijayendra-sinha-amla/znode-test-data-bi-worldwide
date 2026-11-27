@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_WEBSTORE_EXISTING_WITH_ROLE",
+  "entity": "user_management",
+  "type": "existing_with_role",
+  "constraints": {
+    "roleIsActive": "true",
+    "customRole": "{role}"
+  },
+  "scope": { "store": "{store}" },
+  "usage": "consumable",
+  "description": "Existing BIWW storefront account the test names, not locked. Qualifies by {portalRole} on the store's portal (active user linked to the store) or by Admin/Super Admin on all stores (PortalId NULL; qa user 102 signs in this way). Optional BIWW role. Never another account. BMP-38.",
+  "declaredParams": {
+    "store": { "type": "string", "description": "Store code the account signs in to (ZnodePortal.StoreCode), e.g. BNJM" },
+    "portalRole": { "type": "string", "description": "AspNet role the account holds on the store's portal (AspNetRoles.Name, TypeOfRole Commerce Portal), e.g. Web Admin. An Admin or Super Admin on all stores also qualifies" },
+    "role": { "type": "string", "optional": true, "description": "BIWW User Type in the custom user table (Super Admin, Admin, Sales Rep, Market Coordinator). Left out: any, or no custom row" }
+  },
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T14:09:17Z"
+}

@@ -27,7 +27,8 @@ If these docs and the code disagree, stop and ask.
 - Connect to production, or weaken the environment guard (`config/deny-list.yaml`).
 - Use DB credentials with write rights beyond the exception in `config/db-write-exceptions.yaml`, write to any table, or
   generate anything other than parameterized SELECT queries.
-- Mark a query, collection or vocabulary key `approved`. Only humans approve (CODEOWNERS review).
+- Skip query-verify / collection-verify after changing a query or collection. There is no approval step since tda
+  0.21.0: agents write `status: active` and entries are used at once; take one out of use by setting it `rejected`.
 - Commit secrets, tokens or connection strings. `.env` and `input/` are never read.
 - Send customer personal data to the model.
 - Call the model from the run-time resolver path.

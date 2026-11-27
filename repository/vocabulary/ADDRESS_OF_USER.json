@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "key": "ADDRESS_OF_USER",
+  "entity": "user_address",
+  "type": "of_user",
+  "constraints": {
+    "ownerUserId": "{owner}",
+    "isActive": "true",
+    "isShipping": "true",
+    "isDefaultShipping": "{isDefaultShipping}",
+    "countryCode": "us",
+    "stateCode": "{stateCode}"
+  },
+  "scope": {},
+  "usage": "consumable",
+  "description": "A saved US shipping address of the declared storefront user (address book), created for the test and deleted at teardown; the address lines are a valid US address so the storefront address check (Loqate) accepts it.",
+  "declaredParams": {
+    "owner": {
+      "type": "integer",
+      "description": "ZnodeUser.UserId of the account that owns the address: link it to the test's declared account (@user.userId), never a username"
+    },
+    "stateCode": {
+      "type": "string",
+      "description": "US state code of the address, e.g. NJ or CA. Left out: any supported state",
+      "optional": true
+    },
+    "isDefaultShipping": {
+      "type": "boolean",
+      "description": "true when the address must be the user's default shipping address"
+    }
+  },
+  "status": "pending_approval"
+}

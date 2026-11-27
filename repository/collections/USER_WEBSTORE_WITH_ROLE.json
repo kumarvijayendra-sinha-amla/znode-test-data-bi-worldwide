@@ -1,0 +1,152 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_WEBSTORE_WITH_ROLE",
+  "spec" : {
+    "file" : "specs/znode-web-v1-api.json",
+    "operations" : [ "POST /User/CreateCustomerAccount", "POST /User/DeleteUserAccount" ],
+    "additional" : [ {
+      "file" : "specs/Znode Custom API V1.json",
+      "operations" : [ "POST /BIWWCustomer/CreateSingleCustomerWithAdditionalField" ]
+    }, {
+      "file" : "specs/Znode Custom Table API V1.json",
+      "operations" : [ "DELETE /v1/custom-table-data/{tableKey}/{columnName}/{columnValue}/bulk" ]
+    }, {
+      "file" : "specs/Znode Engine API V2 V2.json",
+      "operations" : [ "PUT /v2/users/{userId}/account-status" ]
+    } ]
+  },
+  "create" : {
+    "steps" : [ {
+      "name" : "createUser",
+      "method" : "POST",
+      "path" : "/User/CreateCustomerAccount",
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.createUser.json",
+      "captures" : {
+        "userId" : "/User/UserId",
+        "createdUserName" : "/User/UserName"
+      },
+      "undo" : {
+        "method" : "POST",
+        "path" : "/User/DeleteUserAccount",
+        "bodyTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.undoCreateUser.json"
+      }
+    }, {
+      "name" : "setBiwwFields",
+      "method" : "POST",
+      "path" : "/BIWWCustomer/CreateSingleCustomerWithAdditionalField",
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.setBiwwFields.json",
+      "undo" : {
+        "method" : "DELETE",
+        "path" : "/v1/custom-table-data/{customTableKey}/{customTableColumn}/{createdUserName}/bulk"
+      }
+    }, {
+      "name" : "setStatus",
+      "method" : "PUT",
+      "path" : "/v2/users/{userId}/account-status",
+      "payloadTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.setStatus.json"
+    } ],
+    "id" : "{userId}",
+    "inputsFromDb" : {
+      "portalId" : {
+        "key" : "STORE_WEBSTORE_ACTIVE",
+        "output" : "portalId",
+        "params" : {
+          "store" : "{store}"
+        }
+      }
+    },
+    "constants" : {
+      "isWebStoreUser" : true,
+      "isGuestUser" : false,
+      "isLock" : false,
+      "customTableKey" : "UserManagement",
+      "customTableColumn" : "UserName"
+    },
+    "generated" : {
+      "uniqueSuffix" : {
+        "kind" : "uniqueSuffix"
+      },
+      "shipperSuffix" : {
+        "kind" : "uniqueSuffix"
+      },
+      "password" : {
+        "kind" : "password",
+        "secret" : true
+      },
+      "createdAt" : {
+        "kind" : "dateTime"
+      }
+    },
+    "runIdTag" : {
+      "step" : "createUser",
+      "field" : "/UserName",
+      "format" : "TDA-{runId}-",
+      "property" : "userName"
+    },
+    "outputs" : {
+      "userId" : {
+        "from" : "value",
+        "name" : "userId"
+      },
+      "userName" : {
+        "from" : "payload",
+        "step" : "createUser",
+        "pointer" : "/UserName"
+      },
+      "email" : {
+        "from" : "payload",
+        "step" : "createUser",
+        "pointer" : "/Email"
+      },
+      "firstName" : {
+        "from" : "payload",
+        "step" : "createUser",
+        "pointer" : "/FirstName"
+      },
+      "lastName" : {
+        "from" : "payload",
+        "step" : "createUser",
+        "pointer" : "/LastName"
+      },
+      "role" : {
+        "from" : "value",
+        "name" : "role"
+      },
+      "market" : {
+        "from" : "payload",
+        "step" : "setBiwwFields",
+        "pointer" : "/market"
+      },
+      "shipperId" : {
+        "from" : "payload",
+        "step" : "setBiwwFields",
+        "pointer" : "/shipperID"
+      },
+      "isActive" : {
+        "from" : "payload",
+        "step" : "setBiwwFields",
+        "pointer" : "/isActive"
+      },
+      "createdDate" : {
+        "from" : "value",
+        "name" : "createdAt"
+      },
+      "password" : {
+        "from" : "payload",
+        "step" : "createUser",
+        "pointer" : "/User/Password",
+        "secret" : true
+      }
+    }
+  },
+  "teardown" : {
+    "method" : "POST",
+    "path" : "/User/DeleteUserAccount",
+    "bodyTemplate" : "payloads/USER_WEBSTORE_WITH_ROLE.teardown.json"
+  },
+  "specFingerprint" : "sha256:281282b9b098ed45d16f6f4d2f7eb354e5bdaae66906e46bf47fbcdfb9161d57",
+  "status" : "pending_approval",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-27T07:07:03Z",
+  "verifiedHash" : "sha256:3f7cc3b2cb25b4f338eb2985c5c9d572142b6249e3b29ab6dbfbc7b6d1d7577d"
+}
