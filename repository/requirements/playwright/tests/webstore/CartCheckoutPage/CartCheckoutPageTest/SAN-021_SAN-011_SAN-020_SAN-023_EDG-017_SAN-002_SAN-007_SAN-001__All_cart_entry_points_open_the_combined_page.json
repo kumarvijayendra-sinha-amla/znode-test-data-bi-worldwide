@@ -46,7 +46,7 @@
       "SAN-021 precondition 'BNJM store published' is checked through the product key (publish state PRODUCTION and a published product entity on the store)",
       "SAN-001 step 5 'log out and log back in' becomes Logout (which ends Shop As) and Shop As on the same created user again, since created users never sign in with a password. Decision 2026-11-27 (analysis section 11): Logout during Shop As ends the impersonation, not the Admin's session; after Logout the tester is back in the own Admin session",
       "Heading text is not compared to a fixed value here (SAN-024 only, BMP-500)",
-      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Defect against SAN-011 (user, 2026-11-27; config/known-failures.yaml): the Header Cart should open the combined page directly. T2 soft-checks the direct open (fails on qa) and then goes on through the drawer, as the other tests do",
       "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",

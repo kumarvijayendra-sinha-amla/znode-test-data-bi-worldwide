@@ -1,12 +1,14 @@
 {
-  "schemaVersion": 1,
-  "key": "USER_ID_BY_USERNAME",
-  "sql": "SELECT TOP 1 u.UserId AS userId, az.UserName AS userName, u.AspNetUserId AS aspNetUserId FROM dbo.ZnodeUser u INNER JOIN dbo.AspNetUsers a ON a.Id = u.AspNetUserId INNER JOIN dbo.AspNetZnodeUser az ON az.AspNetZnodeUserId = a.UserName WHERE az.UserName = @userName ORDER BY u.UserId",
-  "params": [ "userName" ],
-  "outputs": [ "userId", "userName", "aspNetUserId" ],
-  "identity": "userId",
-  "schemaFingerprint": "sha256:77f15adc485c4de2516f699e5b0ec074e87040aa42b9a9b3c4ed36d1cc9752a4",
-  "vocabularyFingerprint": "sha256:45328765c7cdb019ecde2a5c58906e4b25e035b7c139e94865fd9ac20157e83f",
-  "status": "pending_approval",
-  "createdAt": "2026-11-26T00:00:00Z"
+  "schemaVersion" : 1,
+  "key" : "USER_ID_BY_USERNAME",
+  "sql" : "SELECT TOP 1 u.UserId AS userId, az.UserName AS userName, u.AspNetUserId AS aspNetUserId FROM dbo.ZnodeUser u INNER JOIN dbo.AspNetUsers a ON a.Id = u.AspNetUserId INNER JOIN dbo.AspNetZnodeUser az ON az.AspNetZnodeUserId = a.UserName WHERE az.UserName = @userName ORDER BY u.UserId",
+  "params" : [ "userName" ],
+  "outputs" : [ "userId", "userName", "aspNetUserId" ],
+  "identity" : "userId",
+  "schemaFingerprint" : "sha256:77f15adc485c4de2516f699e5b0ec074e87040aa42b9a9b3c4ed36d1cc9752a4",
+  "vocabularyFingerprint" : "sha256:45328765c7cdb019ecde2a5c58906e4b25e035b7c139e94865fd9ac20157e83f",
+  "status" : "pending_approval",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-27T08:23:48Z",
+  "verifiedHash" : "sha256:ed903465340aeae75131b5d4dc1ea40cc978c9bbdc2ff28bd0e71a027220d4c0"
 }

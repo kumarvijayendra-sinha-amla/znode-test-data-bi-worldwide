@@ -6,3 +6,8 @@ knownFailures:
     evidence: "2026-11-27, qa (webstore-bnjm-dv), read-only GET /api/admin/users: with search=TDA (81 users, all created 2026-11-27) sortField=createdDate sortOrder=asc and desc return the identical order 579, 578, 577 ...; without a search, asc lists 53 (ZnodeUser.CreatedDate 2026-11-10), 109 (2026-11-16), then 290 (2026-11-18 09:48) before 289 (2026-11-18 09:27): days ascending, times within a day descending. With search=example.test, lastName and email asc equal desc too."
     decidedBy: "Kumar Vijayendra Sinha"
     decidedAt: "2026-11-27"
+  - testId: "tests/webstore/CartCheckoutPage/CartCheckoutPageTest.spec.ts > SAN-021 SAN-011 SAN-020 SAN-023 EDG-017 SAN-002 SAN-007 SAN-001: All cart entry points open the combined page"
+    reason: "App defect on qa (BMP-94, AC1 / SAN-011): the Header Cart opens a cart drawer ('Your cart' with a Checkout link) instead of opening the combined Place Your Order page. The test's soft check 'Header Cart opens the combined page directly' fails; it then continues through the drawer's Checkout link. Bug to be logged in Jira (BMP)."
+    evidence: "2026-11-27, qa (webstore-bnjm-dv), browsing as the tester's own Admin: clicking [data-test-selector=linkDesktopCartPage] opens [data-test-selector=divBnjmCartDrawer]; its Checkout link [data-test-selector=linkBnjmCartDrawerCheckout] opens /checkout (the combined page). User confirmed this is a defect."
+    decidedBy: "Roshni Sen"
+    decidedAt: "2026-11-27"

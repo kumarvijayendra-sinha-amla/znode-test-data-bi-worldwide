@@ -49,7 +49,7 @@
       "Partially automated: EDG-001 20 lines and a product priced 0.00 are not coverable yet (no key; PRODUCT_SIMPLE_WITHOUT_PRICE is a simple product without a price); EDG-011 step 4 print preview is manual; SAN-022 'configured heading' is BMP-500 (no attribute); SAN-022 'a second product with quantity 2' is not coverable yet: a second need of the same product key can resolve to the same product (question to the user); SAN-012 step 5 (Admin) is in the SAN-017 test",
       "EDG-005 step 4 (user without a saved address) is in the EDG-005 SAN-028 SAN-030 EDG-015 test",
       "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): EDG-001 20 line items and the product priced $0.00 (no key yet); EDG-011 print preview (manual only); SAN-022 second product and the heading clause (BMP-500); SAN-035 steps 1-2 (Admin setting change and publish) - partially automated",
-      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer"
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Defect against SAN-011 (user, 2026-11-27; config/known-failures.yaml): the Header Cart should open the combined page directly. T2 soft-checks the direct open (fails on qa) and then goes on through the drawer, as the other tests do"
     ],
     "confidence": "medium",
     "needsReview": true
