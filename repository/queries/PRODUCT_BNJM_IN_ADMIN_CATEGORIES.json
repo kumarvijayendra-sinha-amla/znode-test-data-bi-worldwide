@@ -1,0 +1,26 @@
+{
+  "schemaVersion" : 1,
+  "key" : "PRODUCT_BNJM_IN_ADMIN_CATEGORIES",
+  "sql" : "SELECT TOP 10 pe.ZnodeProductId AS productId, MIN(pe.Name) AS productName FROM dbo.ZnodePublishProductEntity pe INNER JOIN dbo.ZnodePublishVersionEntity ve ON ve.VersionId = pe.VersionId INNER JOIN dbo.ZnodePortalCatalog pc ON pc.PublishCatalogId = pe.ZnodeCatalogId INNER JOIN dbo.ZnodePortal po ON po.PortalId = pc.PortalId WHERE po.StoreCode = @store AND ve.RevisionType = @publishState AND pe.IsActive = @isActive AND pe.IsObsolete = @notObsolete AND NOT EXISTS (SELECT ta.PimProductTypeAssociationId FROM dbo.ZnodePimProductTypeAssociation ta WHERE ta.PimProductId = pe.ZnodeProductId) AND EXISTS (SELECT dv.PimAttributeDefaultValueId FROM dbo.ZnodePimAttributeValue av INNER JOIN dbo.ZnodePimAttribute pa ON pa.PimAttributeId = av.PimAttributeId INNER JOIN dbo.ZnodePimProductAttributeDefaultValue pdv ON pdv.PimAttributeValueId = av.PimAttributeValueId INNER JOIN dbo.ZnodePimAttributeDefaultValue dv ON dv.PimAttributeDefaultValueId = pdv.PimAttributeDefaultValueId INNER JOIN cso.TblCustom_UserManagement um ON um.Id = @owner WHERE av.PimProductId = pe.ZnodeProductId AND pa.AttributeCode = @categoryAttribute AND CHARINDEX(CONCAT(@comma, dv.AttributeDefaultValueCode, @comma), CONCAT(@comma, REPLACE(REPLACE(um.Categories, @commaSpace, @comma), @semicolon, @comma), @comma)) > @zero) GROUP BY pe.ZnodeProductId ORDER BY pe.ZnodeProductId",
+  "params" : [ "store", "publishState", "isActive", "notObsolete", "owner", "categoryAttribute", "comma", "commaSpace", "semicolon", "zero" ],
+  "constants" : {
+    "publishState" : "PRODUCTION",
+    "isActive" : "true",
+    "notObsolete" : "false",
+    "categoryAttribute" : "BenjaminMooreCategory",
+    "comma" : ",",
+    "commaSpace" : ", ",
+    "semicolon" : ";",
+    "zero" : "0"
+  },
+  "outputs" : [ "productId", "productName" ],
+  "identity" : "productId",
+  "schemaFingerprint" : "sha256:bef6e987d5370ad1c0c0ce134fb72cd1bd378d55e8468d6bbc5609b39b88969e",
+  "vocabularyFingerprint" : "sha256:0dd732d7cc1d3effa0bdeeec98969f39aa9f563f12511f378a9fce5fa1ed513d",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T06:47:50Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "lastValidated" : "2026-11-27T06:47:04Z",
+  "verifiedHash" : "sha256:d309bce94cc455801abc2cb4c93ca7fe4c3f3e12b48f2aaf84926b044d95a8c0"
+}

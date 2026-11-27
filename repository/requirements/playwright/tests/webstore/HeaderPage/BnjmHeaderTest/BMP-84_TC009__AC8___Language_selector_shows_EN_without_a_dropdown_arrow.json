@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC009 [AC8]: Language selector shows EN without a dropdown arrow",
+  "scenario": {
+    "summary": "The language selector shows EN, has no dropdown arrow and opens no language list.",
+    "steps": [
+      "Open the storefront",
+      "Check the language text",
+      "Check there is no arrow",
+      "Click the selector and check no Select Locale list"
+    ],
+    "entitiesTouched": [
+      "user"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "EN shown",
+      "No dropdown arrow or list"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC009, AC8)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

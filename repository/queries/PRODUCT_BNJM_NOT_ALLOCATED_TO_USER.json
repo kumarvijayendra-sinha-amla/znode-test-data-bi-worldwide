@@ -1,0 +1,20 @@
+{
+  "schemaVersion" : 1,
+  "key" : "PRODUCT_BNJM_NOT_ALLOCATED_TO_USER",
+  "sql" : "SELECT TOP 10 ps.ParentZnodeProductId AS productId, MIN(ps.ParentName) AS productName FROM cso.ProductSearch ps INNER JOIN dbo.ZnodePortalCatalog pc ON pc.PublishCatalogId = ps.ZnodeCatalogId INNER JOIN dbo.ZnodePortal po ON po.PortalId = pc.PortalId WHERE po.StoreCode = @store AND ps.IsActive = @isActive AND ps.ParentZnodeProductId IS NOT NULL AND NOT EXISTS (SELECT x.Id FROM cso.ProductSearch xs INNER JOIN cso.TblCustom_Allocations x ON x.ChildSKU = xs.SKU INNER JOIN cso.TblCustom_UserManagement xm ON xm.UserName = x.SalesRepEmail WHERE xs.ParentZnodeProductId = ps.ParentZnodeProductId AND x.Status = @allocationStatus AND (@owner IS NULL OR xm.Id = @owner)) GROUP BY ps.ParentZnodeProductId ORDER BY ps.ParentZnodeProductId",
+  "params" : [ "store", "isActive", "allocationStatus", "owner" ],
+  "constants" : {
+    "isActive" : "true",
+    "allocationStatus" : "Active"
+  },
+  "outputs" : [ "productId", "productName" ],
+  "identity" : "productId",
+  "schemaFingerprint" : "sha256:bd6c81b31d4d443529a83555a34c30ab220c382379aa3027a15636bca89f4d93",
+  "vocabularyFingerprint" : "sha256:886fe3f13f23b2a0e00abbb97af0f2d6ec302f81faa3dfefce6bc23948920eeb",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T05:59:30Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "lastValidated" : "2026-11-27T05:58:04Z",
+  "verifiedHash" : "sha256:9e06e1a893993bd4982a8a43592760e49381e9a8906180803b5da870caae0388"
+}

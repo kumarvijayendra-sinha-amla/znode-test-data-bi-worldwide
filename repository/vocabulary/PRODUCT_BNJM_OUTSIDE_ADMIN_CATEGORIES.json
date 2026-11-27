@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_BNJM_OUTSIDE_ADMIN_CATEGORIES",
+  "entity": "bnjm_admin_category",
+  "type": "product",
+  "constraints": {
+    "isActive": "true",
+    "categoryCode": "none_in_owner_categories"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active parent product in the store search catalog with no BenjaminMooreCategory value in the given Admin's assigned categories. Returns the tile id and name. BMP-84 TC005 (AC5 negative flow).",
+  "declaredParams": {
+    "owner": {
+      "type": "integer",
+      "description": "Web Admin user id (cso.TblCustom_UserManagement.Id) of the Admin; link it: @categoryAdmin.userId"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code (ZnodePortal.StoreCode), e.g. BNJM"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T06:45:02Z"
+}

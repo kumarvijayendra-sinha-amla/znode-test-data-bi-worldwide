@@ -16,7 +16,7 @@ newTests:
   inputs: "Atlassian connector (Jira stories, linked issues and AIO test cases on amla.atlassian.net; Confluence FRD pages); else files in work/stories/<KEY>/input/"
   environment: "qa (TDA_ENV_NAME=qa; the fork runs with ENV=qa, playwright.config.ts copies ENV to TEST_ENV: config/qa.json webstoreURL for webstore stories, adminURL for Admin Portal stories)"
   userKey: "USER_WEBSTORE_REGISTERED for webstore stories; USER_ADMIN_PORTAL (param role: Admin or Super Admin) for Admin Portal stories"
-  repository: "D:/IdeaFestNov/znode-biww-playwright-automation-fork, branch dev_<STORY-KEY without dash> (e.g. dev_BMP36)"
+  repository: "D:/znode-biww-playwright-automation-fork, branch qa/<STORY-KEY>-<slug> from origin/master (e.g. qa/BMP-84-storefront-header)"
   specRoot: "tests/webstore/<Area>Page/ or tests/admin/<Area>Page/ (one <Feature>Test.spec.ts per story area, like tests/webstore/LoginPage/LoginPageTest.spec.ts)"
   helper: "testData.value(ALIAS, OUTPUT) and testData.get(ALIAS) from the testData fixture; testData.useExisting(ALIAS, userName) only for a declared existing account"
   fixtures: "fixtures/base.fixture.ts (test with pom, config and testData; import { test } from '../../../fixtures/base.fixture')"
@@ -32,7 +32,7 @@ newTests:
 # tda run <suite>: normal and fallback mode. --reporter replaces the configured reporters (no execution e-mail);
 # the junit file name matches run-compare's TEST-*.xml.
 runs:
-  workdir: "D:/IdeaFestNov/znode-biww-playwright-automation-fork"
+  workdir: "D:/znode-biww-playwright-automation-fork"
   command: "npx playwright test {suite} --project=chromium --reporter=list,junit"
   reports: "tda-reports"
   env:

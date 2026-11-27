@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC002 [AC2]: Sales Rep and Market Coordinator do not see the Admin button",
+  "scenario": {
+    "summary": "Shop As a Sales Rep and a Market Coordinator (found or created by TDA) and check the header shows no Admin button for either.",
+    "steps": [
+      "Shop As the rep (Web Admin /admin/users/{rep.userId}/shop-as, Open storefront)",
+      "Check no Admin button",
+      "End Shop As",
+      "Shop As the coordinator",
+      "Check no Admin button",
+      "End Shop As"
+    ],
+    "entitiesTouched": [
+      "bnjm_product_access"
+    ],
+    "stateChanges": [
+      "Shop As session started and ended (impersonation)"
+    ],
+    "assertions": [
+      "No Admin button for the Sales Rep",
+      "No Admin button for the Market Coordinator"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC002, AC2)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+      "alias": "rep",
+      "params": {
+        "role": "Sales Rep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+      "alias": "coordinator",
+      "params": {
+        "role": "Market Coordinator",
+        "store": "BNJM"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

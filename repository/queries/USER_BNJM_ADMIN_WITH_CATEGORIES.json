@@ -1,0 +1,22 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_BNJM_ADMIN_WITH_CATEGORIES",
+  "sql" : "SELECT TOP 10 azu.UserName AS userName, um.Id AS userId FROM cso.TblCustom_UserManagement um INNER JOIN dbo.AspNetZnodeUser azu ON azu.UserName = um.UserName INNER JOIN dbo.AspNetUsers au ON au.UserName = azu.AspNetZnodeUserId INNER JOIN dbo.ZnodeUser zu ON zu.AspNetUserId = au.Id INNER JOIN dbo.ZnodeUserPortal up ON up.UserId = zu.UserId INNER JOIN dbo.ZnodePortal po ON po.PortalId = up.PortalId AND po.StoreCode = um.StoreCode WHERE po.StoreCode = @store AND um.Role = @role AND zu.IsActive = @isActive AND au.LockoutEnd IS NULL AND um.Categories IS NOT NULL AND LEN(um.Categories) > @zero AND (@preferred IS NULL OR azu.UserName = @preferred) ORDER BY um.Id",
+  "params" : [ "store", "role", "isActive", "zero", "preferred" ],
+  "constants" : {
+    "isActive" : "true",
+    "zero" : "0"
+  },
+  "outputs" : [ "userName", "userId" ],
+  "identity" : "userName",
+  "schemaFingerprint" : "sha256:e8bb8c30a97ca1d5d4c0314edc47c47576a42f0ec08509013ec8846329ffdc7e",
+  "vocabularyFingerprint" : "sha256:b6c1503b1338dd46d6265da8e7aa0ef806f2ace2e01a62a7654144fe4dd2190f",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T06:47:50Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "candidates" : true,
+  "preferredOnly" : true,
+  "lastValidated" : "2026-11-27T06:45:24Z",
+  "verifiedHash" : "sha256:0c43b42a667c8f2b9f06348b471f4fc907d5b86a2813387fee6c7d7749e0b456"
+}

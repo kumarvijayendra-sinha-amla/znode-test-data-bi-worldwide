@@ -1,0 +1,2531 @@
+{
+ "openapi": "3.0.1",
+ "info": {
+  "title": "BNJM allocation test data (subset of Znode Web API v1 and Znode Custom Table API v1)",
+  "version": "1"
+ },
+ "paths": {
+  "/User/CreateCustomerAccount": {
+   "post": {
+    "tags": [
+     "User",
+     "WebstoreAttribute"
+    ],
+    "summary": "Create the Customer Account.",
+    "requestBody": {
+     "description": "Model of type AccountModel",
+     "content": {
+      "application/json-patch+json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserModel"
+       }
+      },
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserModel"
+       }
+      },
+      "text/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserModel"
+       }
+      },
+      "application/*+json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserModel"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       }
+      }
+     },
+     "201": {
+      "description": "Created",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.UserResponse"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Internal Server Error",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/xml": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/xml": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "409": {
+      "description": "Conflict",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/xml": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/xml": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/User/DeleteUserAccount": {
+   "post": {
+    "tags": [
+     "User"
+    ],
+    "summary": "Delete account by accountId.",
+    "requestBody": {
+     "description": "Account Ids to be deleted.",
+     "content": {
+      "application/json-patch+json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "text/json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "application/*+json": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "application/xml": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "text/xml": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      },
+      "application/*+xml": {
+       "schema": {
+        "$ref": "#/components/schemas/Znode.Engine.Api.Models.ParameterModel"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.TrueFalseResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.TrueFalseResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.Api.Models.Responses.TrueFalseResponse"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/custom-table-data/{tableKey}/insert": {
+   "post": {
+    "tags": [
+     "CustomTableData"
+    ],
+    "summary": "Insert record in custom table dynamically.",
+    "parameters": [
+     {
+      "name": "tableKey",
+      "in": "path",
+      "description": "Unique Table Key (maximum 100 characters, no spaces or special characters)",
+      "required": true,
+      "schema": {
+       "maxLength": 100,
+       "pattern": "^[A-Za-z][a-zA-Z0-9]*$",
+       "type": "string"
+      }
+     }
+    ],
+    "requestBody": {
+     "description": "The body containing an array of custom table fields and values in JSON format. Each object in the array represents a row with key-value pairs where the keys are the column names and values are the data for that column.",
+     "content": {
+      "application/json-patch+json": {
+       "schema": {},
+       "example": [
+        {
+         "CustomTableColumn1": "Value1",
+         "CustomTableColumn2": "Value2"
+        }
+       ]
+      },
+      "application/json": {
+       "schema": {},
+       "example": [
+        {
+         "CustomTableColumn1": "Value1",
+         "CustomTableColumn2": "Value2"
+        }
+       ]
+      },
+      "text/json": {
+       "schema": {},
+       "example": [
+        {
+         "CustomTableColumn1": "Value1",
+         "CustomTableColumn2": "Value2"
+        }
+       ]
+      },
+      "application/*+json": {
+       "schema": {},
+       "example": [
+        {
+         "CustomTableColumn1": "Value1",
+         "CustomTableColumn2": "Value2"
+        }
+       ]
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "OK",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       }
+      }
+     },
+     "201": {
+      "description": "Created (Indicates that the request is successfully executed and the response body return the data in CustomTableBulkResponse model.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkResponse"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "Not Found (This status code indicates that the server cannot find the requested resource.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request (The request contain invalid Data.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Server Error (Indicates that an error occurred on the server.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/v1/custom-table-data/{tableKey}/{columnName}/{columnValue}/bulk": {
+   "delete": {
+    "tags": [
+     "CustomTableData"
+    ],
+    "summary": "Deletes multiple records in bulk",
+    "description": "This API endpoint Deletes the list of associated Custom Table Data.",
+    "parameters": [
+     {
+      "name": "tableKey",
+      "in": "path",
+      "description": "Unique Table Key (maximum 100 characters, no spaces or special characters)",
+      "required": true,
+      "schema": {
+       "maxLength": 100,
+       "pattern": "^[A-Za-z][a-zA-Z0-9]*$",
+       "type": "string"
+      }
+     },
+     {
+      "name": "columnName",
+      "in": "path",
+      "description": ">Unique table column Name",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "columnValue",
+      "in": "path",
+      "description": "Table column value",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Success(Indicates that the request is successfully executed and the response body return the data in ProfilesListResponse model.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkDeleteResponse"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkDeleteResponse"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkDeleteResponse"
+        }
+       }
+      }
+     },
+     "204": {
+      "description": "No Content(Indicates that the request is successfully executed, but the response body does not contain any data.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "500": {
+      "description": "Server Error(Indicates that an error occurred on the server.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "404": {
+      "description": "This status code indicates that the server cannot find the requested resource.)",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     },
+     "400": {
+      "description": "Bad Request: The request contains invalid data.",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       },
+       "text/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Znode.Libraries.Abstract.Models.ZnodeErrorDetail"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Microsoft.AspNetCore.Authentication.AuthenticationProperties": {
+    "type": "object",
+    "properties": {
+     "Items": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Microsoft.AspNetCore.Authentication.AuthenticationToken": {
+    "type": "object",
+    "properties": {
+     "Name": {
+      "type": "string",
+      "nullable": true
+     },
+     "Value": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Microsoft.AspNetCore.Identity.ExternalLoginInfo": {
+    "type": "object",
+    "properties": {
+     "LoginProvider": {
+      "type": "string",
+      "nullable": true
+     },
+     "ProviderKey": {
+      "type": "string",
+      "nullable": true
+     },
+     "ProviderDisplayName": {
+      "type": "string",
+      "nullable": true
+     },
+     "Principal": {
+      "$ref": "#/components/schemas/System.Security.Claims.ClaimsPrincipal"
+     },
+     "AuthenticationTokens": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Microsoft.AspNetCore.Authentication.AuthenticationToken"
+      },
+      "nullable": true
+     },
+     "AuthenticationProperties": {
+      "$ref": "#/components/schemas/Microsoft.AspNetCore.Authentication.AuthenticationProperties"
+     }
+    },
+    "additionalProperties": false
+   },
+   "System.Net.HttpStatusCode": {
+    "enum": [
+     100,
+     101,
+     102,
+     103,
+     200,
+     201,
+     202,
+     203,
+     204,
+     205,
+     206,
+     207,
+     208,
+     226,
+     300,
+     301,
+     302,
+     303,
+     304,
+     305,
+     306,
+     307,
+     308,
+     400,
+     401,
+     402,
+     403,
+     404,
+     405,
+     406,
+     407,
+     408,
+     409,
+     410,
+     411,
+     412,
+     413,
+     414,
+     415,
+     416,
+     417,
+     421,
+     422,
+     423,
+     424,
+     426,
+     428,
+     429,
+     431,
+     451,
+     500,
+     501,
+     502,
+     503,
+     504,
+     505,
+     506,
+     507,
+     508,
+     510,
+     511
+    ],
+    "type": "integer",
+    "format": "int32"
+   },
+   "System.Security.Claims.Claim": {
+    "type": "object",
+    "properties": {
+     "Issuer": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "OriginalIssuer": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "Properties": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true,
+      "readOnly": true
+     },
+     "Subject": {
+      "$ref": "#/components/schemas/System.Security.Claims.ClaimsIdentity"
+     },
+     "Type": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "Value": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "ValueType": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "System.Security.Claims.ClaimsIdentity": {
+    "type": "object",
+    "properties": {
+     "AuthenticationType": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "IsAuthenticated": {
+      "type": "boolean",
+      "readOnly": true
+     },
+     "Actor": {
+      "$ref": "#/components/schemas/System.Security.Claims.ClaimsIdentity"
+     },
+     "BootstrapContext": {
+      "nullable": true
+     },
+     "Claims": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/System.Security.Claims.Claim"
+      },
+      "nullable": true,
+      "readOnly": true
+     },
+     "Label": {
+      "type": "string",
+      "nullable": true
+     },
+     "Name": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "NameClaimType": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "RoleClaimType": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "System.Security.Claims.ClaimsPrincipal": {
+    "type": "object",
+    "properties": {
+     "Claims": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/System.Security.Claims.Claim"
+      },
+      "nullable": true,
+      "readOnly": true
+     },
+     "Identities": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/System.Security.Claims.ClaimsIdentity"
+      },
+      "nullable": true,
+      "readOnly": true
+     },
+     "Identity": {
+      "$ref": "#/components/schemas/System.Security.Principal.IIdentity"
+     }
+    },
+    "additionalProperties": false
+   },
+   "System.Security.Principal.IIdentity": {
+    "type": "object",
+    "properties": {
+     "Name": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "AuthenticationType": {
+      "type": "string",
+      "nullable": true,
+      "readOnly": true
+     },
+     "IsAuthenticated": {
+      "type": "boolean",
+      "readOnly": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.AddressModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "AddressId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AccountId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "Address1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Address2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Address3": {
+      "type": "string",
+      "nullable": true
+     },
+     "DisplayName": {
+      "maxLength": 600,
+      "type": "string",
+      "nullable": true
+     },
+     "FirstName": {
+      "maxLength": 300,
+      "type": "string",
+      "nullable": true
+     },
+     "LastName": {
+      "maxLength": 300,
+      "type": "string",
+      "nullable": true
+     },
+     "CountryName": {
+      "type": "string",
+      "nullable": true
+     },
+     "StateName": {
+      "type": "string",
+      "nullable": true
+     },
+     "CityName": {
+      "type": "string",
+      "nullable": true
+     },
+     "StateCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "PostalCode": {
+      "maxLength": 50,
+      "type": "string",
+      "nullable": true
+     },
+     "PhoneNumber": {
+      "maxLength": 50,
+      "type": "string",
+      "nullable": true
+     },
+     "IsDefaultBilling": {
+      "type": "boolean"
+     },
+     "IsDefaultShipping": {
+      "type": "boolean"
+     },
+     "IsActive": {
+      "type": "boolean"
+     },
+     "IsGuest": {
+      "type": "boolean"
+     },
+     "IsShipping": {
+      "type": "boolean"
+     },
+     "IsBilling": {
+      "type": "boolean"
+     },
+     "IsShippingBillingDifferent": {
+      "type": "boolean"
+     },
+     "FromBillingShipping": {
+      "type": "string",
+      "nullable": true
+     },
+     "AccountAddressId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "WarehouseId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AspNetUserId": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserAddressId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "Mobilenumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "AlternateMobileNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "FaxNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "WarehouseName": {
+      "type": "string",
+      "nullable": true
+     },
+     "EmailAddress": {
+      "type": "string",
+      "nullable": true
+     },
+     "LTLAccountNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsUseWareHouseAddress": {
+      "type": "boolean",
+      "nullable": true
+     },
+     "PortalId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ExternalId": {
+      "type": "string",
+      "nullable": true
+     },
+     "CompanyName": {
+      "maxLength": 300,
+      "type": "string",
+      "nullable": true
+     },
+     "CountryCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "DontAddUpdateAddress": {
+      "type": "boolean"
+     },
+     "omsOrderId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "omsOrderShipmentId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "PublishStateId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "IsAddressBook": {
+      "type": "boolean"
+     },
+     "GatewayCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "StoreCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserName": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsCommercial": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.AttributesSelectValuesModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "Value": {
+      "type": "string",
+      "nullable": true
+     },
+     "Code": {
+      "type": "string",
+      "nullable": true
+     },
+     "DisplayOrder": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "SwatchText": {
+      "type": "string",
+      "nullable": true
+     },
+     "Path": {
+      "type": "string",
+      "nullable": true
+     },
+     "VariantDisplayOrder": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "VariantImagePath": {
+      "type": "string",
+      "nullable": true
+     },
+     "VariantSKU": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.BooleanModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsSuccess": {
+      "type": "boolean"
+     },
+     "ErrorMessage": {
+      "type": "string",
+      "nullable": true
+     },
+     "HasError": {
+      "type": "boolean"
+     },
+     "SuccessMessage": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.GlobalAttributeValuesModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "ViewId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ViewName": {
+      "type": "string",
+      "nullable": true
+     },
+     "XmlSetting": {
+      "type": "string",
+      "nullable": true
+     },
+     "XmlSettingName": {
+      "type": "string",
+      "nullable": true
+     },
+     "ApplicationSettingId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "IsSelected": {
+      "type": "boolean"
+     },
+     "Filters": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Libraries.Abstract.Helper.FilterTuple"
+      },
+      "nullable": true
+     },
+     "SortColumn": {
+      "type": "string",
+      "nullable": true
+     },
+     "SortType": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsPublic": {
+      "type": "boolean"
+     },
+     "IsDefault": {
+      "type": "boolean"
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ListViewIds": {
+      "type": "string",
+      "nullable": true
+     },
+     "GlobalEntityId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "EntityName": {
+      "type": "string",
+      "nullable": true
+     },
+     "EntityValue": {
+      "type": "string",
+      "nullable": true
+     },
+     "GlobalAttributeGroupId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "GlobalAttributeId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AttributeTypeId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "AttributeTypeName": {
+      "type": "string",
+      "nullable": true
+     },
+     "AttributeCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsRequired": {
+      "type": "boolean"
+     },
+     "IsLocalizable": {
+      "type": "boolean"
+     },
+     "AttributeName": {
+      "type": "string",
+      "nullable": true
+     },
+     "AttributeValue": {
+      "type": "string",
+      "nullable": true
+     },
+     "GlobalAttributeValueId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "GlobalAttributeDefaultValueId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "AttributeDefaultValueCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "AttributeDefaultValue": {
+      "type": "string",
+      "nullable": true
+     },
+     "RowId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "IsEditable": {
+      "type": "boolean"
+     },
+     "ControlName": {
+      "type": "string",
+      "nullable": true
+     },
+     "ValidationName": {
+      "type": "string",
+      "nullable": true
+     },
+     "SubValidationName": {
+      "type": "string",
+      "nullable": true
+     },
+     "RegExp": {
+      "type": "string",
+      "nullable": true
+     },
+     "ValidationValue": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsRegExp": {
+      "type": "boolean",
+      "nullable": true
+     },
+     "MediaId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "MediaFileName": {
+      "type": "string",
+      "nullable": true
+     },
+     "HelpDescription": {
+      "type": "string",
+      "nullable": true
+     },
+     "SelectValues": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.AttributesSelectValuesModel"
+      },
+      "nullable": true
+     },
+     "Validations": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.LoginUserModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "Comment": {
+      "type": "string",
+      "nullable": true
+     },
+     "Email": {
+      "type": "string",
+      "nullable": true
+     },
+     "NewPassword": {
+      "type": "string",
+      "nullable": true
+     },
+     "Password": {
+      "type": "string",
+      "nullable": true
+     },
+     "ProviderName": {
+      "type": "string",
+      "nullable": true
+     },
+     "Username": {
+      "type": "string",
+      "nullable": true
+     },
+     "PasswordToken": {
+      "type": "string",
+      "nullable": true
+     },
+     "RoleName": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsApproved": {
+      "type": "boolean"
+     },
+     "IsLockedOut": {
+      "type": "boolean"
+     },
+     "IsOnline": {
+      "type": "boolean"
+     },
+     "RememberMe": {
+      "type": "boolean"
+     },
+     "IsConfirmed": {
+      "type": "boolean"
+     },
+     "CreateDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "LastActivityDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "LastLockoutDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "LastLoginDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "LastPasswordChangedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "UserId": {
+      "type": "string",
+      "nullable": true
+     },
+     "RoleId": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.ParameterModel": {
+    "required": [
+     "Ids"
+    ],
+    "type": "object",
+    "properties": {
+     "Ids": {
+      "minLength": 1,
+      "type": "string",
+      "description": "This helps to pass in query parameter (Comma seperated string)"
+     },
+     "TargetPublishState": {
+      "type": "string",
+      "nullable": true
+     },
+     "TakeFromDraftFirst": {
+      "type": "boolean"
+     },
+     "LocaleId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "LocaleIds": {
+      "type": "array",
+      "items": {
+       "type": "integer",
+       "format": "int32"
+      },
+      "nullable": true
+     },
+     "PortalId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "RevisionType": {
+      "type": "string",
+      "nullable": true
+     },
+     "publishCataLogId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "PimProductId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "EnableCMSPreview": {
+      "type": "boolean"
+     },
+     "IsDeletePublishSearchIndexSetting": {
+      "type": "boolean"
+     },
+     "BaseURL": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.ProfileModel": {
+    "required": [
+     "ProfileName"
+    ],
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "AccountId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AccountProfileId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ProfileId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "Name": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ProfileName": {
+      "maxLength": 100,
+      "minLength": 1,
+      "type": "string"
+     },
+     "IsAssociated": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "Weighting": {
+      "type": "number",
+      "format": "double",
+      "nullable": true
+     },
+     "DefaultExternalAccountNo": {
+      "type": "string",
+      "nullable": true
+     },
+     "ShowOnPartnerSignup": {
+      "type": "boolean"
+     },
+     "TaxExempt": {
+      "type": "boolean"
+     },
+     "IsDefault": {
+      "type": "boolean",
+      "nullable": true
+     },
+     "AccountProfileIds": {
+      "type": "string",
+      "nullable": true
+     },
+     "ProfileIds": {
+      "type": "string",
+      "nullable": true
+     },
+     "ParentProfileId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "PimCatalogId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "PublishCatalogId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "CatalogCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Attributes": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.GlobalAttributeValuesModel"
+      },
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.Responses.TrueFalseResponse": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "ErrorCode": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "ErrorMessage": {
+      "type": "string",
+      "nullable": true
+     },
+     "HasError": {
+      "type": "boolean"
+     },
+     "CustomModelState": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "ErrorDetailList": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "booleanModel": {
+      "$ref": "#/components/schemas/Znode.Engine.Api.Models.BooleanModel"
+     },
+     "IsSuccess": {
+      "type": "boolean"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.Responses.UserResponse": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "ErrorCode": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "ErrorMessage": {
+      "type": "string",
+      "nullable": true
+     },
+     "HasError": {
+      "type": "boolean"
+     },
+     "CustomModelState": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "ErrorDetailList": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "User": {
+      "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserModel"
+     },
+     "UserPortal": {
+      "$ref": "#/components/schemas/Znode.Engine.Api.Models.UserPortalModel"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.UserModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AspNetUserId": {
+      "type": "string",
+      "nullable": true
+     },
+     "AspNetZnodeUserId": {
+      "type": "string",
+      "nullable": true
+     },
+     "Email": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsActive": {
+      "type": "boolean"
+     },
+     "StoreCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "BaseUrl": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserName": {
+      "type": "string",
+      "nullable": true
+     },
+     "FullName": {
+      "type": "string",
+      "nullable": true
+     },
+     "PhoneNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "FirstName": {
+      "type": "string",
+      "nullable": true
+     },
+     "LastName": {
+      "type": "string",
+      "nullable": true
+     },
+     "MiddleName": {
+      "type": "string",
+      "nullable": true
+     },
+     "LoginName": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsEmailSentFailed": {
+      "type": "boolean"
+     },
+     "User": {
+      "$ref": "#/components/schemas/Znode.Engine.Api.Models.LoginUserModel"
+     },
+     "RoleId": {
+      "type": "string",
+      "nullable": true
+     },
+     "RoleName": {
+      "type": "string",
+      "nullable": true
+     },
+     "PortalId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "IsLock": {
+      "type": "boolean",
+      "nullable": true
+     },
+     "ProfileId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CompanyName": {
+      "type": "string",
+      "nullable": true
+     },
+     "EmailOptIn": {
+      "type": "boolean"
+     },
+     "SMSOptIn": {
+      "type": "boolean"
+     },
+     "ExternalId": {
+      "type": "string",
+      "nullable": true
+     },
+     "Description": {
+      "type": "string",
+      "nullable": true
+     },
+     "Website": {
+      "type": "string",
+      "nullable": true
+     },
+     "Source": {
+      "type": "string",
+      "nullable": true
+     },
+     "Accountname": {
+      "type": "string",
+      "nullable": true
+     },
+     "AccountCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "StoreName": {
+      "type": "string",
+      "nullable": true
+     },
+     "PermissionsName": {
+      "type": "string",
+      "nullable": true
+     },
+     "DepartmentName": {
+      "type": "string",
+      "nullable": true
+     },
+     "DepartmentId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "AccountId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "AccountPermissionAccessId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "DepartmentUserId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "PortalIds": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "ApprovalUserId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "PermissionCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "BudgetAmount": {
+      "type": "number",
+      "format": "double",
+      "nullable": true
+     },
+     "ApproverName": {
+      "type": "string",
+      "nullable": true
+     },
+     "AccountUserOrderApprovalId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "AccountUserPermissionId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "CustomerPaymentGUID": {
+      "type": "string",
+      "nullable": true
+     },
+     "Addresses": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.AddressModel"
+      },
+      "nullable": true
+     },
+     "Profiles": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.ProfileModel"
+      },
+      "nullable": true
+     },
+     "WishList": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.WishListModel"
+      },
+      "nullable": true
+     },
+     "IsAdminUser": {
+      "type": "boolean"
+     },
+     "IsGuestUser": {
+      "type": "boolean"
+     },
+     "ReferralCommission": {
+      "type": "number",
+      "format": "double",
+      "nullable": true
+     },
+     "ReferralCommissionTypeId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "IsWebStoreUser": {
+      "type": "boolean"
+     },
+     "ReferralUserId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "LocaleId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "QuoteApproverUserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ExternalLoginInfo": {
+      "$ref": "#/components/schemas/Microsoft.AspNetCore.Identity.ExternalLoginInfo"
+     },
+     "IsSocialLogin": {
+      "type": "boolean"
+     },
+     "ShippingPostalCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "BillingPostalCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "CountryName": {
+      "type": "string",
+      "nullable": true
+     },
+     "StateName": {
+      "type": "string",
+      "nullable": true
+     },
+     "CityName": {
+      "type": "string",
+      "nullable": true
+     },
+     "PostalCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "PublishCatalogId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "CatalogCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "PerOrderLimit": {
+      "type": "number",
+      "format": "double"
+     },
+     "AnnualOrderLimit": {
+      "type": "number",
+      "format": "double"
+     },
+     "AnnualBalanceOrderAmount": {
+      "type": "number",
+      "format": "double"
+     },
+     "BillingAccountNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "SalesRepId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "SalesRepUserName": {
+      "type": "string",
+      "nullable": true
+     },
+     "SalesRepFullName": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserGlobalAttributes": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.GlobalAttributeValuesModel"
+      },
+      "nullable": true
+     },
+     "UserVerificationTypeCode": {
+      "$ref": "#/components/schemas/Znode.Libraries.ECommerce.Utilities.UserVerificationTypeEnum"
+     },
+     "UserVerificationType": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsVerified": {
+      "type": "boolean"
+     },
+     "MediaId": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "MediaPath": {
+      "type": "string",
+      "nullable": true
+     },
+     "BusinessIdentificationNumber": {
+      "type": "string",
+      "nullable": true
+     },
+     "IsInvalidCredential": {
+      "type": "boolean"
+     },
+     "IsTradeCentricUser": {
+      "type": "boolean"
+     },
+     "IsChangePasswordFromProfile": {
+      "type": "boolean"
+     },
+     "IsBStoreManager": {
+      "type": "boolean"
+     },
+     "IsBStoreOwner": {
+      "type": "boolean"
+     },
+     "IsBStoreAvailable": {
+      "type": "boolean"
+     },
+     "Token": {
+      "type": "string",
+      "nullable": true
+     },
+     "RefreshToken": {
+      "type": "string",
+      "nullable": true
+     },
+     "RefreshTokenExpiryTime": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+     },
+     "OldRefreshToken": {
+      "type": "string",
+      "nullable": true
+     },
+     "LocaleCode": {
+      "type": "string",
+      "nullable": true
+     },
+     "RoleNames": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "nullable": true
+     },
+     "AccountExternalId": {
+      "type": "string",
+      "nullable": true
+     },
+     "AdditionalAttributes": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.Api.Models.GlobalAttributeValuesModel"
+      },
+      "nullable": true
+     },
+     "DisableCentralLogin": {
+      "type": "boolean",
+      "description": "Gets or sets a value indicating whether central login functionality is disabled for the current context.\r\nWhen set to `true`, users will not be able to log in through the central authentication system.",
+      "nullable": true
+     },
+     "IsMultiFactorAuthenticationEnabled": {
+      "type": "boolean",
+      "description": "Gets or sets a value indicating whether 2FA is enabled for the admin console."
+     },
+     "Status": {
+      "type": "boolean",
+      "description": "A value indicating whether the user account is currently active or deactivated.",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.UserPortalModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "UserPortalId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "AspNetUserId": {
+      "type": "string",
+      "nullable": true
+     },
+     "PortalIds": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.Api.Models.WishListModel": {
+    "type": "object",
+    "properties": {
+     "CreatedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "CreatedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ModifiedBy": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "ModifiedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "ActionMode": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom1": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom2": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom3": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom4": {
+      "type": "string",
+      "nullable": true
+     },
+     "Custom5": {
+      "type": "string",
+      "nullable": true
+     },
+     "UserWishListId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "UserId": {
+      "type": "integer",
+      "format": "int32"
+     },
+     "SKU": {
+      "type": "string",
+      "nullable": true
+     },
+     "WishListAddedDate": {
+      "type": "string",
+      "format": "date-time"
+     },
+     "AddOnProductSKUs": {
+      "type": "string",
+      "nullable": true
+     },
+     "PortalId": {
+      "type": "integer",
+      "format": "int32"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.CustomTable.Model.CustomTableBulkDataModel": {
+    "type": "object",
+    "properties": {
+     "uniqueColumnValue": {
+      "type": "string",
+      "description": "The value of the unique column. If any table does not contain unique column, then it will return row number instead.",
+      "nullable": true
+     },
+     "isSuccess": {
+      "type": "boolean",
+      "description": "The status of the operation."
+     },
+     "errorMessage": {
+      "type": "string",
+      "description": "Error message if anything fails during execution.",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.CustomTable.Model.CustomTableBulkDeleteResponse": {
+    "type": "object",
+    "properties": {
+     "model": {
+      "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkDataModel"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Engine.CustomTable.Model.CustomTableBulkResponse": {
+    "type": "object",
+    "properties": {
+     "customTableBulkDataModels": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/Znode.Engine.CustomTable.Model.CustomTableBulkDataModel"
+      },
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Libraries.Abstract.Helper.FilterTuple": {
+    "type": "object",
+    "properties": {
+     "item1": {
+      "type": "string",
+      "nullable": true
+     },
+     "item2": {
+      "type": "string",
+      "nullable": true
+     },
+     "item3": {
+      "type": "string",
+      "nullable": true
+     },
+     "filterName": {
+      "type": "string",
+      "nullable": true
+     },
+     "filterOperator": {
+      "type": "string",
+      "nullable": true
+     },
+     "filterValue": {
+      "type": "string",
+      "nullable": true
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Libraries.Abstract.Models.ZnodeErrorDetail": {
+    "type": "object",
+    "properties": {
+     "errorCode": {
+      "type": "integer",
+      "format": "int32",
+      "nullable": true
+     },
+     "errorMessage": {
+      "type": "string",
+      "nullable": true
+     },
+     "hasError": {
+      "type": "boolean"
+     },
+     "statusCode": {
+      "$ref": "#/components/schemas/System.Net.HttpStatusCode"
+     }
+    },
+    "additionalProperties": false
+   },
+   "Znode.Libraries.ECommerce.Utilities.UserVerificationTypeEnum": {
+    "enum": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "type": "integer",
+    "format": "int32"
+   }
+  }
+ }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+  "sql" : "SELECT TOP 10 um.Id AS userId, MIN(ps.ParentZnodeProductId) AS productId, MIN(ps.ParentName) AS productName FROM cso.TblCustom_UserManagement um INNER JOIN dbo.AspNetZnodeUser azu ON azu.UserName = um.UserName INNER JOIN dbo.AspNetUsers au ON au.UserName = azu.AspNetZnodeUserId INNER JOIN dbo.ZnodeUser zu ON zu.AspNetUserId = au.Id INNER JOIN dbo.ZnodeUserPortal up ON up.UserId = zu.UserId INNER JOIN dbo.ZnodePortal po ON po.PortalId = up.PortalId AND po.StoreCode = um.StoreCode INNER JOIN cso.TblCustom_Allocations a ON a.SalesRepEmail = um.UserName INNER JOIN cso.ProductSearch ps ON ps.SKU = a.ChildSKU INNER JOIN dbo.ZnodePortalCatalog pc ON pc.PublishCatalogId = ps.ZnodeCatalogId AND pc.PortalId = po.PortalId WHERE po.StoreCode = @store AND um.Role = @role AND zu.IsActive = @isActive AND au.LockoutEnd IS NULL AND a.Status = @allocationStatus AND a.QuantityRemaining > @zero AND ps.IsActive = @isActive AND ps.ParentZnodeProductId IS NOT NULL AND (@preferred IS NULL OR um.Id = @preferred) GROUP BY um.Id ORDER BY um.Id",
+  "params" : [ "store", "role", "isActive", "allocationStatus", "zero", "preferred" ],
+  "constants" : {
+    "isActive" : "true",
+    "allocationStatus" : "Active",
+    "zero" : "0"
+  },
+  "outputs" : [ "userId", "productId", "productName" ],
+  "identity" : "userId",
+  "candidates" : true,
+  "schemaFingerprint" : "sha256:f2894e3287560ce9365395e014081f721de15ab1692f5cd81c3ba30cb6f319b1",
+  "vocabularyFingerprint" : "sha256:286ea7b2610e1ac212e451bee590a94f01775e9d89d460f09088a564c264121d",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T05:59:30Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "lastValidated" : "2026-11-27T05:57:58Z",
+  "verifiedHash" : "sha256:c421d121754748055e45d1e2fece14074c76095db46912f9c5da7570c25438cb"
+}

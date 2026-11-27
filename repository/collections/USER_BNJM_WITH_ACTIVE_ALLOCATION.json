@@ -1,0 +1,123 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+  "spec" : {
+    "file" : "specs/znode-bnjm-allocation-api.json",
+    "operations" : [ "POST /User/CreateCustomerAccount", "POST /User/DeleteUserAccount", "POST /v1/custom-table-data/{tableKey}/insert", "DELETE /v1/custom-table-data/{tableKey}/{columnName}/{columnValue}/bulk" ]
+  },
+  "create" : {
+    "steps" : [ {
+      "name" : "createUser",
+      "method" : "POST",
+      "path" : "/User/CreateCustomerAccount",
+      "payloadTemplate" : "payloads/USER_BNJM_WITH_ACTIVE_ALLOCATION.createUser.json",
+      "captures" : {
+        "userId" : "/User/UserId",
+        "userEmail" : "/UserName"
+      },
+      "undo" : {
+        "method" : "POST",
+        "path" : "/User/DeleteUserAccount",
+        "bodyTemplate" : "payloads/USER_BNJM_WITH_ACTIVE_ALLOCATION.deleteUser.json"
+      }
+    }, {
+      "name" : "allocate",
+      "method" : "POST",
+      "path" : "/v1/custom-table-data/{allocationTable}/insert",
+      "payloadTemplate" : "payloads/USER_BNJM_WITH_ACTIVE_ALLOCATION.allocate.json",
+      "undo" : {
+        "method" : "DELETE",
+        "path" : "/v1/custom-table-data/{allocationTable}/{allocationOwnerColumn}/{userEmail}/bulk"
+      }
+    } ],
+    "id" : "{userId}",
+    "inputsFromDb" : {
+      "portalId" : {
+        "key" : "STORE_WEBSTORE_ACTIVE",
+        "output" : "portalId",
+        "params" : {
+          "store" : "{store}"
+        }
+      },
+      "childSku" : {
+        "key" : "PRODUCT_BNJM_SEARCHABLE_SIZE",
+        "output" : "sku",
+        "params" : {
+          "store" : "{store}"
+        }
+      },
+      "parentSku" : {
+        "key" : "PRODUCT_BNJM_SEARCHABLE_SIZE",
+        "output" : "parentSku",
+        "params" : {
+          "store" : "{store}"
+        }
+      },
+      "productId" : {
+        "key" : "PRODUCT_BNJM_SEARCHABLE_SIZE",
+        "output" : "productId",
+        "params" : {
+          "store" : "{store}"
+        }
+      },
+      "productName" : {
+        "key" : "PRODUCT_BNJM_SEARCHABLE_SIZE",
+        "output" : "productName",
+        "params" : {
+          "store" : "{store}"
+        }
+      }
+    },
+    "constants" : {
+      "isActive" : true,
+      "isWebStoreUser" : true,
+      "isGuestUser" : false,
+      "isLock" : false,
+      "allocationTable" : "Allocations",
+      "allocationOwnerColumn" : "SalesRepEmail",
+      "allocationStatus" : "Active",
+      "quantityAllocated" : 5,
+      "currentlyRedeemed" : 0
+    },
+    "generated" : {
+      "uniqueSuffix" : {
+        "kind" : "uniqueSuffix"
+      },
+      "password" : {
+        "kind" : "password",
+        "secret" : true
+      }
+    },
+    "runIdTag" : {
+      "field" : "/UserName",
+      "format" : "TDA-{runId}-",
+      "property" : "userName"
+    },
+    "outputs" : {
+      "userId" : {
+        "from" : "value",
+        "name" : "userId"
+      },
+      "productId" : {
+        "from" : "value",
+        "name" : "productId"
+      },
+      "productName" : {
+        "from" : "value",
+        "name" : "productName"
+      }
+    }
+  },
+  "specFingerprint" : "sha256:59725cd406b98876dcfcf7d1014520e1b29516b9ea64506d97eedbd9358ea350",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T05:45:43Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "teardown" : {
+    "method" : "POST",
+    "path" : "/User/DeleteUserAccount",
+    "bodyTemplate" : "payloads/USER_BNJM_WITH_ACTIVE_ALLOCATION.teardown.json"
+  },
+  "lastValidated" : "2026-11-27T05:41:49Z",
+  "verifiedHash" : "sha256:e4dda49a1f52b298ad18a0a7e53b277d78677ea690d7a486d7f65570e4ef11f7"
+}

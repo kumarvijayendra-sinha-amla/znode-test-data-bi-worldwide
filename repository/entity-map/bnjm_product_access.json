@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "entity": "bnjm_product_access",
+  "tables": [
+    "cso.ProductSearch",
+    "cso.UserProductAccess",
+    "cso.TblCustom_Allocations",
+    "cso.TblCustom_UserManagement",
+    "dbo.ZnodeUser",
+    "dbo.AspNetZnodeUser",
+    "dbo.AspNetUsers",
+    "dbo.ZnodeUserPortal",
+    "dbo.ZnodePortal",
+    "dbo.AspNetUserRoles",
+    "dbo.AspNetRoles",
+    "dbo.ZnodePortalCatalog",
+    "cso.ZnodeCustomTableDetail",
+    "cso.ZnodeCustomTableFields"
+  ],
+  "joins": [
+    {
+      "from": "cso.UserProductAccess.SKU",
+      "to": "cso.ProductSearch.SKU",
+      "kind": "inner"
+    },
+    {
+      "from": "cso.UserProductAccess.AllocationId",
+      "to": "cso.TblCustom_Allocations.Id",
+      "kind": "inner"
+    },
+    {
+      "from": "cso.UserProductAccess.UserId",
+      "to": "dbo.ZnodeUser.UserId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.ZnodeUser.AspNetUserId",
+      "to": "dbo.AspNetUsers.Id",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.AspNetUsers.UserName",
+      "to": "dbo.AspNetZnodeUser.AspNetZnodeUserId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.AspNetZnodeUser.UserName",
+      "to": "cso.TblCustom_UserManagement.UserName",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeUser.UserId",
+      "to": "dbo.ZnodeUserPortal.UserId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeUserPortal.PortalId",
+      "to": "dbo.ZnodePortal.PortalId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.ZnodeUser.AspNetUserId",
+      "to": "dbo.AspNetUserRoles.UserId",
+      "kind": "left"
+    },
+    {
+      "from": "dbo.AspNetUserRoles.RoleId",
+      "to": "dbo.AspNetRoles.Id",
+      "kind": "left"
+    },
+    {
+      "from": "cso.ProductSearch.ZnodeCatalogId",
+      "to": "dbo.ZnodePortalCatalog.PublishCatalogId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.ZnodePortalCatalog.PortalId",
+      "to": "dbo.ZnodePortal.PortalId",
+      "kind": "inner"
+    },
+    {
+      "from": "dbo.AspNetZnodeUser.UserName",
+      "to": "cso.TblCustom_Allocations.SalesRepEmail",
+      "kind": "inner"
+    },
+    {
+      "from": "cso.ZnodeCustomTableFields.CustomTableDetailId",
+      "to": "cso.ZnodeCustomTableDetail.CustomTableDetailId",
+      "kind": "inner"
+    }
+  ],
+  "properties": {
+    "userId": "dbo.ZnodeUser.UserId",
+    "userName": "dbo.AspNetZnodeUser.UserName",
+    "role": "cso.TblCustom_UserManagement.Role",
+    "aspNetRole": "dbo.AspNetRoles.Name",
+    "store": "dbo.ZnodePortal.StoreCode",
+    "categories": "cso.TblCustom_UserManagement.Categories",
+    "sku": "cso.ProductSearch.SKU",
+    "name": "cso.ProductSearch.Name",
+    "parentSku": "cso.ProductSearch.ParentSKU",
+    "parentName": "cso.ProductSearch.ParentName",
+    "categoryCode": "cso.ProductSearch.CategoryCode",
+    "isActive": "cso.ProductSearch.IsActive",
+    "allocationStatus": "cso.TblCustom_Allocations.Status",
+    "quantityRemaining": "cso.TblCustom_Allocations.QuantityRemaining",
+    "productId": "cso.ProductSearch.ParentZnodeProductId",
+    "customTableKey": "cso.ZnodeCustomTableDetail.TableKey"
+  },
+  "scope": {
+    "store": "dbo.ZnodePortal.StoreCode"
+  },
+  "maskedColumns": [
+    "cso.TblCustom_Allocations.SalesRepEmail",
+    "cso.TblCustom_UserManagement.UserName",
+    "cso.TblCustom_UserManagement.FirstName",
+    "cso.TblCustom_UserManagement.LastName",
+    "cso.TblCustom_UserManagement.ShipperID",
+    "cso.TblCustom_UserManagement.ProgramID",
+    "dbo.AspNetZnodeUser.UserName",
+    "dbo.AspNetUsers.UserName",
+    "dbo.AspNetUsers.NormalizedUserName",
+    "dbo.AspNetUsers.SecurityStamp",
+    "dbo.AspNetUsers.ConcurrencyStamp",
+    "dbo.ZnodeUser.UserName",
+    "dbo.ZnodeUser.Email",
+    "dbo.ZnodeUser.FirstName",
+    "dbo.ZnodeUser.LastName",
+    "dbo.ZnodeUser.MiddleName",
+    "dbo.ZnodeUser.PhoneNumber",
+    "dbo.ZnodeUser.CustomerPaymentGUID",
+    "dbo.ZnodeUser.RefreshToken",
+    "dbo.ZnodeUser.ExternalId",
+    "dbo.ZnodeUser.Custom1",
+    "dbo.ZnodeUser.Custom2",
+    "dbo.ZnodeUser.Custom3",
+    "dbo.ZnodeUser.Custom4",
+    "dbo.ZnodeUser.Custom5"
+  ],
+  "schemaFingerprint": "sha256:ba4af33c056afe099bb4ab5870528a3c9098b518d1b1e62e410cf4e6d856de43",
+  "scannedAt": "2026-11-27T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

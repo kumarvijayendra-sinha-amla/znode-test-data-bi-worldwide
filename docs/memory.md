@@ -10,10 +10,10 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
 | Field | Value |
 | --- | --- |
 | Environment | `qa` = BI Worldwide bnjm-dv (`TDA_ENV_NAME=qa`; DB 172.21.44.4 over VPN; API gateway apigateways-bnjm-dv.znodecorp.com with a dedicated client; storefront webstore-bnjm-dv.znodecorp.com; store code BNJM = PortalId 10) |
-| Framework | Playwright fork `D:\IdeaFestNov\znode-biww-playwright-automation-fork`, branch `dev_BMP36`; runs with `ENV=qa` (config/qa.json) |
+| Framework | Playwright fork `D:\znode-biww-playwright-automation-fork` (moved from `D:\IdeaFestNov\...`), one branch per story `qa/<KEY>-<slug>` from `origin/master`; runs with `ENV=qa` (config/qa.json) |
 | Release | core and adapter 0.19.0 |
-| Last updated | 2026-11-26 |
-| Next step | Commit the BMP-36 work in both repositories (on the user's word); TC2 when a Super Admin account exists; next stories (Sales Rep / Market Coordinator sign-in and impersonation) |
+| Last updated | 2026-11-27 |
+| Next step | BMP-84: commit both BMP-84 branches on the user's word; log defects (placeholder text, Account tab labels) on the user's word; fix the create-path Web Admin id gap; TC005 when a category Admin account exists |
 
 ### 2026-11-26: setup for new tests (/new-test)
 
@@ -52,6 +52,56 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   (approved); keep for TC2 if created users can sign in later, else reject. Fork leftovers: Merchant-admin Dashboard
   page code and `auth/` device-cookie files (delete `auth/admin-qa.json`, it holds full sessions).
 - Generator follow-ups opened: PR #16 (scanner follows constants) and PR #15 (`sensitive` default); both set 0.19.1.
+
+### 2026-11-27: story BMP-84 (Web Storefront Header)
+
+- Branches: data repo `BMP-84` (from `dev`); fork `qa/BMP-84-storefront-header` (from `origin/master`). BMP-94 work was
+  committed to `qa/BMP-94-cart-checkout-delivery` first; BMP-84 carries its login fix and Bnjm page code unchanged.
+- `.env` here now holds the qa DB and API client (user created it 2026-11-27; never read by agents). `tda snapshot` taken.
+- Roles on qa: the config account (roshni.sen) is a Super Admin. Sales Rep / Market Coordinator via Web Admin Shop As
+  (`/admin/users/{userId}/shop-as`, "Open storefront"; `btnShopAsEnd` ends it). No rep passwords used (user decision).
+- BI Worldwide data model (cso schema): `TblCustom_UserManagement` (Role: Sales Rep, Market Coordinator, Admin,
+  Super Admin; Admin `Categories`), `TblCustom_Allocations` (SalesRepEmail, Parent/ChildSKU, Status Active,
+  QuantityRemaining), `ProductSearch` (search catalog; tile id = ParentZnodeProductId), `UserProductAccess` (only some
+  users; not the source of truth). Custom Table API key for allocations: `Allocations` (cso.ZnodeCustomTableDetail).
+- New (all pending_approval): entity map `bnjm_product_access`; keys `USER_BNJM_WITH_ACTIVE_ALLOCATION` (consumable:
+  candidates query + collection that creates a customer and inserts an Active allocation, undone at teardown),
+  `PRODUCT_BNJM_NOT_ALLOCATED_TO_USER`, `PRODUCT_BNJM_SEARCHABLE_SIZE`; spec subset `specs/znode-bnjm-allocation-api.json`
+  (one collection allows one spec file); 12 requirements under `repository/requirements/playwright/tests/webstore/
+  HeaderPage/BnjmHeaderTest/`. qa API writes (customer + allocation row) approved by the user 2026-11-27.
+- Fork: TDA adapter wired on this branch (testData/tdaSwap fixtures, TDA global setup appended to the fork's own when
+  TDA_HOME is set). Spec `tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts`; page code `BnjmHeaderPage`.
+- Pre-approval run (no TDA_HOME): TC001, TC008, TC009, TC011, TC012 pass; TC005 skipped (@blocked, no category Admin
+  account + keys); TC003 and TC010 fail on label text (story "Search Products", "My Orders", "Help/Contact Us"; qa shows
+  "Search products", "My orders", "Help / Contact Us"; user chose exact story text). TC002/4/6/7 need approved data.
+  Live: a Sales Rep sees all 5 products although only one is allocated (BMP-490, TC004 runs and fails by user choice).
+- Pitfall: inside a test, `browser.newContext()` inherits the worker's signed-in storageState; pass an empty one for a
+  signed-out context. Super Admin sign-in lands on `/admin`, which may stay blank in a fresh context: open `/search`.
+- Leftovers seen on qa: 3 users `TDA-tda-playwright-1795756111059-*` (ids 423-425) from an earlier run, not torn down.
+- Web Admin user id (`/admin/users/{id}`, Shop As) = `cso.TblCustom_UserManagement.Id`, NOT `dbo.ZnodeUser.UserId` (ids
+  overlap by chance, e.g. 283 is a different person in each table). First TDA run picked ZnodeUser ids 305-330 ->
+  "Unknown user". Queries USER_BNJM_WITH_ACTIVE_ALLOCATION and PRODUCT_BNJM_NOT_ALLOCATED_TO_USER now use um.Id
+  (re-verified: reps 263, 272, 273...; coordinators 279, 288; Shop As loads) and are pending approval again.
+  Create-path gap: the collection's userId comes from CreateCustomerAccount (ZnodeUser id); no create call returns the
+  UserManagement id, so a created rep cannot be opened in Web Admin yet. Entity map property userId still says ZnodeUser.
+- Round 1 + round 2 approvals 2026-11-27 by gaurav-pistulkar-amla; the approve prompt needs y per item in PowerShell.
+- Reference run 2026-11-27 (`bin/tda run ... --serial`, normal mode): 8 passed (TC001, 002, 006, 007, 008, 009, 011,
+  012), 1 skipped (TC005 blocked), 3 failed on app issues: TC003 placeholder text, TC010 tab labels (story text vs qa),
+  TC004 BMP-490 (rep 263 finds Outwear/797 that is not allocated). Teardown: 0 created, 0 failed. Fallback mode not run
+  (no fallbackWorktree; new tests have no legacy data). Script lessons: wait for the storefront URL after Shop As (the
+  admin page has the same header); count absent tiles once after results load (retrying toHaveCount(0) false-passed).
+- TC005 built 2026-11-27: Admin categories = product attribute BenjaminMooreCategory (default values TEM 498, ADR 499,
+  Contractorworkwear 500); UserManagement.Categories holds the codes. Shop As is offered only for Sales Reps and Market
+  Coordinators (Web Admin row menu), so TC005 signs in as the Admin from env BNJM_ADMIN_USERNAME / BNJM_ADMIN_PASSWORD
+  and declares it (useExisting). New, pending: entity map bnjm_admin_category; keys USER_BNJM_ADMIN_WITH_CATEGORIES
+  (consumable, candidates + preferredOnly, no collection), PRODUCT_BNJM_IN/OUTSIDE_ADMIN_CATEGORIES; TC005 requirement
+  rewritten (pending). Category match is on codes; a value stored with spaces ("Contractor work wear") would not match.
+- Create path: no API step can return the Web Admin (UserManagement) id of a created customer (Custom Table reads are GET;
+  collection steps allow POST/PUT/PATCH; `fetch` runs before create; UserManagement is not a registered custom table).
+  Needs a generator feature (post-create DB lookup through an approved query). Not done.
+- Someone else's TDA run tda-playwright-1795759653848 (05:47Z) left ~78 TDA-* users (some Admin) on qa; not ours.
+- Open: Admin (category) account for TC005 + keys for products in/outside an Admin's categories; whether the storefront
+  search filters on Allocations or UserProductAccess (decides if created allocations show up in search).
 
 ## Current status
 

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+  "entity": "bnjm_product_access",
+  "type": "storefront_user",
+  "constraints": {
+    "role": "{role}",
+    "allocationStatus": "active",
+    "quantityRemaining": "> 0",
+    "isActive": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "consumable",
+  "description": "Active BNJM storefront user of a role (Sales Rep or Market Coordinator) with an Active allocation with units left, on a product active in the store search catalog. Returns userId (for Shop As) and an allocated parent product. Found first, else created via API, removed at teardown. BMP-84.",
+  "declaredParams": {
+    "role": {
+      "type": "string",
+      "description": "Storefront role as stored in cso.TblCustom_UserManagement.Role, e.g. Sales Rep or Market Coordinator"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code (ZnodePortal.StoreCode), e.g. BNJM"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

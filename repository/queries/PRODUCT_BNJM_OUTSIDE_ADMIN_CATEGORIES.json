@@ -1,0 +1,26 @@
+{
+  "schemaVersion" : 1,
+  "key" : "PRODUCT_BNJM_OUTSIDE_ADMIN_CATEGORIES",
+  "sql" : "SELECT TOP 10 pe.ZnodeProductId AS productId, MIN(pe.Name) AS productName FROM dbo.ZnodePublishProductEntity pe INNER JOIN dbo.ZnodePublishVersionEntity ve ON ve.VersionId = pe.VersionId INNER JOIN dbo.ZnodePortalCatalog pc ON pc.PublishCatalogId = pe.ZnodeCatalogId INNER JOIN dbo.ZnodePortal po ON po.PortalId = pc.PortalId WHERE po.StoreCode = @store AND ve.RevisionType = @publishState AND pe.IsActive = @isActive AND pe.IsObsolete = @notObsolete AND NOT EXISTS (SELECT ta.PimProductTypeAssociationId FROM dbo.ZnodePimProductTypeAssociation ta WHERE ta.PimProductId = pe.ZnodeProductId) AND NOT EXISTS (SELECT dv.PimAttributeDefaultValueId FROM dbo.ZnodePimAttributeValue av INNER JOIN dbo.ZnodePimAttribute pa ON pa.PimAttributeId = av.PimAttributeId INNER JOIN dbo.ZnodePimProductAttributeDefaultValue pdv ON pdv.PimAttributeValueId = av.PimAttributeValueId INNER JOIN dbo.ZnodePimAttributeDefaultValue dv ON dv.PimAttributeDefaultValueId = pdv.PimAttributeDefaultValueId INNER JOIN cso.TblCustom_UserManagement um ON um.Id = @owner WHERE av.PimProductId = pe.ZnodeProductId AND pa.AttributeCode = @categoryAttribute AND CHARINDEX(CONCAT(@comma, dv.AttributeDefaultValueCode, @comma), CONCAT(@comma, REPLACE(REPLACE(um.Categories, @commaSpace, @comma), @semicolon, @comma), @comma)) > @zero) GROUP BY pe.ZnodeProductId ORDER BY pe.ZnodeProductId",
+  "params" : [ "store", "publishState", "isActive", "notObsolete", "owner", "categoryAttribute", "comma", "commaSpace", "semicolon", "zero" ],
+  "constants" : {
+    "publishState" : "PRODUCTION",
+    "isActive" : "true",
+    "notObsolete" : "false",
+    "categoryAttribute" : "BenjaminMooreCategory",
+    "comma" : ",",
+    "commaSpace" : ", ",
+    "semicolon" : ";",
+    "zero" : "0"
+  },
+  "outputs" : [ "productId", "productName" ],
+  "identity" : "productId",
+  "schemaFingerprint" : "sha256:bef6e987d5370ad1c0c0ce134fb72cd1bd378d55e8468d6bbc5609b39b88969e",
+  "vocabularyFingerprint" : "sha256:dbfebb02f5b136cd1b1bcf940d0d2c88cfb8c9505a680c83333ba96ffa950d5e",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T06:47:50Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "lastValidated" : "2026-11-27T06:47:11Z",
+  "verifiedHash" : "sha256:33e6b47f2e6be9a90008cdc4e7175d76c31d8a804c4aefef2610c5f783c38e17"
+}

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_BNJM_NOT_ALLOCATED_TO_USER",
+  "entity": "bnjm_product_access",
+  "type": "product",
+  "constraints": {
+    "isActive": "true",
+    "allocatedToOwner": "= false"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active parent product in the store's search catalog none of whose sizes (child SKUs) has an Active allocation for the given user. Returns the product id (storefront tile) and name (search term). Story BMP-84 (AC4 negative flow, AC6).",
+  "declaredParams": {
+    "owner": {
+      "type": "integer",
+      "description": "ZnodeUser.UserId of the user the product must not be allocated to (link it: @rep.userId)"
+    },
+    "store": {
+      "type": "string",
+      "description": "Store code (ZnodePortal.StoreCode), e.g. BNJM"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

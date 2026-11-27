@@ -1,0 +1,19 @@
+{
+  "schemaVersion" : 1,
+  "key" : "PRODUCT_BNJM_SEARCHABLE_SIZE",
+  "sql" : "SELECT TOP 10 ps.SKU AS sku, ps.ParentSKU AS parentSku, ps.ParentZnodeProductId AS productId, ps.ParentName AS productName FROM cso.ProductSearch ps INNER JOIN dbo.ZnodePortalCatalog pc ON pc.PublishCatalogId = ps.ZnodeCatalogId INNER JOIN dbo.ZnodePortal po ON po.PortalId = pc.PortalId WHERE po.StoreCode = @store AND ps.IsActive = @isActive AND ps.ParentZnodeProductId IS NOT NULL AND ps.ParentSKU IS NOT NULL ORDER BY ps.ParentZnodeProductId, ps.SKU",
+  "params" : [ "store", "isActive" ],
+  "constants" : {
+    "isActive" : "true"
+  },
+  "outputs" : [ "sku", "parentSku", "productId", "productName" ],
+  "identity" : "sku",
+  "schemaFingerprint" : "sha256:8f5158e91b5172116c26bb377d65860a322ed0e6af2c443fada651d7bbff670e",
+  "vocabularyFingerprint" : "sha256:69e0ba8378e322b7779f4d3db4cce384ae39a79235c97e6aef07796475f33d71",
+  "status" : "approved",
+  "approvedBy" : "gaurav-pistulkar-amla",
+  "approvedAt" : "2026-11-27T05:41:21Z",
+  "createdAt" : "2026-11-27T00:00:00Z",
+  "lastValidated" : "2026-11-27T05:39:52Z",
+  "verifiedHash" : "sha256:e56dac5a139037e7aafeac0975a30d83871786455bd4e59b6c12dd463d8fcc73"
+}

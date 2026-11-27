@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_BNJM_ADMIN_WITH_CATEGORIES",
+  "entity": "bnjm_admin_category",
+  "type": "admin_user",
+  "constraints": {
+    "role": "{role}",
+    "categories": "not_empty",
+    "isActive": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "consumable",
+  "description": "Existing BNJM Admin (not Super Admin) with assigned product categories, declared by the test that signs in with it (useExisting). Returns its Web Admin user id; never creates or hands out an account. BMP-84 TC005.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code (ZnodePortal.StoreCode), e.g. BNJM"
+    },
+    "role": {
+      "type": "string",
+      "description": "Role as stored in cso.TblCustom_UserManagement.Role: Admin"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T06:45:02Z"
+}
