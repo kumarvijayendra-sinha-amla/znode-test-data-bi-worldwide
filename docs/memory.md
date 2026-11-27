@@ -100,6 +100,20 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   collection steps allow POST/PUT/PATCH; `fetch` runs before create; UserManagement is not a registered custom table).
   Needs a generator feature (post-create DB lookup through an approved query). Not done.
 - Someone else's TDA run tda-playwright-1795759653848 (05:47Z) left ~78 TDA-* users (some Admin) on qa; not ours.
+- Merged origin/dev into BMP-84 2026-11-27 (0.21.0: no approval step; BMP-38, BMP-94). BMP-84 entries keep their
+  approved status (0.21.0 still accepts it). All 6 BMP-84 queries and the collection re-verified with a 0.21.0 build
+  (generator tag v0.21.0); spec rerun on the merged repo: same result (8 pass, TC003/004/010 app issues, TC005 fixme).
+- Overlap with BMP-38/BMP-94 (kept, not duplicates): USER_BNJM_WITH_ACTIVE_ALLOCATION finds an existing rep first, while
+  USER_STOREFRONT_WITH_ROLE + ALLOTMENT_OF_USER_FOR_VARIANT always create. When create.lookupsFromDb is released, move
+  the BMP-84 create path to those collections plus a lookup of the Web Admin id (closes the create-path gap), and
+  TC005 can create its own Admin with a category and password via USER_WEBSTORE_WITH_ROLE + ADMIN_CATEGORY_AVAILABLE.
+- dev holds BMP-38/BMP-94 collections using create.lookupsFromDb; that generator branch
+  (feat/collection-lookups-constant-sets) is not on the generator remote, so released 0.21.0 reports 73 validation
+  errors in those files (none in BMP-84 files). Owner: whoever holds that branch.
+- runs.workdir is a literal machine path (no ${VAR} expansion); kept dev's value. On this machine run with a local,
+  uncommitted workdir of D:/znode-biww-playwright-automation-fork.
+- TC005 switched off (test.fixme, user decision 2026-11-27): the Admin login tried was refused by TDA
+  (PREFERRED_NOT_QUALIFIED). Fork PR: MRRSoft/znode-biww-playwright-automation-fork#2.
 - Open: Admin (category) account for TC005 + keys for products in/outside an Admin's categories; whether the storefront
   search filters on Allocations or UserProductAccess (decides if created allocations show up in search).
 ### 2026-11-27: story BMP-94 (Web Storefront Cart and Checkout page, step 2 in progress)
