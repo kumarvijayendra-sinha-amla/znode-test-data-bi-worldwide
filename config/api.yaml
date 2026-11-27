@@ -36,3 +36,5 @@ localTrustedCert: work/certs/localhost-dev.cer
 entityTerms:
   promotion: [promotion, coupon]
   user: [user, customer, account, register]
+  user_address: [address]
+  allocation: [allocation, custom-table-data]

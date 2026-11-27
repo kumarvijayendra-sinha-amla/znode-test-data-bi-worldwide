@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_ID_BY_USERNAME",
+  "entity": "user",
+  "type": "by_username",
+  "constraints": { "userName": "{userName}" },
+  "scope": {},
+  "usage": "read-only",
+  "description": "The user whose sign-in user name is exactly the given one: its ZnodeUser.UserId. Lookup for collections whose create call returns no ID (create.lookupsFromDb). Read only. KB: Managing Users.",
+  "declaredParams": {
+    "userName": { "type": "string", "description": "Exact sign-in user name as created (AspNetZnodeUser.UserName, the login name behind AspNetUsers/ZnodeUser)" }
+  },
+  "status": "pending_approval"
+}

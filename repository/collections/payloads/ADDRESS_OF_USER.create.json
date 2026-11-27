@@ -1,0 +1,20 @@
+{
+  "UserId": "{owner}",
+  "DisplayName": "{runIdTag}{uniqueSuffix}",
+  "FirstName": "{firstName}",
+  "LastName": "{lastName}",
+  "Address1": "{address1}",
+  "CityName": "{cityName}",
+  "StateName": "{addressStateCode}",
+  "StateCode": "{addressStateCode}",
+  "PostalCode": "{postalCode}",
+  "CountryName": "{countryCode}",
+  "CountryCode": "{countryCode}",
+  "PhoneNumber": "{phoneNumber}",
+  "IsActive": "{isActive}",
+  "IsShipping": "{isShipping}",
+  "IsBilling": "{isBilling}",
+  "IsDefaultShipping": "{isDefaultShipping}",
+  "IsDefaultBilling": "{isDefaultBilling}",
+  "IsAddressBook": "{isAddressBook}"
+}
