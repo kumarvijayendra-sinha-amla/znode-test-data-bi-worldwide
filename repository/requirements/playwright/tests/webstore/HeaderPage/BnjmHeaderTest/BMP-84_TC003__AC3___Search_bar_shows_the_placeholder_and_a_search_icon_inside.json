@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC003 [AC3]: Search bar shows the placeholder and a search icon inside",
+  "scenario": {
+    "summary": "The header search bar shows the placeholder Search Products and a search icon inside the bar.",
+    "steps": [
+      "Open the storefront",
+      "Check the search box placeholder",
+      "Check the search icon box lies within the search bar box"
+    ],
+    "entitiesTouched": [
+      "user"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Placeholder is exactly Search Products (story text)",
+      "Search icon inside the search bar"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC003, AC3)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC001 [AC1]: Admin button opens the Web Admin Dashboard",
+  "scenario": {
+    "summary": "The signed-in Super Admin (config account) sees the Admin button in the storefront header and opens the Web Admin Dashboard with it.",
+    "steps": [
+      "Open the storefront (/search) as the config account",
+      "Check the Admin button is shown",
+      "Click Admin",
+      "Check the Web Admin Dashboard (/admin) opens"
+    ],
+    "entitiesTouched": [
+      "user"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Admin button visible with label Admin",
+      "Web Admin Dashboard (/admin) opens"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC001, AC1)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

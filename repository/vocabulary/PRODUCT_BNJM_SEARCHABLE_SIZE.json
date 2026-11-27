@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "key": "PRODUCT_BNJM_SEARCHABLE_SIZE",
+  "entity": "bnjm_product_access",
+  "type": "product_size",
+  "constraints": {
+    "isActive": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Active size (child SKU) of a parent product in the store's search catalog. Returns the size SKU, its parent SKU, the parent product id (storefront tile) and parent name. Used to allocate a size to a created user. Story BMP-84.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code (ZnodePortal.StoreCode), e.g. BNJM"
+    }
+  },
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

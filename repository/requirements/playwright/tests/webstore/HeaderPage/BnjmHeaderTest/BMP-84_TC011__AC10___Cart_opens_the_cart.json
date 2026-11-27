@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC011 [AC10]: Cart opens the cart",
+  "scenario": {
+    "summary": "The header Cart opens the cart (in the BI WORLDWIDE theme a cart drawer).",
+    "steps": [
+      "Open the storefront",
+      "Click the cart",
+      "Check the cart drawer opens"
+    ],
+    "entitiesTouched": [
+      "user"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Cart opens"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC011, AC10)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

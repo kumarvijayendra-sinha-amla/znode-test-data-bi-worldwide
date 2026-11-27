@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC007 [AC4]: Shop As a Sales Rep shows the rep's products in search",
+  "scenario": {
+    "summary": "During Shop As a Sales Rep, search follows the impersonated user and returns the rep's allocated product.",
+    "steps": [
+      "Shop As the rep",
+      "Check the Shop As bar",
+      "Search rep.productName",
+      "Check the tile of rep.productId",
+      "End Shop As"
+    ],
+    "entitiesTouched": [
+      "bnjm_product_access"
+    ],
+    "stateChanges": [
+      "Shop As session started and ended"
+    ],
+    "assertions": [
+      "Shop As bar shown",
+      "Rep's allocated product found"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC007, AC4)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+      "alias": "rep",
+      "params": {
+        "role": "Sales Rep",
+        "store": "BNJM"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

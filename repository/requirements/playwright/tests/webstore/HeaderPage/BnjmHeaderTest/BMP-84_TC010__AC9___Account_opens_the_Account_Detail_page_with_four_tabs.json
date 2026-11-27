@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC010 [AC9]: Account opens the Account Detail page with four tabs",
+  "scenario": {
+    "summary": "Account opens the Account Detail page with the tabs Account, My Orders, Help/Contact Us and Address.",
+    "steps": [
+      "Open the storefront",
+      "Click Account",
+      "Check the Account Detail page and its tabs"
+    ],
+    "entitiesTouched": [
+      "user"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Account Detail page open",
+      "Tabs Account, My Orders, Help/Contact Us, Address (story text)"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC010, AC9)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}

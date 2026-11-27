@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC005 [AC5]: Admin search shows only products in assigned categories",
+  "scenario": {
+    "summary": "An Admin (not Super Admin) with assigned product categories signs in with its own account (Shop As is offered only for Sales Reps and Market Coordinators) and finds a product in an assigned category but not one outside them.",
+    "steps": [
+      "Read the category Admin's sign-in from BNJM_ADMIN_USERNAME / BNJM_ADMIN_PASSWORD; skip with the reason when unset",
+      "Declare the account to TDA (testData.useExisting categoryAdmin): checked as an Admin with assigned categories",
+      "Sign in as that Admin in its own browser context and open the storefront (/search)",
+      "Search inCategory.productName and check the tile of inCategory.productId is shown",
+      "Search outsideCategory.productName and check the tile of outsideCategory.productId is not shown"
+    ],
+    "entitiesTouched": [
+      "bnjm_admin_category"
+    ],
+    "stateChanges": [
+      "A separate session signs in as the category Admin"
+    ],
+    "assertions": [
+      "Product whose BenjaminMooreCategory is assigned to the Admin is shown",
+      "Product with no assigned BenjaminMooreCategory is not shown"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC005, AC5)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels",
+      "Admin categories = product attribute BenjaminMooreCategory (TEM, ADR, Contractorworkwear); Web Admin row menu: Shop as is available for Sales Reps and Market Coordinators only (seen 2026-11-27)"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_BNJM_ADMIN_WITH_CATEGORIES",
+      "alias": "categoryAdmin",
+      "params": {
+        "role": "Admin",
+        "store": "BNJM"
+      },
+      "preferred": {
+        "source": 0,
+        "required": true
+      }
+    },
+    {
+      "key": "PRODUCT_BNJM_IN_ADMIN_CATEGORIES",
+      "alias": "inCategory",
+      "params": {
+        "owner": "@categoryAdmin.userId",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_BNJM_OUTSIDE_ADMIN_CATEGORIES",
+      "alias": "outsideCategory",
+      "params": {
+        "owner": "@categoryAdmin.userId",
+        "store": "BNJM"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [
+    {
+      "value": "<masked:username>",
+      "location": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts:69",
+      "kind": "constant",
+      "profiled": false,
+      "role": "credential",
+      "alias": "categoryAdmin"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T06:45:02Z"
+}

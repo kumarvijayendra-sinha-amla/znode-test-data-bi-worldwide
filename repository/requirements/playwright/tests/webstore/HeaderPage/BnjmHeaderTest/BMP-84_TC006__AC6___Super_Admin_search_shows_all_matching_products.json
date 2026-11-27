@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/HeaderPage/BnjmHeaderTest.spec.ts > BMP-84 TC006 [AC6]: Super Admin search shows all matching products",
+  "scenario": {
+    "summary": "The Super Admin finds both a product allocated to a rep and a product not allocated to that rep.",
+    "steps": [
+      "Open the storefront as the config account (Super Admin)",
+      "Search rep.productName and check its tile",
+      "Search notAllocated.productName and check its tile"
+    ],
+    "entitiesTouched": [
+      "bnjm_product_access"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Allocated product shown",
+      "Not-allocated product shown"
+    ],
+    "evidence": [
+      "Jira BMP-84 (story, AC list and section 12 test cases), read through the Atlassian connector 2026-11-27; test case list approved by the user 2026-11-27 (TC006, AC6)",
+      "User decisions 2026-11-27: Sales Rep / Market Coordinator reached with Web Admin Shop As from the config account (Super Admin); creates on qa approved (customer + Allocations row, removed at teardown); BMP-490 tests run and fail; exact story text for labels"
+    ],
+    "confidence": "medium",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_BNJM_WITH_ACTIVE_ALLOCATION",
+      "alias": "rep",
+      "params": {
+        "role": "Sales Rep",
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "PRODUCT_BNJM_NOT_ALLOCATED_TO_USER",
+      "alias": "notAllocated",
+      "params": {
+        "owner": "@rep.userId",
+        "store": "BNJM"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-84"
+  ],
+  "sources": [],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "gaurav-pistulkar-amla",
+  "approvedAt": "2026-11-27T05:36:24Z"
+}
