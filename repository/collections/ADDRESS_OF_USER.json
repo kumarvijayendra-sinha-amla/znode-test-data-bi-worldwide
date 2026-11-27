@@ -1,108 +1,104 @@
 {
-  "schemaVersion": 1,
-  "key": "ADDRESS_OF_USER",
-  "spec": {
-    "file": "specs/znode-web-v1-api.json",
-    "operations": [
-      "POST /Customer/CreateCustomerAddress",
-      "POST /Customer/DeleteCustomerAddress"
-    ]
+  "schemaVersion" : 1,
+  "key" : "ADDRESS_OF_USER",
+  "spec" : {
+    "file" : "specs/znode-web-v1-api.json",
+    "operations" : [ "POST /Customer/CreateCustomerAddress", "POST /Customer/DeleteCustomerAddress" ]
   },
-  "create": {
-    "method": "POST",
-    "path": "/Customer/CreateCustomerAddress",
-    "payloadTemplate": "payloads/ADDRESS_OF_USER.create.json",
-    "inputsFromDb": {},
-    "constants": {
-      "firstName": "Test",
-      "lastName": "Shipper",
-      "countryCode": "US",
-      "isActive": true,
-      "isShipping": true,
-      "isBilling": false,
-      "isDefaultBilling": false,
-      "isAddressBook": true
+  "create" : {
+    "method" : "POST",
+    "path" : "/Customer/CreateCustomerAddress",
+    "payloadTemplate" : "payloads/ADDRESS_OF_USER.create.json",
+    "inputsFromDb" : { },
+    "constants" : {
+      "firstName" : "Test",
+      "lastName" : "Shipper",
+      "countryCode" : "US",
+      "isActive" : true,
+      "isShipping" : true,
+      "isBilling" : false,
+      "isDefaultBilling" : false,
+      "isAddressBook" : true
     },
-    "constantSets": [
-      {
-        "values": {
-          "address1": "125 W State St",
-          "cityName": "Trenton",
-          "addressStateCode": "NJ",
-          "postalCode": "08608",
-          "phoneNumber": "6095550100"
-        }
-      },
-      {
-        "when": {
-          "param": "stateCode",
-          "equals": "CA"
-        },
-        "values": {
-          "address1": "1315 10th St",
-          "cityName": "Sacramento",
-          "addressStateCode": "CA",
-          "postalCode": "95814",
-          "phoneNumber": "9165550100"
-        }
+    "constantSets" : [ {
+      "values" : {
+        "address1" : "125 W State St",
+        "cityName" : "Trenton",
+        "addressStateCode" : "NJ",
+        "postalCode" : "08608",
+        "phoneNumber" : "6095550100"
       }
-    ],
-    "generated": {
-      "uniqueSuffix": {
-        "kind": "uniqueSuffix"
+    }, {
+      "when" : {
+        "param" : "stateCode",
+        "equals" : "CA"
+      },
+      "values" : {
+        "address1" : "1315 10th St",
+        "cityName" : "Sacramento",
+        "addressStateCode" : "CA",
+        "postalCode" : "95814",
+        "phoneNumber" : "9165550100"
+      }
+    } ],
+    "generated" : {
+      "uniqueSuffix" : {
+        "kind" : "uniqueSuffix"
       }
     },
-    "runIdTag": {
-      "field": "/DisplayName",
-      "format": "TDA-{runId}-",
-      "property": "displayName"
+    "runIdTag" : {
+      "field" : "/DisplayName",
+      "format" : "TDA-{runId}-",
+      "property" : "displayName"
     },
-    "idPointer": "/Address/AddressId",
-    "outputs": {
-      "addressId": {
-        "from": "response",
-        "pointer": "/Address/AddressId"
+    "idPointer" : "/Address/AddressId",
+    "outputs" : {
+      "addressId" : {
+        "from" : "response",
+        "pointer" : "/Address/AddressId"
       },
-      "displayName": {
-        "from": "payload",
-        "pointer": "/DisplayName"
+      "displayName" : {
+        "from" : "payload",
+        "pointer" : "/DisplayName"
       },
-      "firstName": {
-        "from": "payload",
-        "pointer": "/FirstName"
+      "firstName" : {
+        "from" : "payload",
+        "pointer" : "/FirstName"
       },
-      "lastName": {
-        "from": "payload",
-        "pointer": "/LastName"
+      "lastName" : {
+        "from" : "payload",
+        "pointer" : "/LastName"
       },
-      "address1": {
-        "from": "payload",
-        "pointer": "/Address1"
+      "address1" : {
+        "from" : "payload",
+        "pointer" : "/Address1"
       },
-      "city": {
-        "from": "payload",
-        "pointer": "/CityName"
+      "city" : {
+        "from" : "payload",
+        "pointer" : "/CityName"
       },
-      "stateCode": {
-        "from": "payload",
-        "pointer": "/StateCode"
+      "stateCode" : {
+        "from" : "payload",
+        "pointer" : "/StateCode"
       },
-      "postalCode": {
-        "from": "payload",
-        "pointer": "/PostalCode"
+      "postalCode" : {
+        "from" : "payload",
+        "pointer" : "/PostalCode"
       },
-      "isDefaultShipping": {
-        "from": "value",
-        "name": "isDefaultShipping"
+      "isDefaultShipping" : {
+        "from" : "value",
+        "name" : "isDefaultShipping"
       }
     }
   },
-  "teardown": {
-    "method": "POST",
-    "path": "/Customer/DeleteCustomerAddress",
-    "bodyTemplate": "payloads/ADDRESS_OF_USER.teardown.json"
+  "teardown" : {
+    "method" : "POST",
+    "path" : "/Customer/DeleteCustomerAddress",
+    "bodyTemplate" : "payloads/ADDRESS_OF_USER.teardown.json"
   },
-  "specFingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
-  "status": "pending_approval",
-  "createdAt": "2026-11-26T15:00:00Z"
+  "specFingerprint" : "sha256:3424b3c5c8636d9945f806fcaf8846c159a12e4561d52f007005008963c5d70b",
+  "status" : "pending_approval",
+  "createdAt" : "2026-11-26T15:00:00Z",
+  "lastValidated" : "2026-11-27T07:27:40Z",
+  "verifiedHash" : "sha256:6b72472a861de45bd7840dba9e3385a7d0970849babea138f87501f5c41a8e14"
 }

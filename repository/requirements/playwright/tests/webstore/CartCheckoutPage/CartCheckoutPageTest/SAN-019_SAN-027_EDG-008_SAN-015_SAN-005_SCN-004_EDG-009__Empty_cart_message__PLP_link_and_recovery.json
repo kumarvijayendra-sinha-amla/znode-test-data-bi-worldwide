@@ -49,7 +49,7 @@
       "Category filter: the category name to filter by waits for an output categoryName on PRODUCT_CONFIGURABLE_SIZE_GRID (P6, not built)",
       "SAN-015 'two different items' are two lines (two sizes of the product); SCN-004 'any allotted product' is the same allotted product",
       "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): SAN-005 Category filter on the PLP is not applied; it waits for output proposal P6 (categoryName) - partially automated",
-      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Defect against SAN-011 (user, 2026-11-27; config/known-failures.yaml): the Header Cart should open the combined page directly. T2 soft-checks the direct open (fails on qa) and then goes on through the drawer, as the other tests do",
       "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively",
       "qa finding (2026-11-27): a single size is removed by setting its quantity to 0 in the edit view (no per-size remove control)"
     ],

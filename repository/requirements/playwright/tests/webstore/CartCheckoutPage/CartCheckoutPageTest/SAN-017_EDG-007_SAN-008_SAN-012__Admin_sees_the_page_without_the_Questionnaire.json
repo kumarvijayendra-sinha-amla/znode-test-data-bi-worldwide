@@ -39,7 +39,7 @@
       "Held (partially automated): the Super Admin halves of SAN-017 (step 4) and EDG-007 (step 4) wait for a Super Admin account, like BMP-36 TC2. Shop As exists only for Sales Reps and Market Coordinators and created users have no password, so a created Super Admin or Web Admin cannot be reached (user answer 2026-11-27, analysis section 11)",
       "The own Admin account is shared: its cart is emptied at the start and at the end so runs do not affect each other; parallel runs with the same account would collide",
       "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the Super Admin halves of SAN-017 and EDG-007 are held until a Super Admin account exists (analysis section 11); only the Admin half with the tester's own account is automated - partially automated",
-      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer",
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Defect against SAN-011 (user, 2026-11-27; config/known-failures.yaml): the Header Cart should open the combined page directly. T2 soft-checks the direct open (fails on qa) and then goes on through the drawer, as the other tests do",
       "qa finding (2026-11-27): the section headings on qa are lowercase \"Address and contact\" and \"Order summary\"; the test compares the FRD texts \"Address and Contact\" / \"Order Summary\" case-insensitively"
     ],
     "confidence": "medium",

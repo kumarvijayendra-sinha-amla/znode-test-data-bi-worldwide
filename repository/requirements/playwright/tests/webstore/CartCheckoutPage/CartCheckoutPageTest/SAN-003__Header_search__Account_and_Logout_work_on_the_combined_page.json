@@ -36,7 +36,7 @@
       "Allotments: BIWW Allocations custom table, linked to the rep only by SalesRepEmail (analysis section 9); one ALLOTMENT_OF_USER_FOR_VARIANT need per variant the test enters, quantity = the highest quantity the test reaches for it",
       "The case searches 'BM05' (the product SKU): the term is the product's SKU from the key",
       "SAN-003 title mentions language; its steps do not, so no language check. SAN-003 'Logout should sign the user out' is read as ending the impersonated user's session: Decision 2026-11-27 (analysis section 11): Logout during Shop As ends the impersonation, not the Admin's session; after Logout the tester is back in the own Admin session",
-      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Pending a user decision whether this is a defect against SAN-011 (Header Cart opens the combined page directly); the test goes through the drawer"
+      "qa finding (2026-11-27): the Header Cart opens a cart drawer; its Checkout link opens the combined page. Defect against SAN-011 (user, 2026-11-27; config/known-failures.yaml): the Header Cart should open the combined page directly. T2 soft-checks the direct open (fails on qa) and then goes on through the drawer, as the other tests do"
     ],
     "confidence": "medium",
     "needsReview": true
