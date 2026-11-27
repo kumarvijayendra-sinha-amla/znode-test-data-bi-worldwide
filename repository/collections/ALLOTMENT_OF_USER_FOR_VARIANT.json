@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "key": "ALLOTMENT_OF_USER_FOR_VARIANT",
+  "spec": {
+    "file": "specs/Znode Custom Table API V1.json",
+    "operations": [
+      "POST /v1/custom-table-data/{tableKey}/insert",
+      "DELETE /v1/custom-table-data/{tableKey}/{rowId}"
+    ]
+  },
+  "create": {
+    "steps": [
+      {
+        "name": "insertAllotment",
+        "method": "POST",
+        "path": "/v1/custom-table-data/{tableKey}/insert",
+        "payloadTemplate": "payloads/ALLOTMENT_OF_USER_FOR_VARIANT.insert.json"
+      }
+    ],
+    "id": "{rowId}",
+    "inputsFromDb": {},
+    "lookupsFromDb": {
+      "rowId": {
+        "key": "ALLOTMENT_ID_BY_EMAIL_AND_SKU",
+        "output": "id",
+        "params": {
+          "ownerEmail": "{ownerEmail}",
+          "childSku": "{childSku}"
+        }
+      }
+    },
+    "constants": {
+      "tableKey": "Allocations",
+      "status": "Active",
+      "currentlyRedeemed": 0
+    },
+    "generated": {},
+    "runIdTag": {
+      "step": "insertAllotment",
+      "field": "/SalesRepEmail",
+      "format": "TDA-{runId}-",
+      "property": "salesRepEmail"
+    },
+    "outputs": {
+      "childSku": { "from": "payload", "step": "insertAllotment", "pointer": "/ChildSKU" },
+      "parentSku": { "from": "payload", "step": "insertAllotment", "pointer": "/ParentSKU" },
+      "quantityRemaining": { "from": "payload", "step": "insertAllotment", "pointer": "/QuantityRemaining" },
+      "id": { "from": "value", "name": "rowId" }
+    }
+  },
+  "teardown": {
+    "method": "DELETE",
+    "path": "/v1/custom-table-data/{tableKey}/{id}"
+  },
+  "specFingerprint": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "status": "pending_approval",
+  "createdAt": "2026-11-26T20:30:00Z"
+}
