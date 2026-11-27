@@ -39,13 +39,29 @@
       "step": "insertAllotment",
       "field": "/SalesRepEmail",
       "format": "TDA-{runId}-",
-      "property": "salesRepEmail"
+      "property": "salesRepEmail",
+      "inheritedFrom": "ownerEmail"
     },
     "outputs": {
-      "childSku": { "from": "payload", "step": "insertAllotment", "pointer": "/ChildSKU" },
-      "parentSku": { "from": "payload", "step": "insertAllotment", "pointer": "/ParentSKU" },
-      "quantityRemaining": { "from": "payload", "step": "insertAllotment", "pointer": "/QuantityRemaining" },
-      "id": { "from": "value", "name": "rowId" }
+      "childSku": {
+        "from": "payload",
+        "step": "insertAllotment",
+        "pointer": "/ChildSKU"
+      },
+      "parentSku": {
+        "from": "payload",
+        "step": "insertAllotment",
+        "pointer": "/ParentSKU"
+      },
+      "quantityRemaining": {
+        "from": "payload",
+        "step": "insertAllotment",
+        "pointer": "/QuantityRemaining"
+      },
+      "id": {
+        "from": "value",
+        "name": "rowId"
+      }
     }
   },
   "teardown": {

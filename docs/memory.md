@@ -70,8 +70,9 @@ history (atstage, Znode suites) and does NOT describe BI Worldwide; keep it for 
   (Custom Table API, table key `Allocations`); read-only lookups USER_ID_BY_USERNAME, ALLOTMENT_ID_BY_EMAIL_AND_SKU;
   entity map `allocation` (cso.TblCustom_Allocations, registry); `user_address` gains displayName/stateCode/countryCode
   (back to pending); `config/api.yaml` entityTerms for address and allocation.
-- Open: `validate` fails on ALLOTMENT_OF_USER_FOR_VARIANT (run ID tag must start the field; SalesRepEmail is the rep's
-  tagged e-mail) - proposed core `runIdTag.inheritedFrom`, waiting for the user; `ADMIN_USERNAME` missing in .env (verify
+- ALLOTMENT_OF_USER_FOR_VARIANT uses `runIdTag.inheritedFrom: ownerEmail` (core 0.21.0, approved by the user
+  2026-11-27): SalesRepEmail is the rep's tagged e-mail; the resolver refuses an untagged owner. `validate` passes.
+- Open: `ADMIN_USERNAME` missing in .env (verify
   USER_ID_BY_USERNAME); where BNJM's default shipping method is stored (P4); Loqate check of the two addresses;
   `cso.*.*email*` for config/column-mask.yaml; whether the BIWW create ties the role to portal 10; requirements not
   written yet, so no collection can be verified.
