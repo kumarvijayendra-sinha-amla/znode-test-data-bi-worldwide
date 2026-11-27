@@ -6,7 +6,60 @@ apiDocs: apidocs.znode.com
 
 # collection-builder: which spec and operations to use.
 apiChoices: |
+  BI Worldwide (user decision 2026-11-26): prefer a V2 spec (specs/Znode CP API V2.json, specs/Znode Engine API V2 V2.json);
+  only when V2 has no operation that creates and deletes the record, use V1 (specs/Znode Web V1 API.json, then the
+  BIWW-specific specs/Znode Custom API V1.json and specs/Znode Custom Table API V1.json).
+  Observed on qa 2026-11-26 (corrects an earlier assumption): /User/DeleteUserAccount deletes the Znode user but NOT its
+  cso.TblCustom_UserManagement row, so a BIWW user's teardown also needs that row removed (e.g. the Custom Table API's
+  DELETE /v1/custom-table-data/{tableKey}/{columnName}/{columnValue}/bulk on UserName). The BIWW create call writes the
+  custom row but did not give the user a Commerce Portal role (only Customer); storefront Admins on qa have Customer
+  plus a Commerce Portal role ("Web Admin", "Super Admin", "SalesRep", "MarketCoordinator").
+  The text below is from the generic Znode repository; its spec file names (znode-core-api-v1/v2.json) are not in specs/.
   Prefer the Core API v2 (specs/znode-core-api-v2.json). Use the legacy v1 (specs/znode-core-api-v1.json) only where
   v2 cannot create and delete the record. Decided 2026-10-22: promotions (POST /Promotion/Create, POST /Promotion/Delete)
   and customer users (POST /User/CreateCustomerAccount, POST /User/DeleteUserAccount) use v1. v1 deletes take the IDs in
   the body (ParameterModel.Ids): teardown.bodyTemplate { "Ids": "{id}" }.
+
+# /new-test: project conventions for new tests written from a story. Filled 2026-11-26 from the Playwright fork;
+# values marked ASSUMPTION are defaults to confirm (no convention existed in the fork yet).
+newTests:
+  inputs: >-
+    Atlassian connector: Jira story (amla.atlassian.net, e.g. BMP-38) with its acceptance criteria, linked FRD and AIO
+    manual test cases. Fallback when the connector is refused: the story, FRD/SRS documents and the AIO case export the
+    user copies into work/stories/<KEY>/input/.
+  environment: >-
+    qa (TDA_ENV_NAME=qa, a write environment in config/api.yaml). The fork runs with ENV=qa, which loads its
+    config/qa.json: the BNJM (Benjamin Moore / BI Worldwide) dev storefront and admin. Store code BNJM. Use only qa.json
+    (user decision 2026-11-26); stage.json points to another client.
+  userKey: >-
+    USER_WEBSTORE_WITH_ROLE (proposed in BMP-38, pending): creates a BIWW user with a role (Super Admin, Admin,
+    Sales Rep, Market Coordinator), market and status per test; sign-in through the storefront's own login with the
+    created userName/password (Okta SSO is ignored for now, user decision 2026-11-26). USER_WEBSTORE_REGISTERED creates
+    a plain customer with no role and does not fit BIWW admin pages.
+  repository: "D:/ideafest/znode-biww-playwright-automation-fork, branch dev_bmp38 (TDA_PLAYWRIGHT_REPO)"
+  specRoot: "tests/webstore/<PageOrFeature>/ (one folder per page, files <Name>Test.spec.ts)"
+  helper: >-
+    testData.value(alias, output) for one value, testData.get(alias) for the whole record; a test that signs in as a
+    created user reads testData.value('user', 'userName') and testData.value('user', 'password').
+  fixtures: >-
+    import { test } from '../../../fixtures/base.fixture' (fixtures pom, config, testData; tdaSwap is automatic);
+    expect from '@playwright/test'.
+  pageObjects: >-
+    Locators in page_objects/webstore/<Name>PageObjects.ts, actions in page_actions/, reached through the pom fixture
+    (page_action_manager/PageActionManager.ts); assertion helpers in utils/assertions.utils.ts. Reuse before adding.
+  formatting: >-
+    ASSUMPTION: US dollars as the storefront shows them, "$1,234.56" (symbol, thousands separator, 2 decimals); counts
+    as plain integers. Format resolved numbers in the test, never record the formatted literal.
+  locators: "data-test-selector attribute (page.locator('[data-test-selector=\"...\"]')); fall back to role/label only where none exists"
+  linking: >-
+    ASSUMPTION: the AIO case key leads the test title ("<AIO case key> - Verify ..."), and the tag list carries the
+    suite tags already used in the fork ({ tag: ['@regression'] }).
+  scan: >-
+    From the data repository, with TDA_PLAYWRIGHT_REPO set to the fork: npm run scan:playwright -- <spec paths relative
+    to the fork> (add --force to rescan unchanged files).
+  compile: "In the fork: npx tsc --noEmit (TypeScript comes with the adapter; no lint is configured)"
+  logging: >-
+    await test.step('<what the step does>', async () => { ... }) for steps, as the existing specs do; inputs named in
+    step titles; secret outputs (password) never printed, shown as ***.
+  run: >-
+    In the fork with TDA_HOME set to the data repository and ENV=qa: npx playwright test <spec path> --project=chromium

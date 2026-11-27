@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "entity": "market",
+  "tables": [
+    "cso.TblCustom_Market",
+    "cso.TblCustom_UserManagement"
+  ],
+  "joins": [
+    { "from": "cso.TblCustom_Market.Market", "to": "cso.TblCustom_UserManagement.Market", "kind": "left" }
+  ],
+  "properties": {
+    "marketId": "cso.TblCustom_Market.Id",
+    "marketName": "cso.TblCustom_Market.Market",
+    "userStore": "cso.TblCustom_UserManagement.StoreCode",
+    "userRole": "cso.TblCustom_UserManagement.Role",
+    "marketUserCount": "COUNT(DISTINCT cso.TblCustom_UserManagement.Id)"
+  },
+  "maskedColumns": [
+    "cso.TblCustom_UserManagement.UserName",
+    "cso.TblCustom_UserManagement.FirstName",
+    "cso.TblCustom_UserManagement.LastName",
+    "cso.TblCustom_UserManagement.ASM"
+  ],
+  "schemaFingerprint": "sha256:895f015b9c8eafb472ce772170f86ac3b7002ec643f21a70bcb0c98f3623fac6",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

@@ -1,215 +1,44 @@
 # Framework conventions the discovery scanners rely on. Paths are relative to the framework repository roots
 # set in .env (TDA_SELENIUM_REPO, TDA_PLAYWRIGHT_REPO).
+# Playwright framework: znode-biww-playwright-automation-fork (branch dev).
 
 selenium:
   sourceRoots: [src/main/java, src/test/java]
-  constantsClass: TestDataConstants
-  registryClass: TestData
+  constantsClass: TestDataConstants   # the framework's class of data constants
+  registryClass: TestData             # and its registry of test data
   registryMethod: init
-  workbooks:
-    webstore: webstoreTestData.xlsx
-    admin: adminTestData.xlsx
-  pilots:
-    - src/test/java/testClasses/integration/marketing/promotionsAndCoupons/WebstorePromotionAndCouponVerificationTest.java
+  workbooks: {}                       # name: file.xlsx of the Excel workbooks tests read
+  pilots: []                          # test files to scan
 
 playwright:
-  pilots:
-    - testim-migrated/tests/webstore/pdp/verify-configurable-product-details-on-pdp-variant1.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-order-coupon-functionality.spec.ts
+  pilots: []
 
-# Files whose tests run on keys (globs relative to each framework repository). The keys check
-# (`bin/tda check-hardcoded`, and the Playwright repo's tda-keys-check workflow on every PR) fails if a test in them
-# reads a value its approved requirement does not allow (credential, config, expected-output, created-by-test).
+# Files whose tests run on keys (globs relative to each framework repository). The keys check (`tda check-hardcoded`)
+# fails if a test in them reads a value its approved requirement does not allow.
 migrated:
-  playwright:
-    - testim-migrated/tests/webstore/pdp/verify-configurable-product-details-on-pdp-variant1.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-order-coupon-functionality.spec.ts
-    # Phase 6 module webstore/shopping-cart, stage 1 (full migration 2026-10-28; 3 shipping specs wait for SHIPPING_FLAT_RATE_ON_STORE)
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-link-navigation-from-header.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-merges-with-add-ons-when-guest-logs-in.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-page-headers-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-page-headers-for-retail-user-with-bundle-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-page-headers-for-retail-user-with-configurable-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-page-headers-for-retail-user-with-group-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-cart-page-headers-for-retail-user-with-simple-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-navigation-to-home-after-continue-shopping.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-quantity-update-on-duplicate-save-for-later.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-for-bundle-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-for-configurable-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-for-group-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-for-simple-product.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-functionality-validations.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-cart-unsupported-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-for-later-for-bundle-products.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-for-later-for-configurable-products.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-for-later-for-group-products.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-for-later-for-simple-products.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-save-for-later-unsupported-for-guest-user.spec.ts
-    # Stage 2 (2026-10-29): coupons created per run, promotions found read-only, request quote. Not yet: order-promotion
-    # threshold and reorder-from-receipt (wait for SHIPPING_FLAT_RATE_ON_STORE), amount-off-product promotion (data gap),
-    # existing-order reorder and existing saved cart (deferred)
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-category-coupon-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-product-coupon-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-category-coupon-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-order-coupon-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-product-coupon-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-multicoupon-allowed-when-flag-enabled.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-multicoupon-not-allowed-when-flag-disabled.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-category-promotion-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-order-promotion-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-category-promotion-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-order-promotion-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-percent-off-product-promotion-functionality.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-request-quote-access-for-guest-and-retail.spec.ts
-    # Shipping specs (FLAT verified and approved 2026-11-01; FLAT serves all countries on atstage)
-    - testim-migrated/tests/webstore/shopping-cart/verify-estimate-shipping-cost-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-estimate-shipping-cost-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-order-promotion-threshold-on-cart-and-checkout.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-product-details-after-reorder-from-receipt-and-history.spec.ts
-    - testim-migrated/tests/webstore/shopping-cart/verify-selected-shipping-deselected-by-removing-postal-code.spec.ts
-    # Saved cart of the declared account (owner @user.userId, core 0.13.2; verified and approved 2026-11-01)
-    - testim-migrated/tests/webstore/shopping-cart/verify-existing-saved-cart-visible-and-scroller.spec.ts
-    # Order of the declared account, created per run by the multi-step collection when none exists (core 0.14.1, 2026-11-02)
-    - testim-migrated/tests/webstore/shopping-cart/verify-product-details-after-reorder-from-existing-order-via-history.spec.ts
-    # Phase 6 module webstore/checkout, migrated specs (requirements approved 2026-11-01)
-    - testim-migrated/tests/webstore/checkout/validate-group-product-order-summary-section-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-simple-product-checkout-page-coupon-and-voucher-code-functionality-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-simple-product-checkout-page-coupon-and-voucher-code-functionality-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-voucher-with-promotion.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-configurable-product-details-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-configurable-product-details-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-product-types-in-order-summary-section-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-order-summary-section-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-bundle-product-details-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-bundle-products-order-summary-section-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-group-products-details-for-retail-user.spec.ts
-    # Moved from swapped: its vouchers link owner/notOwner to the declared account (core 0.13.2, 2026-11-01)
-    - testim-migrated/tests/webstore/checkout/verify-voucher-restriction-and-entitlement.spec.ts
-    # New keys 2026-11-01: carrier shipping promotion/coupon, percent off brand, free shipping (custom by code)
-    - testim-migrated/tests/webstore/checkout/verify-shipping-promotion-and-coupon-cap.spec.ts
-    - testim-migrated/tests/webstore/checkout/z10-28100-profile-shipping.spec.ts
-    - testim-migrated/tests/webstore/checkout/z10-28102-order-receipt-discount.spec.ts
-    # Phase 6 module webstore/my-account, batch 1 (owned records resolve after testData.useExisting)
-    - testim-migrated/tests/webstore/my-account/wishlist-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/saved-carts-validate-pagination-filter-and-sorting.spec.ts
-    - testim-migrated/tests/webstore/my-account/voucher-history-validate-history-and-details.spec.ts
-    # Phase 6 module webstore/my-account, batch 2 group 1
-    - testim-migrated/tests/webstore/my-account/saved-carts-validate-action-column-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/saved-carts-validate-edit-saved-cart.spec.ts
-    - testim-migrated/tests/webstore/my-account/voucher-history-validate-pagination-and-sorting.spec.ts
-    - testim-migrated/tests/webstore/my-account/order-history-validate-page-filter-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/order-template-validate-quantity-and-total.spec.ts
-    - testim-migrated/tests/webstore/my-account/order-templates-validate-list-page-pagination-and-sorting.spec.ts
-    - testim-migrated/tests/webstore/my-account/verify-order-template-landmarks-and-row-actions.spec.ts
-    - testim-migrated/tests/webstore/my-account/pending-orders-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/pending-payment-validate.spec.ts
-    # Phase 6 module webstore/my-account, batch 2 group 2 (order created per run by the collection)
-    - testim-migrated/tests/webstore/my-account/dashboard-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/order-history-validate-actions-sorting-and-button-status.spec.ts
-    # Phase 6 module webstore/my-account, batch 2 group 3 (quote-history skips until an IN REVIEW quote exists)
-    - testim-migrated/tests/webstore/my-account/new-account-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/quote-history-validate-functionality.spec.ts
-    # Phase 6 module webstore/plp (core 0.15.0; requirements, keys and queries approved 2026-11-02)
-    - testim-migrated/tests/webstore/plp/verify-categories-paginations-and-breadcrumbs.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-compare-product-functionality.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-details-on-quick-view-of-simple-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-facets-and-their-filters.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-group-product-details-of-quick-view.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-highlights-for-all-types-of-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-inventory-details-on-quick-view.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-no-pricing-validation-on-plp-and-quickview.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-obsolete-product-and-replacement-products-on-plp-and-quick-view.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-out-of-stock-validation-on-plp-and-quickview.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-plp-sort-order.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-plp-sorting-and-grid-view-and-category-descriptions.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-quick-view-for-configurable-product-with-variant3.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-quick-view-of-bundle-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-quick-view-of-configurable-product-with-variant1.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-quick-view-of-configurable-product-with-variant2.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-sales-retail-price-for-simple-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-tier-pricing-on-quick-view.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-wishlist-detail-for-retail-user-from-quick-view-for-bundle-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-wishlist-detail-for-retail-user-from-quick-view-for-simple-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-wishlist-detail-for-retail-user-on-quick-view-for-group-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-wishlist-details-for-retail-user-from-quick-view-for-configurable-product.spec.ts
-    - testim-migrated/tests/webstore/plp/verify-wishlist-error-validation-for-guest-user-with-all-types-of-product.spec.ts
-    # Phase 6 module webstore/pdp (requirements approved earlier; migrated 2026-11-03)
-    - testim-migrated/tests/webstore/pdp/verify-add-to-cart-functionality-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-add-to-wishlist-functionality-on-pdp-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-brand-hyperlink-navigation-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-bundle-product-details-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-category-hyperlink-navigation-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-configurable-product-details-on-pdp-variant2.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-group-product-details-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-hyperlink-read-review-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-hyperlinks-navigation-of-email-a-friend-see-more-power-tools-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-hyperlinks-navigation-of-highlights-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-obsolete-product-details-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-quick-view-functionality-on-pdp.spec.ts
-    - testim-migrated/tests/webstore/pdp/verify-simple-product-details-on-pdp.spec.ts
-    # Phase 6 module webstore/quick-order (2026-11-03; CSV fixtures written at run time from resolved records)
-    - testim-migrated/tests/webstore/quick-order/verification-of-paste-multiple-section-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verification-of-paste-multiple-section-of-retail-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verification-of-upload-csv-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verification-single-and-multiple-sku-field-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verification-single-and-multiple-sku-field-of-retail-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verify-add-multiple-item-sku-validation-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verify-obsolete-sku-from-csv-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/quick-order/verify-quick-order-pad-state-and-paste-validation.spec.ts
-    # Phase 6 module webstore/home-page (2026-11-03; CMS banner/ticker/footer/phone texts checked structurally)
-    - testim-migrated/tests/webstore/home-page/validate-featured-products-visibility-count-and-navigation.spec.ts
-    - testim-migrated/tests/webstore/home-page/validate-footer-links-and-contact-information-functionality.spec.ts
-    - testim-migrated/tests/webstore/home-page/validate-menu-navigation-and-brand-listings-functionality.spec.ts
-    - testim-migrated/tests/webstore/home-page/validate-visibility-and-functionality-of-homepage-banners-and-slider-navigation.spec.ts
-    - testim-migrated/tests/webstore/home-page/verify-header-components-and-quick-order.spec.ts
-    - testim-migrated/tests/webstore/home-page/verify-home-page-banner-sliders.spec.ts
-    - testim-migrated/tests/webstore/home-page/verify-track-order-functionality.spec.ts
-    # Phase 6 module webstore/login (2026-11-03; create account and labels read no data)
-    - testim-migrated/tests/webstore/login/verify-create-account-functionality.spec.ts
-    - testim-migrated/tests/webstore/login/verify-forget-password-functionality.spec.ts
-    - testim-migrated/tests/webstore/login/verify-sign-in-and-registration-labels.spec.ts
-    - testim-migrated/tests/webstore/login/verify-sign-in-functionality.spec.ts
-    - testim-migrated/tests/webstore/login/verify-validation-on-login-page.spec.ts
-    # Phase 6 module webstore/order-receipt (2026-11-03; each test places a COD order)
-    - testim-migrated/tests/webstore/order-receipt/validate-bundle-products-in-order-receipt.spec.ts
-    - testim-migrated/tests/webstore/order-receipt/validate-configurable-products-in-order-receipt.spec.ts
-    - testim-migrated/tests/webstore/order-receipt/validate-group-products-in-order-receipt.spec.ts
-    - testim-migrated/tests/webstore/order-receipt/validate-simple-products-in-order-receipt.spec.ts
-    # Phase 6 module webstore/order (2026-11-04; Create Return present is a known failure)
-    - testim-migrated/tests/webstore/order/verify-create-return-availability.spec.ts
-    - testim-migrated/tests/webstore/order/verify-quote-request-page-details.spec.ts
-    # 2026-11-04: amount-off-product promotion (promotion created per run by the PROMOTION_AMOUNT_OFF_PRODUCT collection)
-    - testim-migrated/tests/webstore/shopping-cart/verify-amount-off-product-promotion-functionality.spec.ts
-  selenium:   # Phase 6 wave 2
-    # Phase 6 wave 2, webstore/shoppingCart
-    - src/test/java/testClasses/webstore/shoppingCart/BundleProductShoppingCartPageTest.java
-    - src/test/java/testClasses/webstore/shoppingCart/ConfigurableProductShoppingCartPageTest.java
-    - src/test/java/testClasses/webstore/shoppingCart/ShippingCostTest.java
-    - src/test/java/testClasses/webstore/shoppingCart/SimpleProductShoppingCartPageTest.java
+  playwright: []
+  selenium: []
 
 # Files whose tests keep their JSON test data and get resolved values swapped in at run time (requirement strategy
-# swap; the framework's loadData and tdaSwap fixture are wired once). check-hardcoded covers them too.
+# swap; the framework loader and fixture are wired once). The keys check covers them too: a data value must have an
+# output and must not appear in the spec's code.
 swapped:
+  playwright: []
+
+# Folders where new tests must be on keys from the start (new tests from a story, /new-test). Every file under paths is
+# covered by the keys check, except the tests that existed before, listed once under legacy (print the list with
+# `tda legacy-list <framework> <framework repository dir>`). A legacy file leaves the list when it is migrated.
+keysRequired:
   playwright:
-    - testim-migrated/tests/webstore/pdp/verify-add-to-wishlist-functionality-on-pdp-for-guest-user.spec.ts
-    # Phase 6 module webstore/checkout (requirements approved 2026-11-01; z10-27984 is swap too but outside the
-    # webstore regression config and has a COD gap on Multistore13)
-    - testim-migrated/tests/webstore/checkout/detailed-validations-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-checkout-page-functionalities-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-user-can-place-order-using-purchase-order-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-user-can-place-order-with-cod-payment-method-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/validate-user-can-place-order-with-invoice-me-payment-method-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-checkout-page-order-calculation-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-order-calculation-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-place-order-using-purchase-order-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-place-order-with-cod-payment-method-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-place-order-with-invoice-me-payment-method-for-retail-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-shipping-address-validation-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-simple-product-checkout-page-coupon-and-voucher-code-functionality-for-guest-user.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-voucher-discount-calculation-and-removal.spec.ts
-    - testim-migrated/tests/webstore/checkout/verify-voucher-for-all-users.spec.ts
-    # Phase 6 module webstore/my-account, batch 1 (requirements approved; swap: spec and JSON kept, values swapped at load)
-    - testim-migrated/tests/webstore/my-account/address-book-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/edit-profile-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/order-template-validate-functionality.spec.ts
-    - testim-migrated/tests/webstore/my-account/review-history-validate-functionality.spec.ts
+    paths: ["tests/**"]
+    # keysRequired.playwright.legacy: 9 file(s) not on keys yet (fork at dev, 2026-11-26)
+    legacy:
+      - tests/seed.spec.ts
+      - tests/webstore/ForgotPasswordPage/ForgotPasswordPageTest.spec.ts
+      - tests/webstore/HomePage/FooterTest.spec.ts
+      - tests/webstore/HomePage/HeaderTest.spec.ts
+      - tests/webstore/LoginPage/LoginPageTest.spec.ts
+      - tests/webstore/ProductDisplayPage/EmailAFriendTest.spec.ts
+      - tests/webstore/ProductDisplayPage/ProductSettingTest.spec.ts
+      - tests/webstore/ProductListingPage/CategoryPageTest.spec.ts
+      - tests/webstore/RegistrationPage/RegistrationPageTest.spec.ts

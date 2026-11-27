@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts > BMP-TC-111 - Verify tampered filter values in the request are handled without exposing errors or unrelated users",
+  "scenario": {
+    "summary": "The filter request values are rewritten; the page shows no error details or unrelated users.",
+    "steps": [
+      "Sign in on the storefront login with testData.value('admin', 'userName') and the admin password (***)",
+      "Open Header > Users (Administrator Users page) > Users tab",
+      "Rewrite the filter values of the list request (page.route) to invalid values",
+      "Apply a filter"
+    ],
+    "entitiesTouched": [
+      "user_management",
+      "market"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "No error details are shown",
+      "Only rows matching the defined handling are listed"
+    ],
+    "evidence": [
+      "Jira BMP-38 (Web Admins can search, filter, and sort the user list)",
+      "AIO BMP-TC-111 (title only; the export has no steps)",
+      "Review: Expected behaviour not defined (question 13)",
+      "UI labels on qa (test author, 2026-11-26): tab \"Help/Contact Us\", \"Clear filters\", sort options \"Newest first\" / \"First name A - Z\", User Type option \"Sales Representative\""
+    ],
+    "confidence": "low",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_WEBSTORE_EXISTING_WITH_ROLE",
+      "alias": "admin",
+      "params": {
+        "store": "BNJM",
+        "portalRole": "Web Admin"
+      },
+      "preferred": {
+        "source": 0,
+        "required": true
+      }
+    },
+    {
+      "key": "MARKET_AVAILABLE",
+      "alias": "market",
+      "params": {
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_WEBSTORE_WITH_ROLE",
+      "alias": "rep",
+      "params": {
+        "store": "BNJM",
+        "role": "Sales Rep",
+        "portalRole": "SalesRep",
+        "market": "@market.marketName"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-TC-111"
+  ],
+  "sources": [
+    {
+      "value": "<env:BNJM_ADMIN_USERNAME>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:1150",
+      "kind": "env",
+      "keyPath": "BNJM_ADMIN_USERNAME",
+      "sensitive": false,
+      "profiled": false,
+      "role": "credential",
+      "alias": "admin"
+    },
+    {
+      "value": "**/*",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:1158",
+      "kind": "literal",
+      "keyPath": "route",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "Active",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:16",
+      "kind": "literal",
+      "keyPath": "STATUS_ACTIVE",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    },
+    {
+      "value": "Administrator Users",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:14",
+      "kind": "literal",
+      "keyPath": "HEADING",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    },
+    {
+      "value": "0",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:1175",
+      "kind": "literal",
+      "keyPath": "expected",
+      "sensitive": false,
+      "profiled": false,
+      "role": "expected-output"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T13:17:50Z"
+}

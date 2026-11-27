@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "entity": "user_global_attributes",
+  "tables": [
+    "dbo.ZnodeUser",
+    "dbo.ZnodeUserPortal",
+    "dbo.ZnodePortal",
+    "dbo.ZnodeUserGlobalAttributeValue",
+    "dbo.ZnodeUserGlobalAttributeValueLocale",
+    "dbo.ZnodeGlobalAttribute",
+    "dbo.ZnodeGlobalAttributeLocale",
+    "dbo.ZnodeGlobalEntity",
+    "dbo.ZnodeGlobalAttributeDefaultValue",
+    "dbo.ZnodeGlobalAttributeDefaultValueLocale"
+  ],
+  "joins": [
+    { "from": "dbo.ZnodeUser.UserId", "to": "dbo.ZnodeUserPortal.UserId", "kind": "left" },
+    { "from": "dbo.ZnodeUserPortal.PortalId", "to": "dbo.ZnodePortal.PortalId", "kind": "left" },
+    { "from": "dbo.ZnodeUser.UserId", "to": "dbo.ZnodeUserGlobalAttributeValue.UserId", "kind": "inner" },
+    { "from": "dbo.ZnodeUserGlobalAttributeValue.UserGlobalAttributeValueId", "to": "dbo.ZnodeUserGlobalAttributeValueLocale.UserGlobalAttributeValueId", "kind": "left" },
+    { "from": "dbo.ZnodeUserGlobalAttributeValue.GlobalAttributeId", "to": "dbo.ZnodeGlobalAttribute.GlobalAttributeId", "kind": "inner" },
+    { "from": "dbo.ZnodeGlobalAttribute.GlobalAttributeId", "to": "dbo.ZnodeGlobalAttributeLocale.GlobalAttributeId", "kind": "left" },
+    { "from": "dbo.ZnodeGlobalAttribute.GlobalEntityId", "to": "dbo.ZnodeGlobalEntity.GlobalEntityId", "kind": "inner" },
+    { "from": "dbo.ZnodeUserGlobalAttributeValueLocale.GlobalAttributeDefaultValueId", "to": "dbo.ZnodeGlobalAttributeDefaultValue.GlobalAttributeDefaultValueId", "kind": "left" },
+    { "from": "dbo.ZnodeGlobalAttributeDefaultValue.GlobalAttributeDefaultValueId", "to": "dbo.ZnodeGlobalAttributeDefaultValueLocale.GlobalAttributeDefaultValueId", "kind": "left" }
+  ],
+  "properties": {
+    "userId": "dbo.ZnodeUser.UserId",
+    "store": "dbo.ZnodePortal.StoreCode",
+    "globalEntity": "dbo.ZnodeGlobalEntity.EntityName",
+    "attributeCode": "dbo.ZnodeGlobalAttribute.AttributeCode",
+    "attributeName": "dbo.ZnodeGlobalAttributeLocale.AttributeName",
+    "attributeActive": "dbo.ZnodeGlobalAttribute.IsActive",
+    "attributeValue": "dbo.ZnodeUserGlobalAttributeValueLocale.AttributeValue",
+    "attributeValueNonLocale": "dbo.ZnodeUserGlobalAttributeValue.AttributeValue",
+    "attributeDefaultValueCode": "dbo.ZnodeGlobalAttributeDefaultValue.AttributeDefaultValueCode",
+    "attributeDefaultValue": "dbo.ZnodeGlobalAttributeDefaultValueLocale.AttributeDefaultValue",
+    "localeId": "dbo.ZnodeUserGlobalAttributeValueLocale.LocaleId",
+    "userCount": "COUNT(DISTINCT dbo.ZnodeUser.UserId)"
+  },
+  "scope": {
+    "store": "dbo.ZnodePortal.StoreCode"
+  },
+  "filters": {
+    "dbo.ZnodeGlobalEntity.EntityName": "User"
+  },
+  "maskedColumns": [
+    "dbo.ZnodeUser.UserName",
+    "dbo.ZnodeUser.Email",
+    "dbo.ZnodeUser.FirstName",
+    "dbo.ZnodeUser.LastName",
+    "dbo.ZnodeUser.MiddleName",
+    "dbo.ZnodeUser.PhoneNumber",
+    "dbo.ZnodeUser.CustomerPaymentGUID",
+    "dbo.ZnodeUser.RefreshToken",
+    "dbo.ZnodeUser.ExternalId",
+    "dbo.ZnodeUserGlobalAttributeValueLocale.MediaPath"
+  ],
+  "schemaFingerprint": "sha256:297bf7985851089a8919ad056bf676a2efba1f2a9765b11e3a9d5f14fc5dd504",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}
