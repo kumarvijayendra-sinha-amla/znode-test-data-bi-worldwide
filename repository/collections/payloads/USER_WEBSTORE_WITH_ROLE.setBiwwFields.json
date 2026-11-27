@@ -1,0 +1,14 @@
+{
+  "storeCode": "{store}",
+  "userName": "{runIdTag}{uniqueSuffix}{emailLocalPart:}@example.test",
+  "email": "{runIdTag}{uniqueSuffix}{emailLocalPart:}@example.test",
+  "firstName": "{firstName:}{runIdTag}{uniqueSuffix}",
+  "lastName": "{lastName:}{runIdTag}{uniqueSuffix}",
+  "isActive": "{isActive:true}",
+  "role": "{role}",
+  "cpRoles": "{portalRole?}",
+  "market": "{market?}",
+  "asm": "{asm?}",
+  "categories": "{category?}",
+  "shipperID": "{shipperSuffix}"
+}

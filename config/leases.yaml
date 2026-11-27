@@ -5,4 +5,4 @@ defaultTtlMinutes: 30
 # then it is skipped with LEASE_TIMEOUT.
 leaseWaitMinutes: 10
 perKey:
-  # COUPON_AMOUNT_OFF_ORDER: 30
+  

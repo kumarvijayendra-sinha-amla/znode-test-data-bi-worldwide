@@ -1,0 +1,22 @@
+{
+  "schemaVersion" : 1,
+  "key" : "USER_WEBSTORE_EXISTING_WITH_ROLE",
+  "sql" : "SELECT TOP 10 az.UserName AS userName, po.StoreCode AS storeCode, MIN(u.UserId) AS userId, MIN(r.Name) AS portalRole, MIN(cu.Role) AS role FROM dbo.ZnodeUser u INNER JOIN dbo.AspNetUsers a ON a.Id = u.AspNetUserId INNER JOIN dbo.AspNetZnodeUser az ON az.AspNetZnodeUserId = a.UserName INNER JOIN dbo.AspNetUserRoles ur ON ur.UserId = a.Id INNER JOIN dbo.AspNetRoles r ON r.Id = ur.RoleId INNER JOIN dbo.ZnodePortal po ON po.StoreCode = @store LEFT JOIN cso.TblCustom_UserManagement cu ON cu.UserName = az.UserName AND cu.StoreCode = po.StoreCode WHERE (a.LockoutEnd IS NULL OR a.LockoutEnd < @now) AND r.IsActive = @activeFlag AND ((r.Name = @portalRole AND ur.PortalId = po.PortalId AND u.IsActive = @activeFlag AND EXISTS (SELECT up.UserId FROM dbo.ZnodeUserPortal up WHERE up.UserId = u.UserId AND up.PortalId = po.PortalId)) OR ((r.Name = @allStoresAdminRole OR r.Name = @allStoresSuperAdminRole) AND ur.PortalId IS NULL)) AND (@role IS NULL OR cu.Role = @role) AND (@preferred IS NULL OR az.UserName = @preferred) GROUP BY az.UserName, po.StoreCode ORDER BY az.UserName",
+  "params" : [ "store", "portalRole", "role", "preferred", "activeFlag", "now", "allStoresAdminRole", "allStoresSuperAdminRole" ],
+  "constants" : {
+    "activeFlag" : "true",
+    "allStoresAdminRole" : "Admin",
+    "allStoresSuperAdminRole" : "Super Admin"
+  },
+  "outputs" : [ "userName", "storeCode", "userId", "portalRole", "role" ],
+  "candidates" : true,
+  "preferredOnly" : true,
+  "identity" : "userName",
+  "schemaFingerprint" : "sha256:049c938888f9065f73d72c42aff9df50be877b010465b5a0feb27317860c386e",
+  "status" : "approved",
+  "approvedBy" : "Kumar Vijayendra Sinha",
+  "approvedAt" : "2026-11-26T14:10:21Z",
+  "createdAt" : "2026-11-26T00:00:00Z",
+  "lastValidated" : "2026-11-26T14:08:11Z",
+  "verifiedHash" : "sha256:dcf784ccb4d54b0593c5b72a31cdd4dd3c08b5faaab79937588169358d5653e0"
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "key": "MARKET_WITHOUT_USERS",
+  "sql": "SELECT TOP 10 m.Market AS marketName FROM cso.TblCustom_Market m LEFT JOIN cso.TblCustom_UserManagement u ON u.Market = m.Market WHERE m.Market IS NOT NULL AND u.Id IS NULL ORDER BY m.Id",
+  "params": [],
+  "outputs": ["marketName"],
+  "identity": "marketName",
+  "schemaFingerprint": "sha256:895f015b9c8eafb472ce772170f86ac3b7002ec643f21a70bcb0c98f3623fac6",
+  "vocabularyFingerprint": "sha256:b0d4e6acb91cde84f1da7b6886917d9be734d58b6fb7e76ad53e5f398c7d326a",
+  "status": "pending_approval",
+  "createdAt": "2026-11-26T00:00:00Z"
+}

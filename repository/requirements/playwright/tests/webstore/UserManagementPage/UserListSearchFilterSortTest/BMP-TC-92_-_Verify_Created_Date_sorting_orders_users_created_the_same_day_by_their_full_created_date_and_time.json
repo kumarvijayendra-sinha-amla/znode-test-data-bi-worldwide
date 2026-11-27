@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts > BMP-TC-92 - Verify Created Date sorting orders users created the same day by their full created date and time",
+  "scenario": {
+    "summary": "Two Sales Reps created seconds apart on the same day are ordered by time.",
+    "steps": [
+      "Sign in on the storefront login with testData.value('admin', 'userName') and the admin password (***)",
+      "Open Header > Users (Administrator Users page) > Users tab"
+    ],
+    "entitiesTouched": [
+      "user_management",
+      "market"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "rep2 (created later) is above rep in the default sort",
+      "createdDate of rep2 is later than of rep"
+    ],
+    "evidence": [
+      "Jira BMP-38 (Web Admins can search, filter, and sort the user list)",
+      "AC7",
+      "AIO BMP-TC-92 (title only; the export has no steps)",
+      "UI labels on qa (test author, 2026-11-26): tab \"Help/Contact Us\", \"Clear filters\", sort options \"Newest first\" / \"First name A - Z\", User Type option \"Sales Representative\""
+    ],
+    "confidence": "medium"
+  },
+  "requires": [
+    {
+      "key": "USER_WEBSTORE_EXISTING_WITH_ROLE",
+      "alias": "admin",
+      "params": {
+        "store": "BNJM",
+        "portalRole": "Web Admin"
+      },
+      "preferred": {
+        "source": 25,
+        "required": true
+      }
+    },
+    {
+      "key": "MARKET_AVAILABLE",
+      "alias": "market",
+      "params": {
+        "store": "BNJM"
+      }
+    },
+    {
+      "key": "USER_WEBSTORE_WITH_ROLE",
+      "alias": "rep",
+      "params": {
+        "store": "BNJM",
+        "role": "Sales Rep",
+        "portalRole": "SalesRep",
+        "market": "@market.marketName"
+      }
+    },
+    {
+      "key": "USER_WEBSTORE_WITH_ROLE",
+      "alias": "rep2",
+      "params": {
+        "store": "BNJM",
+        "role": "Sales Rep",
+        "portalRole": "SalesRep",
+        "market": "@market.marketName"
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-TC-92"
+  ],
+  "sources": [
+    {
+      "value": "admin",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:49",
+      "kind": "literal",
+      "keyPath": "A.admin",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "superAdmin",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:49",
+      "kind": "literal",
+      "keyPath": "A.superAdmin",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "market",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:49",
+      "kind": "literal",
+      "keyPath": "A.market",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "market2",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:49",
+      "kind": "literal",
+      "keyPath": "A.market2",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "emptyMarket",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:49",
+      "kind": "literal",
+      "keyPath": "A.emptyMarket",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "rep",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:50",
+      "kind": "literal",
+      "keyPath": "A.rep",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "rep2",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:50",
+      "kind": "literal",
+      "keyPath": "A.rep2",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repInactive",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:50",
+      "kind": "literal",
+      "keyPath": "A.repInactive",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "coord",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:50",
+      "kind": "literal",
+      "keyPath": "A.coord",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "adminListed",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:50",
+      "kind": "literal",
+      "keyPath": "A.adminListed",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "superAdminListed",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:51",
+      "kind": "literal",
+      "keyPath": "A.superAdminListed",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repFirst",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:51",
+      "kind": "literal",
+      "keyPath": "A.repFirst",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repLast",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:51",
+      "kind": "literal",
+      "keyPath": "A.repLast",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "<masked:email>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:51",
+      "kind": "literal",
+      "keyPath": "A.repEmail",
+      "sensitive": true,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repA",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:52",
+      "kind": "literal",
+      "keyPath": "A.repA",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repM",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:52",
+      "kind": "literal",
+      "keyPath": "A.repM",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repZ",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:52",
+      "kind": "literal",
+      "keyPath": "A.repZ",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repTie1",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:52",
+      "kind": "literal",
+      "keyPath": "A.repTie1",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repTie2",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:52",
+      "kind": "literal",
+      "keyPath": "A.repTie2",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repLower",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:53",
+      "kind": "literal",
+      "keyPath": "A.repLower",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repUpper",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:53",
+      "kind": "literal",
+      "keyPath": "A.repUpper",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repDigit",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:53",
+      "kind": "literal",
+      "keyPath": "A.repDigit",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "repAccent",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:53",
+      "kind": "literal",
+      "keyPath": "A.repAccent",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "userCount",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:54",
+      "kind": "literal",
+      "keyPath": "A.userCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "activeCount",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:54",
+      "kind": "literal",
+      "keyPath": "A.activeCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "<env:BNJM_ADMIN_USERNAME>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:857",
+      "kind": "env",
+      "keyPath": "BNJM_ADMIN_USERNAME",
+      "sensitive": false,
+      "profiled": false,
+      "role": "credential",
+      "alias": "admin"
+    },
+    {
+      "value": "<masked:username>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:57",
+      "kind": "literal",
+      "keyPath": "O.userName",
+      "sensitive": true,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "<masked:password>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:57",
+      "kind": "literal",
+      "keyPath": "O.password",
+      "sensitive": true,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "<masked:email>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:57",
+      "kind": "literal",
+      "keyPath": "O.email",
+      "sensitive": true,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "<masked:person_name>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:57",
+      "kind": "literal",
+      "keyPath": "O.firstName",
+      "sensitive": true,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "market",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:58",
+      "kind": "literal",
+      "keyPath": "O.market",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "marketName",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:58",
+      "kind": "literal",
+      "keyPath": "O.marketName",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "shipperId",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:58",
+      "kind": "literal",
+      "keyPath": "O.shipperId",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "createdDate",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:58",
+      "kind": "literal",
+      "keyPath": "O.createdDate",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "userCount",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:58",
+      "kind": "literal",
+      "keyPath": "O.userCount",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    },
+    {
+      "value": "isActive",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:59",
+      "kind": "literal",
+      "keyPath": "O.isActive",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T13:17:50Z"
+}

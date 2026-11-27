@@ -36,5 +36,6 @@ localTrustedCert: work/certs/localhost-dev.cer
 entityTerms:
   promotion: [promotion, coupon]
   user: [user, customer, account, register]
+  user_management: [user, customer, account, register, biwwcustomer, custom-table-data]   # BIWW user with role (BMP-38); V1 Web + Custom API user operations
   user_address: [address]
   allocation: [allocation, custom-table-data]

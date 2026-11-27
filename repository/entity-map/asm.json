@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "entity": "asm",
+  "tables": [
+    "cso.TblCustom_ASM"
+  ],
+  "joins": [],
+  "properties": {
+    "asmId": "cso.TblCustom_ASM.Id",
+    "asmCount": "COUNT(DISTINCT cso.TblCustom_ASM.Id)"
+  },
+  "maskedColumns": [
+    "cso.TblCustom_ASM.ASM"
+  ],
+  "schemaFingerprint": "sha256:85c8fa9c7c5031daad37b5992303309de2065e451e02d00000782f59e351aa9c",
+  "scannedAt": "2026-11-26T00:00:00Z",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

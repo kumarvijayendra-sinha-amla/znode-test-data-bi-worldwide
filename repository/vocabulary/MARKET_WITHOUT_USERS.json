@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "key": "MARKET_WITHOUT_USERS",
+  "entity": "market",
+  "type": "without_users",
+  "constraints": {
+    "marketUserCount": "= 0"
+  },
+  "scope": {},
+  "usage": "read-only",
+  "description": "BIWW market (cso.TblCustom_Market) that no user belongs to (no cso.TblCustom_UserManagement row has it as Market), so filtering the Users tab by it lists nobody. Outputs marketName. Story BMP-38, AIO case BMP-TC-84; may not exist on every environment.",
+  "declaredParams": {},
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T10:16:34Z"
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts > BMP-TC-87 - Verify clicking Clear Filters when no filter is applied keeps the list unchanged",
+  "scenario": {
+    "summary": "Admin clicks Clear Filters with no filter; rows and count stay the same. Runs serially.",
+    "steps": [
+      "Sign in on the storefront login with testData.value('admin', 'userName') and the admin password (***)",
+      "Open Header > Users (Administrator Users page) > Users tab",
+      "Read the first page rows and the total count",
+      "Click Clear Filters"
+    ],
+    "entitiesTouched": [
+      "user_management"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "Rows and total count are unchanged"
+    ],
+    "evidence": [
+      "Jira BMP-38 (Web Admins can search, filter, and sort the user list)",
+      "AC6",
+      "AIO BMP-TC-87 (title only; the export has no steps)",
+      "UI labels on qa (test author, 2026-11-26): tab \"Help/Contact Us\", \"Clear filters\", sort options \"Newest first\" / \"First name A - Z\", User Type option \"Sales Representative\""
+    ],
+    "confidence": "high"
+  },
+  "requires": [
+    {
+      "key": "USER_WEBSTORE_EXISTING_WITH_ROLE",
+      "alias": "admin",
+      "params": {
+        "store": "BNJM",
+        "portalRole": "Web Admin"
+      },
+      "preferred": {
+        "source": 0,
+        "required": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-TC-87"
+  ],
+  "sources": [
+    {
+      "value": "<env:BNJM_ADMIN_USERNAME>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:666",
+      "kind": "env",
+      "keyPath": "BNJM_ADMIN_USERNAME",
+      "sensitive": false,
+      "profiled": false,
+      "role": "credential",
+      "alias": "admin"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T13:17:50Z"
+}

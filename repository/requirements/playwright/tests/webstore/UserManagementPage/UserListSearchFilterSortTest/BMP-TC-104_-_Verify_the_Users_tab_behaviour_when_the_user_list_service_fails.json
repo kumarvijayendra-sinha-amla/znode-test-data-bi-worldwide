@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "framework": "playwright",
+  "testId": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts > BMP-TC-104 - Verify the Users tab behaviour when the user list service fails",
+  "scenario": {
+    "summary": "The user list request is stubbed to fail; the tab shows the defined error state.",
+    "steps": [
+      "Sign in on the storefront login with testData.value('admin', 'userName') and the admin password (***)",
+      "Stub the user list request to fail (page.route)",
+      "Open Header > Users (Administrator Users page) > Users tab"
+    ],
+    "entitiesTouched": [
+      "user_management"
+    ],
+    "stateChanges": [],
+    "assertions": [
+      "The defined error state is shown; no stale rows"
+    ],
+    "evidence": [
+      "Jira BMP-38 (Web Admins can search, filter, and sort the user list)",
+      "AIO BMP-TC-104 (title only; the export has no steps)",
+      "Review: Expected behaviour not defined (question 13)",
+      "UI labels on qa (test author, 2026-11-26): tab \"Help/Contact Us\", \"Clear filters\", sort options \"Newest first\" / \"First name A - Z\", User Type option \"Sales Representative\""
+    ],
+    "confidence": "low",
+    "needsReview": true
+  },
+  "requires": [
+    {
+      "key": "USER_WEBSTORE_EXISTING_WITH_ROLE",
+      "alias": "admin",
+      "params": {
+        "store": "BNJM",
+        "portalRole": "Web Admin"
+      },
+      "preferred": {
+        "source": 0,
+        "required": true
+      }
+    }
+  ],
+  "linkedCases": [
+    "BMP-TC-104"
+  ],
+  "sources": [
+    {
+      "value": "<env:BNJM_ADMIN_USERNAME>",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:1026",
+      "kind": "env",
+      "keyPath": "BNJM_ADMIN_USERNAME",
+      "sensitive": false,
+      "profiled": false,
+      "role": "credential",
+      "alias": "admin"
+    },
+    {
+      "value": "**/*",
+      "location": "tests/webstore/UserManagementPage/UserListSearchFilterSortTest.spec.ts:1033",
+      "kind": "literal",
+      "keyPath": "route",
+      "sensitive": false,
+      "profiled": false,
+      "role": "config"
+    }
+  ],
+  "strategy": "migrate",
+  "status": "approved",
+  "approvedBy": "Kumar Vijayendra Sinha",
+  "approvedAt": "2026-11-26T13:17:50Z"
+}

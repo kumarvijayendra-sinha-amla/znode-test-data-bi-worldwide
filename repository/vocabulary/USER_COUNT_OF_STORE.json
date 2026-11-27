@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_COUNT_OF_STORE",
+  "entity": "user_management",
+  "type": "count_of_store",
+  "constraints": {
+    "hasCustomRow": "true",
+    "customRole": "{role}",
+    "market": "{market}",
+    "isActive": "{isActive}",
+    "userCount": ">= {minUsers}"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "read-only",
+  "description": "Number of users the storefront Users tab lists for the store (BIWW rows whose Znode user exists), all or of one role, market and status (Active = account not locked). Output userCount. Read only; count tests run serially. BMP-38.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code the webstore under test serves (ZnodePortal.StoreCode), e.g. BNJM"
+    },
+    "role": {
+      "type": "string",
+      "optional": true,
+      "description": "User Type as the grid shows it: Super Admin, Admin, Sales Rep or Market Coordinator. Left out: all roles"
+    },
+    "market": {
+      "type": "string",
+      "optional": true,
+      "description": "Market name; bind by reference, e.g. @market.marketName. Left out: any market, including none"
+    },
+    "isActive": {
+      "type": "boolean",
+      "optional": true,
+      "description": "true = Active (account not locked), false = Deactivated (locked). Left out: both"
+    },
+    "minUsers": {
+      "type": "integer",
+      "optional": true,
+      "description": "Users the count must reach (at least), e.g. page size + 1 for paging cases. Left out: no lower bound"
+    }
+  },
+  "status": "pending_approval"
+}
