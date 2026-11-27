@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
+  "entity": "user_management",
+  "type": "with_role",
+  "constraints": {
+    "role": "{role}",
+    "market": "{market}",
+    "isActive": "{isActive}",
+    "hasCustomRow": "true"
+  },
+  "scope": {
+    "store": "{store}"
+  },
+  "usage": "consumable",
+  "description": "As USER_WEBSTORE_WITH_ROLE, but the user is never deleted: test users are kept on qa at teardown (reported as kept, tagged with the run ID; user decision 2026-11-27: users are not deleted, and a user with an order or a default address cannot be deleted anyway). Story BMP-94.",
+  "declaredParams": {
+    "store": {
+      "type": "string",
+      "description": "Store code the user belongs to (ZnodePortal.StoreCode), e.g. the BIWW storefront"
+    },
+    "role": {
+      "type": "string",
+      "description": "BIWW role name: Super Admin, Admin, Sales Rep or Market Coordinator"
+    },
+    "portalRole": {
+      "type": "string",
+      "optional": true,
+      "description": "AspNet Commerce Portal role sent as RoleName on user create, next to role: Web Admin (Admin), Super Admin, SalesRep, MarketCoordinator"
+    },
+    "market": {
+      "type": "string",
+      "optional": true,
+      "description": "Market name (Sales Rep, Market Coordinator); bind by reference to MARKET_AVAILABLE, e.g. @market.marketName"
+    },
+    "isActive": {
+      "type": "boolean",
+      "optional": true,
+      "description": "true (default) = Active; false = Deactivated"
+    },
+    "firstName": {
+      "type": "string",
+      "optional": true,
+      "description": "Text placed before the run-unique token in the first name (sort, special-character cases); the token always follows"
+    },
+    "lastName": {
+      "type": "string",
+      "optional": true,
+      "description": "Text placed before the run-unique token in the last name; the token always follows"
+    },
+    "emailLocalPart": {
+      "type": "string",
+      "optional": true,
+      "description": "Text added after the run-unique token in the email local part"
+    },
+    "asm": {
+      "type": "string",
+      "optional": true,
+      "description": "ASM value (Sales Rep, Market Coordinator); the create call does not require it; source open (cso.TblCustom_ASM.ASM is masked)"
+    },
+    "category": {
+      "type": "string",
+      "optional": true,
+      "description": "Benjamin Moore Product Category code (Admin), stored in the BIWW row Categories; bind by reference, e.g. @adminCategory.optionCode (ADMIN_CATEGORY_AVAILABLE)"
+    }
+  },
+  "status": "active"
+}

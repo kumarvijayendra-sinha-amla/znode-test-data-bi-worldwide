@@ -32,7 +32,7 @@
     "generated" : { },
     "runIdTag" : {
       "step" : "insertAllotment",
-      "field" : "/SalesRepEmail",
+      "field" : "/0/SalesRepEmail",
       "format" : "TDA-{runId}-",
       "property" : "salesRepEmail",
       "inheritedFrom" : "ownerEmail"
@@ -41,17 +41,17 @@
       "childSku" : {
         "from" : "payload",
         "step" : "insertAllotment",
-        "pointer" : "/ChildSKU"
+        "pointer" : "/0/ChildSKU"
       },
       "parentSku" : {
         "from" : "payload",
         "step" : "insertAllotment",
-        "pointer" : "/ParentSKU"
+        "pointer" : "/0/ParentSKU"
       },
       "quantityRemaining" : {
         "from" : "payload",
         "step" : "insertAllotment",
-        "pointer" : "/QuantityRemaining"
+        "pointer" : "/0/QuantityRemaining"
       },
       "id" : {
         "from" : "value",
@@ -66,6 +66,6 @@
   "specFingerprint" : "sha256:41f8b00c41f846f05e179ef3b94674fdc875f51eef9792433a4f7f99f80abe0c",
   "status" : "pending_approval",
   "createdAt" : "2026-11-26T20:30:00Z",
-  "lastValidated" : "2026-11-27T07:28:13Z",
-  "verifiedHash" : "sha256:7463daa09e8805e64a3f58d5851698abd55db21f468158d942fda6bcb2c4d125"
+  "lastValidated" : "2026-11-27T09:33:55Z",
+  "verifiedHash" : "sha256:03e4dcaa85039367b08fa44f8b48e63fa178babf3716fea3f0f9af11bd6c2919"
 }

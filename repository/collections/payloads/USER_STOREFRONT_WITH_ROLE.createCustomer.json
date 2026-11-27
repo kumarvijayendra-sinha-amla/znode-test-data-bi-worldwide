@@ -1,9 +1,0 @@
-{
-  "storeCode": "{store}",
-  "userName": "{runIdTag}{uniqueSuffix}@example.test",
-  "email": "{runIdTag}{uniqueSuffix}@example.test",
-  "firstName": "{firstName}",
-  "lastName": "{uniqueSuffix}",
-  "roleName": "{role}",
-  "isActive": "{isActive}"
-}

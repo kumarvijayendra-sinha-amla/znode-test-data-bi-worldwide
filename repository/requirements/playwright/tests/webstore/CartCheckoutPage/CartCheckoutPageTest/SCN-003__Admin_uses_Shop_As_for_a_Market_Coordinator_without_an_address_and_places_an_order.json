@@ -23,7 +23,7 @@
       "order"
     ],
     "stateChanges": [
-      "The Market Coordinator user and its allotment are created for the test; the allotment is deleted at teardown, the user is kept on qa at teardown (a user with an order cannot be deleted; key USER_STOREFRONT_WITH_ROLE_ORDERING, reported as kept)",
+      "The Market Coordinator user and its allotment are created for the test; the allotment is deleted at teardown; the user is kept on qa (test users are not deleted, user decision 2026-11-27)",
       "An address typed by the test (stays with the user)",
       "An order placed by the test on qa (left on qa, not torn down; decision 2026-11-26)"
     ],
@@ -46,7 +46,7 @@
       "Delivery method: the expected method name and information wait for a read-only key of store BNJM's default shipping method (P4, not built: where Admin stores the default on BNJM is unknown, analysis section 9). Until it exists the test checks the heading 'Delivery', that one shipping method with its information is shown and that no cost or price wording is shown, not which method it is",
       "Precondition 'no saved address': the created user has none (its create payload sends no address)",
       "Questionnaire client: see the SAN-033 test (question to the user)",
-      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_STOREFRONT_WITH_ROLE_ORDERING (teardown notRemovable, the user stays on qa tagged with the run ID)",
+      "The ordering user is not deleted: POST /User/DeleteUserAccount is refused for a user who has placed an order; the user decided not to try (2026-11-27), so the user key is USER_WEBSTORE_WITH_ROLE_KEPT (teardown notRemovable, the user stays on qa tagged with the run ID)",
       "SCN-003 names a tester account as the Market Coordinator; not used (created user)",
       "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the exact name of the store default shipping method is not compared; P4 (SHIPPING_DEFAULT_OF_STORE) is open because the default flag is not in ZnodePortalShipping or a mapped table (analysis section 11). The test checks that Delivery shows one method without cost - partially automated",
       "Not covered (test author report on the spec (framework branch dev_BMP94, 75b25168, 2026-11-27)): the owner of the placed order (that it belongs to the Market Coordinator, not the Admin) is not checked - partially automated"
@@ -56,11 +56,12 @@
   },
   "requires": [
     {
-      "key": "USER_STOREFRONT_WITH_ROLE_ORDERING",
+      "key": "USER_WEBSTORE_WITH_ROLE_KEPT",
       "alias": "user",
       "params": {
-        "role": "MarketCoordinator",
-        "store": "BNJM"
+        "store": "BNJM",
+        "role": "Market Coordinator",
+        "portalRole": "MarketCoordinator"
       }
     },
     {
